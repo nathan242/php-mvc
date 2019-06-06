@@ -1,0 +1,62 @@
+div.topbar {
+	height: 10%;
+}
+
+ul.topbar {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	text-align: right;
+        background: linear-gradient(grey, white);
+}
+
+li.topbar {
+	display: inline;
+}
+
+.header-location {
+	float: left;
+	text-shadow: 2px 2px #808080;
+	font-weight: bold;
+	padding: 6px;
+}
+
+.header-location-link {
+	color: black;
+}
+
+.header-username {
+	text-shadow: 2px 2px #808080;
+}
+
+.logout-button {
+	margin-left: 20px
+}
+.control-box {
+	display: inline-block;
+}
+
+.percentbar {
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	height: 20px;
+}
+
+.percentbar div {
+	background: #0000FF;
+	height: 18px;
+}
+
+.panel-custom {
+	margin-left: 15px;
+        margin-right: 15px;
+}
+
+.login-panel {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	width: 300px;
+}
+
