@@ -22,4 +22,12 @@
             $table = ob_get_clean();
             return response::set(200, view::set('test.php', ['table' => $table]));
         }
+
+        public function php_info() {
+            phpinfo();
+        }
+
+        public function dump_server() {
+            return response::set(200, '<pre>'.print_r($_SERVER, 1).'</pre>');
+        }
     }

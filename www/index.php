@@ -20,6 +20,8 @@
     $router->route('/view', 'GET', ['test', 'view']);
     $router->route('/nocontroller', 'GET', ['testx', 'number']);
     $router->route('/nomethod', 'GET', ['test', 'noexist']);
+    $router->route('/phpinfo', 'GET', ['test', 'php_info']);
+    $router->route('/dump/server', 'GET', ['test', 'dump_server']);
 
     object_storage::add('router', $router);
 

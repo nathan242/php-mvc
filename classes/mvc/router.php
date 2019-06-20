@@ -19,7 +19,7 @@
 
         public function process() {
             $request_method = $_SERVER['REQUEST_METHOD'];
-            $request_path = preg_replace('/\?(.+)?/', '', $_SERVER['REQUEST_URI']);
+            $request_path = $_SERVER['PATH_INFO'];
 
             foreach (array_keys($this->routes[$request_method]) as $path) {
                 $matches = [];
