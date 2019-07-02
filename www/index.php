@@ -15,6 +15,7 @@
     $router = new router();
 
     $router->set_namespace('controller');
+    $router->route('/', 'GET', ['test', 'hello']);
     $router->route('/test', 'GET', ['test', 'hello']);
     $router->route('/test/(\d+)', 'GET', ['test', 'number']);
     $router->route('/view', 'GET', ['test', 'view']);
