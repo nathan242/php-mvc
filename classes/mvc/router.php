@@ -8,6 +8,16 @@
         private $routes = [];
         private $namespace = '\\';
 
+        public function __construct($config = []) {
+            if (array_key_exists('namespace', $config)) {
+                $this->namespace = $config['namespace'];
+            }
+
+            if (array_key_exists('routes', $config)) {
+                $this->routes = $config['routes'];
+            }
+        }
+
         public function set_namespace($namespace) {
             $this->namespace = $namespace;
         }

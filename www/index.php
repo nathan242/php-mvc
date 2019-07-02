@@ -14,18 +14,10 @@
         require ROOT_PATH.'/classes/'.$class.'.php';
     });
 
-    $router = new router();
+    $config = new config(ROOT_PATH.'/config');
+    $router = new router($config->get('router'));
 
-    $router->set_namespace('controller');
-    $router->route('/', 'GET', ['test', 'hello']);
-    $router->route('/test', 'GET', ['test', 'hello']);
-    $router->route('/test/(\d+)', 'GET', ['test', 'number']);
-    $router->route('/view', 'GET', ['test', 'view']);
-    $router->route('/nocontroller', 'GET', ['testx', 'number']);
-    $router->route('/nomethod', 'GET', ['test', 'noexist']);
-    $router->route('/phpinfo', 'GET', ['test', 'php_info']);
-    $router->route('/dump/server', 'GET', ['test', 'dump_server']);
-
+    object_storage::add('config', $config);
     object_storage::add('router', $router);
 
     try {
