@@ -6,10 +6,12 @@
     use mvc\exceptions\page_not_found;
     use mvc\exceptions\method_not_found;
 
+    define('ROOT_PATH', __DIR__.'/..');
+
     // Class autoloader
     spl_autoload_register(function ($class) {
         $class = str_replace('\\', '/', $class);
-        require '../classes/'.$class.'.php';
+        require ROOT_PATH.'/classes/'.$class.'.php';
     });
 
     $router = new router();
