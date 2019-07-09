@@ -18,7 +18,7 @@
                     $$key = $value;
                 }
             }
-            require '../view/'.$this->view_view;
+            require ROOT_PATH.'/view/'.$this->view_view;
         }
         
         public static function set($view, $variables = []) {
