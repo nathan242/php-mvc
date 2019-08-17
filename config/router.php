@@ -4,14 +4,16 @@
         'routes' => [
             'GET' => [
                 '/' => ['login', 'login'],
-                '/logout' => ['login', 'logout']
+                '/logout' => ['login', 'logout'],
+                '/main' => ['main', 'main']
             ],
             'POST' => [
                 '/' => ['login', 'login']
             ]
         ],
         'factories' => [
-            'login' => 'factory\\login_factory'
+            'login' => 'factory\\base_factory',
+            'main' => 'factory\\base_factory'
         ]
     ];
 

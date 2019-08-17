@@ -17,7 +17,7 @@
          */
         public function check_logged_in() {
             if (
-                $this->session->has('user_id')
+                !$this->session->has('user_id')
                 || !$this->retrieve(['id' => $this->session->get('user_id'), 'enabled' => 1])
             ) {
                 return false;

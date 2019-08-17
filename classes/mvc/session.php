@@ -15,7 +15,7 @@
         }
 
         public function get($key) {
-            return array_key_exists($key, $_SESSION[$this->name]) ? $_SESSION[$this->name] : false;
+            return array_key_exists($key, $_SESSION[$this->name]) ? $_SESSION[$this->name][$key] : false;
         }
 
         public function set($key, $value) {
