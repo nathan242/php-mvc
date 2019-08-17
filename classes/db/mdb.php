@@ -1,6 +1,8 @@
 <?php
     namespace db;
 
+    use mysqli;
+
     class mdb {
         public $address;
         public $user;

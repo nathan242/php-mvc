@@ -7,7 +7,7 @@
         protected $primary_key = 'id';
         public $data = false;
 
-        public function __construct(&$db) {
+        public function __construct($db) {
             $this->db = $db;
         }
 
@@ -25,7 +25,7 @@
                 $values[] = $value;
             }
 
-            if (!$this->db->prepared_query("SELECT * FROM `{$this->table}` WHERE ".implode(', ', $fields)." LIMIT 1", $types, $values) || !isset($this->db->result[0])) {
+            if (!$this->db->prepared_query("SELECT * FROM `{$this->table}` WHERE ".implode(' AND  ', $fields)." LIMIT 1", $types, $values) || !isset($this->db->result[0])) {
                 $this->data = false;
                 return false;
             }
