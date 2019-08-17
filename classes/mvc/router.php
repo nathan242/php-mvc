@@ -27,14 +27,11 @@
             $this->routes[$method][$path] = $action;
 	}
 
-        public function process() {
-            $request_method = $_SERVER['REQUEST_METHOD'];
-            $request_path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
-
-            foreach (array_keys($this->routes[$request_method]) as $path) {
+        public function process($request) {
+            foreach (array_keys($this->routes[$request->method]) as $path) {
                 $matches = [];
-                if (preg_match('/^'.str_replace('/', '\\/', $path).'$/', $request_path, $matches)) {
-                    $action = $this->routes[$request_method][$path];
+                if (preg_match('/^'.str_replace('/', '\\/', $path).'$/', $request->path, $matches)) {
+                    $action = $this->routes[$request->method][$path];
                     $params = $matches;
                     unset($params[0]);
                 }
