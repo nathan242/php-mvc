@@ -8,7 +8,7 @@
 
         public function get() {
             $this->method = $_SERVER['REQUEST_METHOD'];
-            $this->path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
+            $this->path = preg_replace('/\?(.+)?/', '', $_SERVER['REQUEST_URI']);
             $this->params = [
                 'GET' => $_GET,
                 'POST' => $_POST
@@ -27,6 +27,10 @@
             }
 
             return $return;
+        }
+
+        public function has_param($name, $type = null) {
+            return null !== $this->param($name, null, $type);
         }
     }
 

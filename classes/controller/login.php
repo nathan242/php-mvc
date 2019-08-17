@@ -5,21 +5,11 @@
     use mvc\view;
     use mvc\object_storage;
 
-    class login {
-        private $request;
-        private $session;
-        private $config;
-
-        public function __construct($request, $session, $config) {
-            $this->request = $request;
-            $this->session = $session;
-            $this->config = $config;
-        }
-
+    class login extends base_controller {
         public function login() {
-            if (!$this->session->has('user_id') && (!array_key_exists('username', $_POST) || !array_key_exists('password', $_POST))) {
+            if (!$this->session->has('user_id') && !$this->request->has_param('username', 'POST') || !$this->request->has_param('password', 'POST')) {
                 return response::set(200, view::set('login.php', ['app' => $this->config->get('application')]));
-            } elseif (!$this->session->has('user_id') && array_key_exists('username', $_POST) && array_key_exists('password', $_POST)) {
+            } elseif (!$this->session->has('user_id') && $this->request->has_param('username', 'POST')  && $this->request->has_param('password', 'POST')) {
                 if (false) {
                     header('Location: main');
                     exit();
