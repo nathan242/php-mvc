@@ -9,6 +9,9 @@
             'POST' => [
                 '/' => ['login', 'login']
             ]
+        ],
+        'factories' => [
+            'login' => 'factory\\login_factory'
         ]
     ];
 

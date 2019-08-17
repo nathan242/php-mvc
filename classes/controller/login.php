@@ -6,17 +6,25 @@
     use mvc\object_storage;
 
     class login {
-        public function login() {
-            $session = object_storage::get('session');
+        private $request;
+        private $session;
+        private $config;
 
-            if (!$session->has('user_id') && (!array_key_exists('username', $_POST) || !array_key_exists('password', $_POST))) {
-                return response::set(200, view::set('login.php', ['app' => object_storage::get('config')->get('application')]));
-            } elseif (!$session->has('user_id') && array_key_exists('username', $_POST) && array_key_exists('password', $_POST)) {
+        public function __construct($request, $session, $config) {
+            $this->request = $request;
+            $this->session = $session;
+            $this->config = $config;
+        }
+
+        public function login() {
+            if (!$this->session->has('user_id') && (!array_key_exists('username', $_POST) || !array_key_exists('password', $_POST))) {
+                return response::set(200, view::set('login.php', ['app' => $this->config->get('application')]));
+            } elseif (!$this->session->has('user_id') && array_key_exists('username', $_POST) && array_key_exists('password', $_POST)) {
                 if (false) {
                     header('Location: main');
                     exit();
                 } else {
-                    return response::set(200, view::set('login-fail.php', ['app' => object_storage::get('config')->get('application')]));
+                    return response::set(200, view::set('login-fail.php', ['app' => $this->config->get('application')]));
                 }
             } else {
                 header('Location: main');

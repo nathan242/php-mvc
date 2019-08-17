@@ -5,8 +5,9 @@
     use mvc\exceptions\method_not_found;
 
     class router {
-        private $routes = [];
         private $namespace = '\\';
+        private $routes = [];
+        private $factories = [];
 
         public function __construct($config = []) {
             if (array_key_exists('namespace', $config)) {
@@ -15,6 +16,10 @@
 
             if (array_key_exists('routes', $config)) {
                 $this->routes = $config['routes'];
+            }
+
+            if (array_key_exists('factories', $config)) {
+                $this->factories = $config['factories'];
             }
         }
 
@@ -50,12 +55,14 @@
                 throw new controller_not_found();
             }
 
-            $controller = $action[0];
-            if (strpos($controller, '\\') === false) {
-                $controller = $this->namespace.'\\'.$controller;
+            $controller = $this->namespace.'\\'.$action[0];
+            if (array_key_exists($action[0], $this->factories)) {
+                $factory = $this->namespace.'\\'.$this->factories[$action[0]];
+                $controller = (new $factory)($controller);
+            } else {
+                $controller = new $controller();
             }
 
-            $controller = new $controller();
             if (!method_exists($controller, $action[1])) {
                 throw new method_not_found();
             }
