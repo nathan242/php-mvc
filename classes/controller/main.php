@@ -9,7 +9,6 @@
         use login_required;
 
         public function main() {
-            $this->check_logged_in();
             return response::set(200, view::set('main.php', ['loginuser' => $this->session->get('loginuser')]));
         }
     }

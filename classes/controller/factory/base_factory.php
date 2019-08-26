@@ -13,6 +13,7 @@
             }
 
             $this->set_objects($controller);
+            $this->run_init($controller);
             return $controller;
         }
 
@@ -21,5 +22,11 @@
             $controller->set_session(object_storage::get('session'));
             $controller->set_config(object_storage::get('config'));
             $controller->set_user(new user(object_storage::get('db'), object_storage::get('session')));
+        }
+
+        protected function run_init($controller) {
+            if (method_exists($controller, 'init')) {
+                $controller->init();
+            }
         }
     }

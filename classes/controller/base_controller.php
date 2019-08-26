@@ -22,4 +22,10 @@
         public function set_user($user) {
             $this->user = $user;
         }
+
+        public function init() {
+            if (method_exists($this, 'check_logged_in')) {
+                $this->check_logged_in();
+            }
+        }
     }
