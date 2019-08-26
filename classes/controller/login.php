@@ -23,7 +23,7 @@
         }
 
         public function logout() {
-            session_destroy();
+            $this->session->destroy();
 
             header('Location: /');
             exit();

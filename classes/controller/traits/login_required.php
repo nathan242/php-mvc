@@ -4,7 +4,7 @@
     trait login_required {
         public function check_logged_in() {
             if (!$this->user->check_logged_in()) {
-                session_destroy();
+                $this->session->destroy();
 
                 header('Location: /');
                 exit();

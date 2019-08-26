@@ -25,5 +25,9 @@
         public function has($key) {
             return array_key_exists($key, $_SESSION[$this->name]);
         }
+
+        public function destroy() {
+            session_destroy();
+        }
     }
 
