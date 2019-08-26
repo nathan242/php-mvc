@@ -29,3 +29,8 @@
     echo '<hr>';
     echo '</div>';
 }
+
+echo $view;
+?>
+  </body>
+</html>

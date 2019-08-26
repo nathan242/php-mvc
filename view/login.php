@@ -1,6 +1,5 @@
-<?= self::render('header.php', ['pagetitle' => "{$app['name']} Login"]) ?>
 <div class="panel panel-default control-box login-panel">
-  <div class="panel-heading" style="text-align: center;"><?= $app['name'] ?> Login</div>
+  <div class="panel-heading" style="text-align: center;"><?= $app_name ?> Login</div>
   <form action="" method="POST">
     <table border="1">
       <tr>
@@ -17,4 +16,3 @@
     </table>
   </form>
 </div>
-<?= self::render('footer.php') ?>

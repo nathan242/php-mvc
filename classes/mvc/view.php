@@ -11,11 +11,30 @@
             $this->view_view = $view;
             $this->view_variables = $variables;
         }
+
+        public function variables($variables = []) {
+            $this->view_variables = array_merge($this->view_variables, $variables);
+        }
+
+        public function sub_view($view, $variables, $name) {
+            $this->variables([$name => self::set($view, $variables)]);
+        }
+
+        public function get($view, $variables = [], $name = 'view') {
+            $this->sub_view($view, $variables, $name);
+            return $this;
+        }
         
         public function output_content() {
             foreach ($this->view_variables as $key => $value) {
                 if (!isset($$key)) {
-                    $$key = $value;
+                    if ($value instanceof response_content) {
+                        ob_start();
+                        $value->output_content();
+                        $$key = ob_get_clean();
+                    } else {
+                        $$key = $value;
+                    }
                 }
             }
             require ROOT_PATH.'/view/'.$this->view_view;
@@ -38,4 +57,5 @@
             
             return null;
         }
+
     }

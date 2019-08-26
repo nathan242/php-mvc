@@ -8,7 +8,14 @@
     class main extends base_controller {
         use login_required;
 
+        protected $view;
+
+        public function init() {
+            $this->view = view::set('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', $_SERVER['REQUEST_URI']]]]);
+            parent::init();
+        }
+
         public function main() {
-            return response::set(200, view::set('main.php', ['loginuser' => $this->session->get('loginuser')]));
+            return response::set(200, $this->view->get('main.php'));
         }
     }
