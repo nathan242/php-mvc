@@ -3,6 +3,7 @@
     use mvc\config;
     use mvc\router;
     use mvc\session;
+    use db\db_factory;
     use mvc\request;
     use mvc\response;
     use mvc\exceptions\page_not_found;
@@ -20,6 +21,7 @@
     $config = new config(ROOT_PATH.'/config');
     $router = new router($config->get('router'));
     $session = new session($config->get('application')['name']);
+    $db = db_factory::get($config);
 
     $request->get();
 
@@ -27,6 +29,7 @@
     object_storage::add('config', $config);
     object_storage::add('router', $router);
     object_storage::add('session', $session);
+    object_storage::add('db', $db);
 
     try {
         $response = $router->process($request);
