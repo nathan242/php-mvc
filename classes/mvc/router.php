@@ -63,6 +63,10 @@
                 $controller = new $controller();
             }
 
+            if (method_exists($controller, 'init')) {
+                $controller->init();
+            }
+
             if (!method_exists($controller, $action[1])) {
                 throw new method_not_found();
             }
