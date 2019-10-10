@@ -3,7 +3,6 @@
 
     use mvc\response;
     use mvc\view;
-    use mvc\object_storage;
 
     class login extends base_controller {
         protected $view;
