@@ -58,7 +58,8 @@
             $controller = $this->namespace.'\\'.$action[0];
             if (array_key_exists($action[0], $this->factories)) {
                 $factory = $this->namespace.'\\'.$this->factories[$action[0]];
-                $controller = (new $factory)($controller);
+                $factory = new $factory();
+                $controller = $factory($controller);
             } else {
                 $controller = new $controller();
             }

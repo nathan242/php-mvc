@@ -11,11 +11,7 @@
 
     define('ROOT_PATH', __DIR__.'/..');
 
-    // Class autoloader
-    spl_autoload_register(function ($class) {
-        $class = str_replace('\\', '/', $class);
-        require ROOT_PATH.'/classes/'.$class.'.php';
-    });
+    require_once ROOT_PATH.'/include/autoloader.php';
 
     $request = new request();
     $config = new config(ROOT_PATH.'/config');
