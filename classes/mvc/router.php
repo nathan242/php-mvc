@@ -3,6 +3,7 @@
 
     use mvc\exceptions\page_not_found;
     use mvc\exceptions\method_not_found;
+    use mvc\exceptions\controller_not_found;
 
     class router {
         private $namespace = '\\';
@@ -42,12 +43,12 @@
                 }
             }
 
-            if (isset($action)) {
-                return $this->run_action($action, $params);
-            } else {
+            if (!isset($action)) {
                 // No route
                 throw new page_not_found();
             }
+
+            return $this->run_action($action, $params);
         }
 
         public function run_action($action, $params = []) {
