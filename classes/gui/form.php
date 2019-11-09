@@ -11,20 +11,19 @@
         public $result;
 
         /**
-         * Construct a form.
-         * 
+         * Initialize a form.
+         *
          * @param string $title Form panel heading
          * @param string $submit Submit button text
          * @param string $submit_colour Submit button colour
-         * @param string $method Form method (post/get)
+         * @param string $method Form submit method
          */
-        public function __construct(
+        public function init(
                 $title = '',
                 $submit = 'Submit',
                 $submit_colour = 'primary',
                 $method = 'post'
         ) {
-            
             $this->title = $title;
             $this->submit = $submit;
             $this->submit_colour = $submit_colour;
@@ -60,14 +59,13 @@
 
         /**
          * Check for and handle submitted form.
-         * 
-         * @param function $function Function to process submitted data
+         *
+         * @param array $params Submitted form values
+         * @param callable $function Function to process submitted data
          * @param array $pass Array of additional parameters for function
          * @return bool Returns true if form submit is valid
          */
-        public function handle($function, $pass = array()) {
-            $params = ($this->method === 'post') ? $_POST : $_GET;
-
+        public function handle($params, $function, $pass = array()) {
             $input_data = array();
             $input_names = array_keys($this->inputs);
             foreach ($input_names as $i) {

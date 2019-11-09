@@ -5,15 +5,18 @@
             'GET' => [
                 '/' => ['login', 'login'],
                 '/logout' => ['login', 'logout'],
-                '/main' => ['main', 'main']
+                '/main' => ['main', 'main'],
+                '/form_test' => ['form_test', 'get']
             ],
             'POST' => [
-                '/' => ['login', 'login']
+                '/' => ['login', 'login'],
+                '/form_test' => ['form_test', 'post']
             ]
         ],
         'factories' => [
             'login' => 'factory\\base_factory',
-            'main' => 'factory\\base_factory'
+            'main' => 'factory\\base_factory',
+            'form_test' => 'factory\\form_test_factory'
         ]
     ];
 
