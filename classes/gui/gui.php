@@ -52,8 +52,12 @@
             // Data
             foreach ($data as $v) {
                 if (is_array($select)) {
-                    $sep = (strpos($select['path'], '?')) ? '&' : '?';
-                    $url = $select['path'].$sep.$select['key'].'='.$v[$select['vkey']];
+                    if (array_key_exists('route', $select)) {
+                        $url = $select['route'] . $v[$select['vkey']];
+                    } else {
+                        $sep = (strpos($select['path'], '?')) ? '&' : '?';
+                        $url = $select['path'] . $sep . $select['key'] . '=' . $v[$select['vkey']];
+                    }
                     echo '<tr onclick="window.location=\''.$url.'\'">';
                 } else {
                     echo '<tr>';

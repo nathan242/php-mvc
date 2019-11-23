@@ -58,4 +58,11 @@
             return null;
         }
 
+        public function __set($name, $value) {
+            $this->view_variables[$name] = $value;
+        }
+
+        public function __isset($name) {
+            return array_key_exists($name, $this->view_variables);
+        }
     }
