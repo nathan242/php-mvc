@@ -11,11 +11,11 @@
         protected $view;
 
         public function init() {
-            $this->view = view::set('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', $_SERVER['REQUEST_URI']]]]);
+            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', $_SERVER['REQUEST_URI']]]]);
             parent::init();
         }
 
         public function main() {
-            return response::set(200, $this->view->get('main.php'));
+            return $this->response->set(200, $this->view->get('main.php'));
         }
     }

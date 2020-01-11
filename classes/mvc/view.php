@@ -37,6 +37,7 @@
                     }
                 }
             }
+
             require ROOT_PATH.'/view/'.$this->view_view;
         }
         

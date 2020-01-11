@@ -22,12 +22,11 @@
             echo $this->content;
         }
 
-        public static function set($code = 200, $content = '', $headers = []) {
-            $instance = new self();
-            $instance->code = $code;
-            $instance->content = $content;
-            $instance->headers = $headers;
+        public function set($code = 200, $content = '', $headers = []) {
+            $this->code = $code;
+            $this->content = $content;
+            $this->headers = $headers;
 
-            return $instance;
+            return $this;
         }
     }

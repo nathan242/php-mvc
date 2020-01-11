@@ -20,6 +20,7 @@
 
     $container = new container();
     $request = new request();
+    $response = new response();
     $config = new config(ROOT_PATH.'/config');
     $router = new router($container, $config->get('router'));
     $command = new command($container, $config->get('commands'), $config->get('application'));
@@ -27,6 +28,7 @@
     $db = db_factory::get($config);
 
     $container->add('request', $request);
+    $container->add('response', $response);
     $container->add('config', $config);
     $container->add('router', $router);
     $container->add('command', $command);
@@ -58,13 +60,13 @@
                 exit($response);
             }
         } catch (page_not_found $e) {
-            response::set(404, 'Page not found')->send();
+            $response->set(404, 'Page not found')->send();
             exit();
         } catch (method_not_found $e) {
-            response::set(500, 'Internal error')->send();
+            $response->set(500, 'Internal error')->send();
             exit();
         } catch (controller_not_found $e) {
-            response::set(500, 'Internal error')->send();
+            $response->set(500, 'Internal error')->send();
             exit();
         }
     }

@@ -16,8 +16,7 @@
         }
 
         public function init() {
-            $this->view = view::set('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Records', '/records']]]);
-
+            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Records', '/records']]]);
             parent::init();
         }
 
@@ -38,7 +37,7 @@
                 $data[] = [$key, $value];
             }
 
-            return response::set(200, $this->view->get('records.php', ['records' => $data]));
+            return $this->response->set(200, $this->view->get('records.php', ['records' => $data]));
         }
 
         public function create() {
@@ -63,16 +62,16 @@
 
             if (!$result) {
                 $this->view->pagepath = array_merge($this->view->pagepath, [['New', $_SERVER['REQUEST_URI']]]);
-                return response::set(200, $this->view->get('records_edit.php', ['form' => $this->form]));
+                return $this->response->set(200, $this->view->get('records_edit.php', ['form' => $this->form]));
             }
 
-            return response::set(302, '', ['Location' => '/records']);
+            return $this->response->set(302, '', ['Location' => '/records']);
         }
 
         public function edit($id) {
             $records = $this->get_records();
             if (!array_key_exists($id, $records)) {
-                return response::set(404, 'Record not found');
+                return $this->response->set(404, 'Record not found');
             }
 
             $this->form->init("Edit record {$id}");
@@ -96,13 +95,13 @@
 
             if (!$result) {
                 $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $_SERVER['REQUEST_URI']]]);
-                return response::set(200, $this->view->get('records_edit.php', ['form' => $this->form]));
+                return $this->response->set(200, $this->view->get('records_edit.php', ['form' => $this->form]));
             }
 
             if (!$this->form->result) {
-                return response::set(404, 'Record not found');
+                return $this->response->set(404, 'Record not found');
             }
 
-            return response::set(302, '', ['Location' => '/records']);
+            return $this->response->set(302, '', ['Location' => '/records']);
         }
     }

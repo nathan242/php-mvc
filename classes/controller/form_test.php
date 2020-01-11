@@ -16,7 +16,7 @@
         }
 
         public function init() {
-            $this->view = view::set('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Form Test', $_SERVER['REQUEST_URI']]]]);
+            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Form Test', $_SERVER['REQUEST_URI']]]]);
 
             $this->form->init('test');
             $this->form->input('data1', 'data1', 'text', true);
@@ -27,7 +27,7 @@
 
         public function get()
         {
-            return response::set(200, $this->view->get('form_test.php', ['form' => $this->form, 'data' => '']));
+            return $this->response->set(200, $this->view->get('form_test.php', ['form' => $this->form, 'data' => '']));
         }
 
         public function post() {
@@ -44,6 +44,6 @@
 
             $data = json_encode($this->form->result);
 
-            return response::set(200, $this->view->get('form_test.php', ['form' => $this->form, 'data' => $data]));
+            return $this->response->set(200, $this->view->get('form_test.php', ['form' => $this->form, 'data' => $data]));
         }
     }
