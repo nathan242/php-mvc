@@ -19,21 +19,17 @@
                 return $this->response->set(200, $this->view->get('login.php', ['app_name' => $this->app_config['name']]));
             } elseif (!$this->session->has('user_id') && $this->request->has_param('username', 'POST')  && $this->request->has_param('password', 'POST')) {
                 if ($this->user->login($this->request->param('username', null, 'POST'), $this->request->param('password', null, 'POST'))) {
-                    header('Location: main');
-                    exit();
+                    return $this->response->set(302, '', ['Location' => 'main']);
                 } else {
                     return $this->response->set(200, $this->view->get('login-fail.php'));
                 }
             } else {
-                header('Location: main');
-                exit();
+                return $this->response->set(302, '', ['Location' => 'main']);
             }
         }
 
         public function logout() {
             $this->session->destroy();
-
-            header('Location: /');
-            exit();
+            return $this->response->set(302, '', ['Location' => 'main']);
         }
     }

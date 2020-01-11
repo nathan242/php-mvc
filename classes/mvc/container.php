@@ -1,5 +1,5 @@
 <?php
-    namespace Mvc;
+    namespace mvc;
 
     use RuntimeException;
 

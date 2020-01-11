@@ -7,6 +7,7 @@
     use db\db_factory;
     use mvc\request;
     use mvc\response;
+    use mvc\exceptions\response_exception;
     use mvc\exceptions\page_not_found;
     use mvc\exceptions\method_not_found;
     use mvc\exceptions\controller_not_found;
@@ -59,6 +60,9 @@
             } elseif (is_string($response)) {
                 exit($response);
             }
+        } catch (response_exception $e) {
+            $e->get_response()->send();
+            exit();
         } catch (page_not_found $e) {
             $response->set(404, 'Page not found')->send();
             exit();
