@@ -25,8 +25,12 @@
         public function set($code = 200, $content = '', $headers = []) {
             $this->code = $code;
             $this->content = $content;
-            $this->headers = $headers;
+            $this->add_headers($headers);
 
             return $this;
+        }
+
+        public function add_headers($headers) {
+            $this->headers = array_merge($this->headers, $headers);
         }
     }
