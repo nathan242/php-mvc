@@ -9,8 +9,11 @@
         private $namespace = '\\';
         private $routes = [];
         private $factories = [];
+        private $container;
 
-        public function __construct($config = []) {
+        public function __construct($container, $config = []) {
+            $this->container = $container;
+
             if (array_key_exists('namespace', $config)) {
                 $this->namespace = $config['namespace'];
             }
@@ -60,7 +63,7 @@
             if (array_key_exists($action[0], $this->factories)) {
                 $factory = $this->namespace.'\\'.$this->factories[$action[0]];
                 $factory = new $factory();
-                $controller = $factory($controller);
+                $controller = $factory($this->container, $controller);
             } else {
                 $controller = new $controller();
             }

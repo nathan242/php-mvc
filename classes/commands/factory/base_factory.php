@@ -1,21 +1,21 @@
 <?php
     namespace commands\factory;
 
-    use mvc\object_storage;
+    use mvc\interfaces\factory;
 
-    class base_factory {
-        public function __invoke($controller) {
+    class base_factory implements factory {
+        public function __invoke($container, $controller) {
             if (method_exists($this, 'create')) {
-                $controller = $this->create($controller);
+                $controller = $this->create($container, $controller);
             } else {
                 $controller = new $controller();
             }
 
-            $this->set_objects($controller);
+            $this->set_objects($container, $controller);
             return $controller;
         }
 
-        protected function set_objects($controller) {
-            $controller->set_config(object_storage::get('config'));
+        protected function set_objects($container, $controller) {
+            $controller->set_config($container->get('config'));
         }
     }

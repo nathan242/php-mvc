@@ -10,8 +10,10 @@
         private $commands = [];
         private $factories = [];
         private $app_config = [];
+        private $container;
 
-        public function __construct($config = [], $app_config = []) {
+        public function __construct($container, $config = [], $app_config = []) {
+            $this->container = $container;
             $this->app_config = $app_config;
 
             if (array_key_exists('namespace', $config)) {
@@ -57,7 +59,7 @@
             if (array_key_exists($action[0], $this->factories)) {
                 $factory = $this->namespace.'\\'.$this->factories[$action[0]];
                 $factory = new $factory();
-                $controller = $factory($controller);
+                $controller = $factory($this->container, $controller);
             } else {
                 $controller = new $controller();
             }

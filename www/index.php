@@ -1,5 +1,5 @@
 <?php
-    use mvc\object_storage;
+    use mvc\container;
     use mvc\config;
     use mvc\router;
     use mvc\command;
@@ -18,19 +18,20 @@
 
     require_once ROOT_PATH.'/include/autoloader.php';
 
+    $container = new container();
     $request = new request();
     $config = new config(ROOT_PATH.'/config');
-    $router = new router($config->get('router'));
-    $command = new command($config->get('commands'), $config->get('application'));
+    $router = new router($container, $config->get('router'));
+    $command = new command($container, $config->get('commands'), $config->get('application'));
     $session = new session($config->get('application')['name']);
     $db = db_factory::get($config);
 
-    object_storage::add('request', $request);
-    object_storage::add('config', $config);
-    object_storage::add('router', $router);
-    object_storage::add('command', $command);
-    object_storage::add('session', $session);
-    object_storage::add('db', $db);
+    $container->add('request', $request);
+    $container->add('config', $config);
+    $container->add('router', $router);
+    $container->add('command', $command);
+    $container->add('session', $session);
+    $container->add('db', $db);
 
     if ('cli' === php_sapi_name()) {
         try {
