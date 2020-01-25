@@ -8,7 +8,6 @@
     class router {
         private $namespace = '\\';
         private $routes = [];
-        private $factories = [];
         private $container;
 
         public function __construct($container, $config = []) {
@@ -20,10 +19,6 @@
 
             if (array_key_exists('routes', $config)) {
                 $this->routes = $config['routes'];
-            }
-
-            if (array_key_exists('factories', $config)) {
-                $this->factories = $config['factories'];
             }
         }
 
@@ -60,13 +55,7 @@
             }
 
             $controller = $this->namespace.'\\'.$action[0];
-            if (array_key_exists($action[0], $this->factories)) {
-                $factory = $this->namespace.'\\'.$this->factories[$action[0]];
-                $factory = new $factory();
-                $controller = $factory($this->container, $controller);
-            } else {
-                $controller = new $controller();
-            }
+            $controller = $this->container->create($controller);
 
             if (method_exists($controller, 'init')) {
                 $controller->init();

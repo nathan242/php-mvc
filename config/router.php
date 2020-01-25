@@ -17,12 +17,6 @@
                 '/records/add' => ['records', 'create'],
                 '/records/(\d+)' => ['records', 'edit']
             ]
-        ],
-        'factories' => [
-            'login' => 'factory\\base_factory',
-            'main' => 'factory\\base_factory',
-            'form_test' => 'factory\\form_test_factory',
-            'records' => 'factory\\records_factory'
         ]
     ];
 

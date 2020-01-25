@@ -1,11 +1,7 @@
 <?php
     use mvc\container;
     use mvc\config;
-    use mvc\router;
-    use mvc\command;
-    use mvc\session;
     use db\db_factory;
-    use mvc\request;
     use mvc\response;
     use mvc\exceptions\response_exception;
     use mvc\exceptions\page_not_found;
@@ -19,26 +15,15 @@
 
     require_once ROOT_PATH.'/include/autoloader.php';
 
-    $container = new container();
-    $request = new request();
-    $response = new response();
     $config = new config(ROOT_PATH.'/config');
-    $router = new router($container, $config->get('router'));
-    $command = new command($container, $config->get('commands'), $config->get('application'));
-    $session = new session($config->get('application')['name']);
+    $container = new container($config->get('container'));
     $db = db_factory::get($config);
-
-    $container->add('request', $request);
-    $container->add('response', $response);
-    $container->add('config', $config);
-    $container->add('router', $router);
-    $container->add('command', $command);
-    $container->add('session', $session);
-    $container->add('db', $db);
+    $container->set('config', $config);
+    $container->set('db', $db);
 
     if ('cli' === php_sapi_name()) {
         try {
-            exit($command->process($argv));
+            exit($container->get('command')->process($argv));
         } catch (command_not_found $e) {
             echo "Command not found.\n";
             exit(1);
@@ -51,9 +36,10 @@
         }
     } else {
         try {
+            $request = $container->get('request');
             $request->get();
 
-            $response = $router->process($request);
+            $response = $container->get('router')->process($request);
             if ($response instanceof response) {
                 $response->send();
                 exit();
@@ -64,13 +50,13 @@
             $e->get_response()->send();
             exit();
         } catch (page_not_found $e) {
-            $response->set(404, 'Page not found')->send();
+            $container->get('response')->set(404, 'Page not found')->send();
             exit();
         } catch (method_not_found $e) {
-            $response->set(500, 'Internal error')->send();
+            $container->get('response')->set(500, 'Internal error')->send();
             exit();
         } catch (controller_not_found $e) {
-            $response->set(500, 'Internal error')->send();
+            $container->get('response')->set(500, 'Internal error')->send();
             exit();
         }
     }
