@@ -1,7 +1,9 @@
 <?php
     namespace mvc;
 
-    class request {
+    use mvc\interfaces\request_interface;
+
+    class request implements request_interface {
         public $method;
         public $path;
         public $params;

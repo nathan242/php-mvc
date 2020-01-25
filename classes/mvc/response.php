@@ -2,8 +2,9 @@
     namespace mvc;
     
     use mvc\interfaces\response_content;
+    use mvc\interfaces\response_interface;
 
-    class response {
+    class response implements response_interface {
         public $code = 200;
         public $content = '';
         public $headers = [];

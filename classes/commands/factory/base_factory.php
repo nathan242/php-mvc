@@ -1,10 +1,11 @@
 <?php
     namespace commands\factory;
 
-    use mvc\interfaces\factory;
+    use mvc\interfaces\container_interface;
+    use mvc\interfaces\factory_interface;
 
-    class base_factory implements factory {
-        public function __invoke($container, $controller) {
+    class base_factory implements factory_interface {
+        public function __invoke(container_interface $container, $controller) {
             if (method_exists($this, 'create')) {
                 $controller = $this->create($container, $controller);
             } else {

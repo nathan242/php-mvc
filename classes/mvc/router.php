@@ -4,13 +4,15 @@
     use mvc\exceptions\page_not_found;
     use mvc\exceptions\method_not_found;
     use mvc\exceptions\controller_not_found;
+    use mvc\interfaces\container_interface;
+    use mvc\interfaces\request_interface;
 
     class router {
         private $namespace = '\\';
         private $routes = [];
         private $container;
 
-        public function __construct($container, $config = []) {
+        public function __construct(container_interface $container, $config = []) {
             $this->container = $container;
 
             if (array_key_exists('namespace', $config)) {
@@ -31,7 +33,7 @@
             $this->routes[$method][$path] = $action;
 	}
 
-        public function process($request) {
+        public function process(request_interface $request) {
             foreach (array_keys($this->routes[$request->method]) as $path) {
                 $matches = [];
                 if (preg_match('/^'.str_replace('/', '\\/', $path).'$/', $request->path, $matches)) {

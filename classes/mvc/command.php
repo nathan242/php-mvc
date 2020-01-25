@@ -4,6 +4,7 @@
     use mvc\exceptions\command_not_found;
     use mvc\exceptions\command_method_not_found;
     use mvc\exceptions\command_controller_not_found;
+    use mvc\interfaces\container_interface;
 
     class command {
         private $namespace = '\\';
@@ -11,7 +12,7 @@
         private $app_config = [];
         private $container;
 
-        public function __construct($container, $config = [], $app_config = []) {
+        public function __construct(container_interface $container, $config = [], $app_config = []) {
             $this->container = $container;
             $this->app_config = $app_config;
 
@@ -69,7 +70,7 @@
             $app_ver = array_key_exists('version', $this->app_config) ? $this->app_config['version'] : '<not configured>';
 
             echo "{$app_name} [{$app_ver}]\n\n";
-            echo "Availiable commands:\n";
+            echo "Available commands:\n";
 
             foreach ($this->commands as $command => $details) {
                 echo str_pad("{$command} ", 25);

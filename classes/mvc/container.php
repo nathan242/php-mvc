@@ -2,9 +2,10 @@
     namespace mvc;
 
     use Exception;
+    use mvc\interfaces\container_interface;
     use RuntimeException;
 
-    class container {
+    class container implements container_interface {
         private $aliases = [];
         private $factories = [];
         private $instances = [];

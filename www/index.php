@@ -2,7 +2,7 @@
     use mvc\container;
     use mvc\config;
     use db\db_factory;
-    use mvc\response;
+    use mvc\interfaces\response_interface;
     use mvc\exceptions\response_exception;
     use mvc\exceptions\page_not_found;
     use mvc\exceptions\method_not_found;
@@ -40,7 +40,7 @@
             $request->get();
 
             $response = $container->get('router')->process($request);
-            if ($response instanceof response) {
+            if ($response instanceof response_interface) {
                 $response->send();
                 exit();
             } elseif (is_string($response)) {
