@@ -18,7 +18,7 @@
         public function check_logged_in() {
             if (
                 !$this->session->has('user_id')
-                || !$this->retrieve(['id' => $this->session->get('user_id'), 'enabled' => 1])
+                || !$this->retrieveWhere(['id' => $this->session->get('user_id'), 'enabled' => 1])
             ) {
                 return false;
             }
@@ -35,10 +35,10 @@
          */
         public function login($username, $password) {
             $hash = hash('sha256', $password);
-            if (!$this->retrieve(['username' => $username, 'password' => $hash, 'enabled' => 1])) {
+            if (!$this->retrieveWhere(['username' => $username, 'password' => $hash, 'enabled' => 1])) {
                 return false;
             } else {
-                $this->session->set('user_id', $this->data['id']);
+                $this->session->set('user_id', $this->id);
                 $this->session->set('loginuser', $username);
                 return true;
             }

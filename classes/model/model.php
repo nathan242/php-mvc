@@ -5,13 +5,36 @@
         private $db;
         protected $table;
         protected $primary_key = 'id';
-        public $data = false;
+        protected $data = [];
+        protected $changed = [];
 
         public function __construct($db) {
             $this->db = $db;
         }
 
-        public function retrieve($where) {
+        public function __isset($name) {
+            return array_key_exists($name, $this->data);
+        }
+
+        public function __get($name) {
+            return $this->data[$name] ?? null;
+        }
+
+        public function __set($name, $value) {
+            $this->data[$name] = $value;
+            if (!array_key_exists($name, $this->changed)) {
+                $this->changed[] = $name;
+            }
+        }
+
+        public function retrieve($id) {
+            return $this->retrieveWhere([$this->primary_key => $id]);
+        }
+
+        public function retrieveWhere($where) {
+            $this->data = [];
+            $this->changed = [];
+
             if (!is_array($where)) {
                 $where = [$this->primary_key => $where];
             }
@@ -26,7 +49,6 @@
             }
 
             if (!$this->db->prepared_query("SELECT * FROM `{$this->table}` WHERE ".implode(' AND  ', $fields)." LIMIT 1", $types, $values) || !isset($this->db->result[0])) {
-                $this->data = false;
                 return false;
             }
 
@@ -36,14 +58,12 @@
         }
 
         public function update() {
-            if (!is_array($this->data)) {
-                return false;
-            }
+            $data = array_intersect_key($this->data, array_flip($this->changed));
 
             $fields = [];
             $types = [];
             $values = [];
-            foreach ($this->data as $key => $value) {
+            foreach ($data as $key => $value) {
                 $fields[] = "`{$key}`=?";
                 $types[] = 's';
                 $values[] = $value;
@@ -60,10 +80,6 @@
         }
 
         public function insert() {
-            if (!is_array($this->data)) {
-                return false;
-            }
-
             $fields = [];
             $placeholders = [];
             $types = [];
