@@ -11,13 +11,11 @@
         public function create_users_table() {
             echo "Creating users table ... ";
             if (!$this->db->query("CREATE TABLE `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-)")) {
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(255) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `enabled` TINYINT(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1")) {
                 echo "Failed\n\nFailed to create user table.\nError: ".$this->db->last_error()."\n";
                 return 1;
             }
