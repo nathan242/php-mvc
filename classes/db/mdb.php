@@ -128,32 +128,46 @@
         }
 
         /**
-         * Execute a prepared SQL query and store result in $this->result.
+         * Prepare an SQL query
          * 
          * @param string $query SQL query
-         * @param array $types Array of data types for prepared parameters
-         * @param array $data Array of data for prepared parameters
          * @return boolean
          */
-        public function prepared_query($query, $types, $data) {
+        public function prepare($query) {
             $this->connect();
-            $this->debug_print("PREPARED_QUERY = ".$query." | TYPES = ".print_r($types,1)." | DATA = ".print_r($data,1));
+            $this->debug_print("PREPARE_QUERY = {$query}");
             if (!$this->stmt = $this->dbobj->prepare($query)) {
                 $this->disconnect_if_allowed();
                 return false;
             }
 
-            //bind_param
+            return true;
+        }
+
+        /**
+         * Execute the prepared query and store result in $this->result
+         * 
+         * @param array $types Array of data types for prepared parameters
+         * @param array $data Array of data for prepared parameters
+         * @return boolean
+         */
+        public function execute($types, $data) {
+            $this->debug_print('EXECUTE_PREPARED_QUERY | TYPES = '.print_r($types,1).' | DATA = '.print_r($data,1));
+
+            // bind_param
             $bind_params = array();
             $param_type = '';
             $n = count($types);
+
             for ($i = 0; $i < $n; $i++) {
                 $param_type .= $types[$i];
             }
+
             $bind_params[] = & $param_type;
             for ($i = 0; $i < $n; $i++) {
                 $bind_params[] = & $data[$i];
             }
+
             if (!call_user_func_array(array($this->stmt, 'bind_param'), $bind_params)) {
                 $this->disconnect_if_allowed();
                 return false;
@@ -165,8 +179,25 @@
             }
 
             $this->result = $this->prepared_query_fetch();
-            $this->disconnect_if_allowed();
             return true;
+        }
+
+        /**
+         * Prepare and execute an SQL query and store result in $this->result
+         * 
+         * @param string $query SQL query
+         * @param array $types Array of data types for prepared parameters
+         * @param array $data Array of data for prepared parameters
+         * @return boolean
+         */
+        public function prepared_query($query, $types, $data) {
+            if (!$this->prepare($query)) {
+                return false;
+            }
+
+            $result = $this->execute($types, $data);
+            $this->disconnect_if_allowed();
+            return $result;
         }
 
         /**
