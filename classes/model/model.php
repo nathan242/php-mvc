@@ -31,7 +31,7 @@
             return $this->retrieveWhere([$this->primary_key => $id]);
         }
 
-        public function retrieveWhere($where) {
+        public function retrieve_where($where) {
             $this->data = [];
             $this->changed = [];
 
