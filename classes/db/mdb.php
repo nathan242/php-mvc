@@ -2,8 +2,9 @@
     namespace db;
 
     use mysqli;
+    use db\interfaces\db_interface;
 
-    class mdb {
+    class mdb implements db_interface {
         public $address;
         public $user;
         public $pass;
