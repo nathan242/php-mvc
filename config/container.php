@@ -17,6 +17,7 @@
             controller\form_test::class => controller\factory\form_test_factory::class,
             controller\records::class => controller\factory\records_factory::class,
             commands\test_commands::class => commands\factory\base_factory::class,
-            commands\initialization_commands::class => commands\factory\initialization_commands_factory::class
+            commands\initialization_commands::class => commands\factory\initialization_commands_factory::class,
+            model\user::class => model\factory\user_factory::class
         ]
     ];

@@ -5,18 +5,18 @@
     use mvc\interfaces\factory_interface;
 
     class base_factory implements factory_interface {
-        public function __invoke(container_interface $container, $controller) {
+        public function __invoke(container_interface $container, $class) {
             if (method_exists($this, 'create')) {
-                $controller = $this->create($container, $controller);
+                $class = $this->create($container, $class);
             } else {
-                $controller = new $controller();
+                $class = new $class();
             }
 
-            $this->set_objects($container, $controller);
-            return $controller;
+            $this->set_objects($container, $class);
+            return $class;
         }
 
-        protected function set_objects($container, $controller) {
-            $controller->set_config($container->get('config'));
+        protected function set_objects($container, $class) {
+            $class->set_config($container->get('config'));
         }
     }

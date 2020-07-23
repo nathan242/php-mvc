@@ -6,8 +6,8 @@
 
     class router_factory implements factory_interface {
 
-        public function __invoke(container_interface $container, $controller) {
+        public function __invoke(container_interface $container, $class) {
             $config = $container->get('config');
-            return new $controller($container, $config->get('router'));
+            return new $class($container, $config->get('router'));
         }
     }

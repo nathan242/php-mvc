@@ -6,8 +6,8 @@
 
     class session_factory implements factory_interface {
 
-        public function __invoke(container_interface $container, $controller) {
+        public function __invoke(container_interface $container, $class) {
             $config = $container->get('config');
-            return new $controller($config->get('application')['name']);
+            return new $class($config->get('application')['name']);
         }
     }
