@@ -18,7 +18,7 @@
     $config = new config(ROOT_PATH.'/config');
     $container = new container($config->get('container'));
     $db = db_factory::get($config);
-    $container->set('config', $config);
+    $container->set(config::class, $config);
     $container->set('db', $db);
 
     if ('cli' === php_sapi_name()) {

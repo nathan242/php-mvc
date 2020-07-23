@@ -4,14 +4,14 @@
     use mvc\response;
     use mvc\view;
     use controller\traits\login_required;
+    use gui\form;
 
     class records extends base_controller {
         use login_required;
 
-        protected $view;
         private $form;
 
-        public function __construct($form) {
+        public function __construct(form $form) {
             $this->form = $form;
         }
 

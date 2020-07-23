@@ -11,7 +11,7 @@
             if (method_exists($this, 'create')) {
                 $class = $this->create($container, $class);
             } else {
-                $class = new $class();
+                $class = $container->resolve($class);
             }
 
             $this->set_objects($container, $class);
