@@ -1,5 +1,5 @@
 <?php
-    namespace commands;
+    namespace command;
 
     class initialization_commands extends base_command {
         protected $db;

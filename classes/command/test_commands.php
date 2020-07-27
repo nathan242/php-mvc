@@ -1,5 +1,5 @@
 <?php
-    namespace commands;
+    namespace command;
 
     class test_commands extends base_command {
         public function dump_config($name = null) {

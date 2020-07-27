@@ -1,5 +1,5 @@
 <?php
-    namespace commands\factory;
+    namespace command\factory;
 
     use mvc\interfaces\container_interface;
     use mvc\interfaces\factory_interface;

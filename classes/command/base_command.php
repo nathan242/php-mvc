@@ -1,5 +1,5 @@
 <?php
-    namespace commands;
+    namespace command;
 
     abstract class base_command {
         protected $config;
