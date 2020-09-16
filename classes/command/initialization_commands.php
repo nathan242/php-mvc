@@ -25,7 +25,9 @@
                 return 1;
             }
 
-            echo "Done\nInserting admin user ... ";
+            echo "Done\n";
+
+            echo "Inserting admin user ... ";
             if (!$this->db->query("INSERT INTO `users` (`username`, `password`, `enabled`) VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1)")) {
                 echo "Failed\n\nFailed to insert admin user.\nError: ".$this->db->last_error()."\n";
                 return 1;
@@ -35,4 +37,15 @@
 
             return 0;
         }
+
+        public function create_test_table() {
+            echo "Creating test table ... ";
+            if (!$this->db->query("CREATE TABLE `test` (`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `text` VARCHAR(255), `number` INT(11)) ENGINE=InnoDB DEFAULT CHARSET=latin1")) {
+                echo "Failed\n\nFailed to create test table.\nError: ".$this->db->last_error()."\n";
+                return 1;
+            }
+
+            echo "Done\n";
+        }
     }
+
