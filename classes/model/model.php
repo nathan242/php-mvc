@@ -1,15 +1,20 @@
 <?php
     namespace model;
 
+    use db\interfaces\db_interface;
+    use db\sql_builder;
+
     abstract class model {
-        private $db;
+        protected $db;
+        protected $sql_builder;
         protected $table;
         protected $primary_key = 'id';
         protected $data = [];
         protected $changed = [];
 
-        public function __construct($db) {
+        public function __construct(db_interface $db, sql_builder $sql_builder) {
             $this->db = $db;
+            $this->sql_builder = $sql_builder;
         }
 
         public function __isset($name) {
@@ -28,27 +33,23 @@
         }
 
         public function retrieve($id) {
-            return $this->retrieveWhere([$this->primary_key => $id]);
+            return $this->retrieve_where([$this->primary_key => $id]);
         }
 
         public function retrieve_where($where) {
             $this->data = [];
             $this->changed = [];
 
-            if (!is_array($where)) {
-                $where = [$this->primary_key => $where];
-            }
+            $sql = $this
+                ->sql_builder
+                ->reset()
+                ->select()
+                ->from($this->table)
+                ->where($where)
+                ->limit(1)
+                ->sql();
 
-            $fields = [];
-            $types = [];
-            $values = [];
-            foreach ($where as $key => $value) {
-                $fields[] = "`{$key}`=?";
-                $types[] = 's';
-                $values[] = $value;
-            }
-
-            if (!$this->db->prepared_query("SELECT * FROM `{$this->table}` WHERE ".implode(' AND  ', $fields)." LIMIT 1", $types, $values) || !isset($this->db->result[0])) {
+            if (!$this->db->prepared_query($sql['sql'], $sql['types'], $sql['params']) || !isset($this->db->result[0])) {
                 return false;
             }
 

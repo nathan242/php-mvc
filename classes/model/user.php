@@ -1,13 +1,16 @@
 <?php
     namespace model;
 
+    use db\interfaces\db_interface;
+    use db\sql_builder;
+
     class user extends model {
         protected $table = 'users';
         private $session;
 
-        public function __construct($db, $session) {
+        public function __construct(db_interface $db, sql_builder $sql_builder, $session) {
             $this->session = $session;
-            parent::__construct($db);
+            parent::__construct($db, $sql_builder);
         }
 
         /**

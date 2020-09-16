@@ -7,7 +7,7 @@
 
     class user_factory implements factory_interface {
         public function __invoke(container_interface $container, $class) {
-            return new user($container->get('db'), $container->get('session'));
+            return new user($container->get('db_driver'), $container->get('db_sql_builder'), $container->get('session'));
         }
     }
 

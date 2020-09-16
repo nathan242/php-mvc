@@ -19,7 +19,8 @@
     $container = new container($config->get('container'));
     $db = db_factory::get($config);
     $container->set(config::class, $config);
-    $container->set('db', $db);
+    $container->set('db_driver', $db['driver']);
+    $container->set('db_sql_builder', $db['sql_builder']);
 
     if ('cli' === php_sapi_name()) {
         try {

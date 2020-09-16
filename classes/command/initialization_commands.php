@@ -1,11 +1,16 @@
 <?php
     namespace command;
 
+    use db\interfaces\db_interface;
+    use db\sql_builder;
+
     class initialization_commands extends base_command {
         protected $db;
+        protected $sql_builder;
 
-        public function __construct($db) {
+        public function __construct(db_interface $db, sql_builder $sql_builder) {
             $this->db = $db;
+            $this->sql_builder = $sql_builder;
         }
 
         public function create_users_table() {

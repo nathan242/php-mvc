@@ -2,17 +2,39 @@
     namespace db;
 
     abstract class sql_builder {
-        protected $select = [];
-        protected $from;
-        protected $where = [];
+        protected $select;
+        protected $table;
+        protected $where;
+        protected $limit;
+
+        protected $insert;
+
+        protected $update = false;
+        protected $set;
 
         public function select($select = []) {
             $this->select = $select;
             return $this;
         }
 
+        public function insert($insert = []) {
+            $this->insert = $insert;
+            return $this;
+        }
+
+        public function update($update) {
+            $this->table = $update;
+            $this->update = true;
+            return $this;
+        }
+
         public function from($table) {
-            $this->from = $table;
+            $this->table = $table;
+            return $this;
+        }
+
+        public function into($table) {
+            $this->table = $table;
             return $this;
         }
 
@@ -21,10 +43,25 @@
             return $this;
         }
 
+        public function set($set) {
+            $this->set = $set;
+            return $this;
+        }
+
+        public function limit($limit) {
+            $this->limit = $limit;
+            return $this;
+        }
+
         public function reset() {
-            $this->select = [];
-            $this->from = null;
-            $this->where = [];
+            $this->select = null;
+            $this->table = null;
+            $this->where = null;
+            $this->limit = null;
+            $this->insert = null;
+            $this->update = false;
+            $this->set = null;
+            return $this;
         }
 
         abstract public function sql();
