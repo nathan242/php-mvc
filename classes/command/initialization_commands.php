@@ -15,12 +15,17 @@
 
         public function create_users_table() {
             echo "Creating users table ... ";
-            if (!$this->db->query("CREATE TABLE `users` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `username` VARCHAR(255) NOT NULL UNIQUE,
-  `password` VARCHAR(255) NOT NULL,
-  `enabled` TINYINT(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1")) {
+
+            $sql = $this->sql_builder
+                ->reset()
+                ->create('users', ['mysql_engine' => 'InnoDB', 'charset' => 'latin1'])
+                ->field('id', 'int', ['unsigned' => true, 'required' => true, 'increment' => true, 'primary' => true])
+                ->field('username', 'string', ['required' => true, 'unique' => true])
+                ->field('password', 'string', ['required' => true])
+                ->field('enabled', 'boolean', ['required' => true, 'default' => 0])
+                ->sql();
+
+            if (!$this->db->query($sql['sql'])) {
                 echo "Failed\n\nFailed to create user table.\nError: ".$this->db->last_error()."\n";
                 return 1;
             }
@@ -28,7 +33,20 @@
             echo "Done\n";
 
             echo "Inserting admin user ... ";
-            if (!$this->db->query("INSERT INTO `users` (`username`, `password`, `enabled`) VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1)")) {
+
+            $sql = $this->sql_builder
+                ->reset()
+                ->insert(
+                    [
+                        'username' => 'admin',
+                        'password' => '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+                        'enabled' => 1
+                    ]
+                )
+                ->into('users')
+                ->sql();
+
+            if (!$this->db->prepared_query($sql['sql'], $sql['types'], $sql['params'])) {
                 echo "Failed\n\nFailed to insert admin user.\nError: ".$this->db->last_error()."\n";
                 return 1;
             }
@@ -40,7 +58,16 @@
 
         public function create_test_table() {
             echo "Creating test table ... ";
-            if (!$this->db->query("CREATE TABLE `test` (`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `text` VARCHAR(255), `number` INT(11)) ENGINE=InnoDB DEFAULT CHARSET=latin1")) {
+
+            $sql = $this->sql_builder
+                ->reset()
+                ->create('test', ['mysql_engine' => 'InnoDB', 'charset' => 'latin1'])
+                ->field('id', 'int', ['unsigned' => true, 'required' => true, 'increment' => true, 'primary' => true])
+                ->field('text', 'string')
+                ->field('number', 'int')
+                ->sql();
+
+            if (!$this->db->query($sql['sql'])) {
                 echo "Failed\n\nFailed to create test table.\nError: ".$this->db->last_error()."\n";
                 return 1;
             }

@@ -12,6 +12,10 @@
         protected $update = false;
         protected $set;
 
+        protected $create_table;
+        protected $create_table_params;
+        protected $create_fields;
+
         public function select($select = []) {
             $this->select = $select;
             return $this;
@@ -61,8 +65,27 @@
             $this->insert = null;
             $this->update = false;
             $this->set = null;
+            $this->create_table = null;
+            $this->create_table_params = null;
+            $this->create_fields = null;
             return $this;
         }
 
+        public function create($table, $params = []) {
+            $this->create_table = $table;
+            $this->create_table_params = $params;
+            return $this;
+        }
+
+        public function field($name, $type, $params = []) {
+            $type_method = "field_{$type}";
+            $this->create_fields[] = $this->{$type_method}($name, $params);
+
+            return $this;
+        }
+
+        abstract public function field_int($name, $params);
+        abstract public function field_string($name, $params);
+        abstract public function field_boolean($name, $params);
         abstract public function sql();
     }
