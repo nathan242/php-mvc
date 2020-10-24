@@ -13,5 +13,6 @@
         public function rollback();
         public function escape($value);
         public function last_error();
+        public function get_last_insert_id();
     }
 

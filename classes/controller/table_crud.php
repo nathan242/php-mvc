@@ -22,7 +22,7 @@
         }
 
         public function list_all() { // @todo: fix
-            return $this->response->set(200, $this->view->get('table_crud.php', ['records' => $data]));
+            return $this->response->set(200, $this->view->get('table_crud.php', ['records' => []]));
         }
 
         public function create() {

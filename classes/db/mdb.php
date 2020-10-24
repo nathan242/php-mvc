@@ -275,6 +275,19 @@
         }
 
         /**
+         * Get ID of last inserted record
+         *
+         * @return bool|int
+         */
+        public function get_last_insert_id() {
+            if (!$this->query('SELECT LAST_INSERT_ID()') || !isset($this->result[0]['LAST_INSERT_ID()'])) {
+                return false;
+            }
+
+            return $this->result[0]['LAST_INSERT_ID()'];
+        }
+
+        /**
          * Output debugging information.
          * 
          * @param string $data Data to output

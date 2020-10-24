@@ -61,19 +61,15 @@
         public function update() {
             $data = array_intersect_key($this->data, array_flip($this->changed));
 
-            $fields = [];
-            $types = [];
-            $values = [];
-            foreach ($data as $key => $value) {
-                $fields[] = "`{$key}`=?";
-                $types[] = 's';
-                $values[] = $value;
-            }
+            $sql = $this
+                ->sql_builder
+                ->reset()
+                ->update($this->table)
+                ->set($data)
+                ->where([$this->primary_key => $this->data[$this->primary_key]])
+                ->sql();
 
-            $types[] = 's';
-            $values[] = $this->data[$this->primary_key];
-
-            if (!$this->db->prepared_query("UPDATE `{$this->table}` SET ".implode(', ', $fields)." WHERE {$this->primary_key}=?", $types, $values)) {
+            if (!$this->db->prepared_query($sql['sql'], $sql['types'], $sql['params'])) {
                 return false;
             }
 
@@ -81,25 +77,23 @@
         }
 
         public function insert() {
-            $fields = [];
-            $placeholders = [];
-            $types = [];
-            $values = [];
-            foreach ($this->data as $key => $value) {
-                $fields[] = $key;
-                $placeholders[] = '?';
-                $types[] = 's';
-                $values[] = $value;
-            }
+            $sql = $this
+                ->sql_builder
+                ->reset()
+                ->insert($this->data)
+                ->into($this->table)
+                ->sql();
 
-            if (!$this->db->prepared_query("INSERT INTO `{$this->table}` (`".implode('`, `', $fields)."`) VALUES (".implode(', ', $placeholders).")", $types, $values)) {
+            if (!$this->db->prepared_query($sql['sql'], $sql['types'], $sql['params'])) {
                 return false;
             }
 
-            if (!$this->db->query('SELECT LAST_INSERT_ID()') || !isset($this->db->result[0]['LAST_INSERT_ID()'])) {
+            $insert_id = $this->db->get_last_insert_id();
+
+            if (false === $insert_id) {
                 return false;
             }
 
-            return $this->db->result[0]['LAST_INSERT_ID()'];
+            return $insert_id;
         }
     }
