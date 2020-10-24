@@ -8,9 +8,9 @@
         protected $table = 'users';
         private $session;
 
-        public function __construct(db_interface $db, sql_builder $sql_builder, $session) {
+        public function __construct(db_interface $db, sql_builder $sql_builder, model_collection $model_collection, $session) {
             $this->session = $session;
-            parent::__construct($db, $sql_builder);
+            parent::__construct($db, $sql_builder, $model_collection);
         }
 
         /**

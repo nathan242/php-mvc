@@ -21,8 +21,9 @@
             parent::init();
         }
 
-        public function list_all() { // @todo: fix
-            return $this->response->set(200, $this->view->get('table_crud.php', ['records' => []]));
+        public function list_all() {
+            $all_records = $this->model->all()->to_array();
+            return $this->response->set(200, $this->view->get('table_crud.php', ['records' => $all_records]));
         }
 
         public function create() {

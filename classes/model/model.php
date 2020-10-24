@@ -7,14 +7,16 @@
     abstract class model {
         protected $db;
         protected $sql_builder;
+        protected $model_collection;
         protected $table;
         protected $primary_key = 'id';
         protected $data = [];
         protected $changed = [];
 
-        public function __construct(db_interface $db, sql_builder $sql_builder) {
+        public function __construct(db_interface $db, sql_builder $sql_builder, model_collection $model_collection) {
             $this->db = $db;
             $this->sql_builder = $sql_builder;
+            $this->model_collection = $model_collection;
         }
 
         public function __isset($name) {
@@ -30,6 +32,45 @@
             if (!array_key_exists($name, $this->changed)) {
                 $this->changed[] = $name;
             }
+        }
+
+        public function all() {
+            return $this->where([]);
+        }
+
+        public function where($where) {
+            $sql = $this
+                ->sql_builder
+                ->reset()
+                ->select()
+                ->from($this->table)
+                ->where($where)
+                ->sql();
+
+            if (count($where) === 0) {
+                if (!$this->db->query($sql['sql'])) {
+                    return false;
+                }
+            } else {
+                if (!$this->db->prepared_query($sql['sql'], $sql['types'], $sql['params'])) {
+                    return false;
+                }
+            }
+
+            $collection = clone $this->model_collection;
+            foreach ($this->db->result as $record) {
+                $model = clone $this;
+                $collection[] = $model->set_record($record);
+            }
+
+            return $collection;
+        }
+
+        public function set_record($data) {
+            $this->data = $data;
+            $this->changed = [];
+
+            return $this;
         }
 
         public function retrieve($id) {
@@ -95,5 +136,9 @@
             }
 
             return $insert_id;
+        }
+
+        public function to_array() {
+            return $this->data;
         }
     }
