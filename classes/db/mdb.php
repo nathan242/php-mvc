@@ -5,9 +5,9 @@
     use db\interfaces\db_interface;
 
     class mdb implements db_interface {
-        public $address;
-        public $user;
-        public $pass;
+        public $host;
+        public $username;
+        public $password;
         public $db;
         public $port;
         public $socket;
@@ -27,21 +27,15 @@
         /**
          * Construct DB object.
          * 
-         * @param string $address Address of server
-         * @param string $user Username
-         * @param string $pass Password
-         * @param string $db Default database
-         * @param int $port Port number
-         * @param string|boolean $socket Optional socket path
+         * @param array $config DB config
          */
-        function __construct($address, $user, $pass, $db ,$port = 3306, $socket = false) {
-
-            $this->address = $address;
-            $this->user = $user;
-            $this->pass = $pass;
-            $this->db = $db;
-            $this->port = $port;
-            $this->socket = $socket;
+        function __construct($config = []) {
+            $this->host = $config['host'] ?? null;
+            $this->username = $config['username'] ?? null;
+            $this->password = $config['password'] ?? null;
+            $this->db = $config['db'] ?? null;
+            $this->port = $config['port'] ?? 3306;
+            $this->socket = $config['socket'] ?? false;
         }
 
         /**
@@ -51,7 +45,7 @@
          */
         public function connect() {
             if (!$this->is_connected) {
-                if ($this->dbobj = new mysqli($this->address, $this->user, $this->pass, $this->db, $this->port, $this->socket)) {
+                if ($this->dbobj = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port, $this->socket)) {
                     $this->is_connected = true;
                     $this->transaction_open = false;
                     //TODO: Else, throw error
