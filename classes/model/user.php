@@ -6,7 +6,7 @@
 
     class user extends model {
         protected $table = 'users';
-        private $session;
+        protected $session;
 
         public function __construct(db_interface $db, sql_builder $sql_builder, model_collection $model_collection, $session) {
             $this->session = $session;

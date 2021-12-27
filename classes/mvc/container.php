@@ -8,10 +8,10 @@
     use ReflectionException;
 
     class container implements container_interface {
-        private $aliases = [];
-        private $factories = [];
-        private $store_instances = [];
-        private $instances = [];
+        protected $aliases = [];
+        protected $factories = [];
+        protected $store_instances = [];
+        protected $instances = [];
 
         public function __construct($config = []) {
             if (array_key_exists('aliases', $config)) {

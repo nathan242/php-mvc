@@ -4,7 +4,7 @@
     use RuntimeException;
 
     class config {
-        private $config_path;
+        protected $config_path;
 
         public function __construct($config_path) {
             if (!is_dir($config_path)) {

@@ -7,10 +7,10 @@
     use mvc\interfaces\container_interface;
 
     class command {
-        private $namespace = '\\';
-        private $commands = [];
-        private $app_config = [];
-        private $container;
+        protected $namespace = '\\';
+        protected $commands = [];
+        protected $app_config = [];
+        protected $container;
 
         public function __construct(container_interface $container, $config = [], $app_config = []) {
             $this->container = $container;

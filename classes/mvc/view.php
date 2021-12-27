@@ -2,10 +2,18 @@
     namespace mvc;
     
     use mvc\interfaces\response_content;
+    use RuntimeException;
     
     class view implements response_content {
-        private $view_variables;
-        private $view_view;
+        protected $view_path;
+        protected $view_variables;
+        protected $view_view;
+
+        public function __construct($config = []) {
+            if (array_key_exists('path', $config)) {
+                $this->view_path = $config['path'];
+            }
+        }
         
         public function set_view($view, $variables = []) {
             $this->view_view = $view;
@@ -17,7 +25,7 @@
         }
 
         public function sub_view($view, $variables, $name) {
-            $this->variables([$name => self::set($view, $variables)]);
+            $this->variables([$name => self::set(['path' => $this->view_path], $view, $variables)]);
         }
 
         public function get($view, $variables = [], $name = 'view') {
@@ -38,24 +46,28 @@
                 }
             }
 
-            require ROOT_PATH.'/view/'.$this->view_view;
+            if (null === $this->view_path) {
+                throw new RuntimeException('View path is not configured');
+            }
+
+            require $this->view_path.$this->view_view;
         }
-        
-        public static function set($view, $variables = []) {
-            $view_obj = new self();
+
+        public static function set($config, $view, $variables = []) {
+            $view_obj = new self($config);
             $view_obj->set_view($view, $variables);
             return $view_obj;
         }
-        
-        public static function render($view, $variables = []) {
-            self::set($view, $variables)->output_content();
+
+        public static function render($config, $view, $variables = []) {
+            self::set($config, $view, $variables)->output_content();
         }
-        
+
         public function __get($name) {
             if (array_key_exists($name, $this->view_variables)) {
                 return $this->view_variables[$name];
             }
-            
+
             return null;
         }
 

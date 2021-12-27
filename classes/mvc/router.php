@@ -8,9 +8,9 @@
     use mvc\interfaces\request_interface;
 
     class router {
-        private $namespace = '\\';
-        private $routes = [];
-        private $container;
+        protected $namespace = '\\';
+        protected $routes = [];
+        protected $container;
 
         public function __construct(container_interface $container, $config = []) {
             $this->container = $container;

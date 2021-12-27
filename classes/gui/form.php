@@ -2,11 +2,11 @@
     namespace gui;
 
     class form extends gui {
-        private $inputs = array();
-        private $title;
-        private $submit;
-        private $submit_colour;
-        private $method;
+        protected $inputs = array();
+        protected $title;
+        protected $submit;
+        protected $submit_colour;
+        protected $method;
         
         public $result;
 

@@ -18,11 +18,11 @@
         public $keep_connected = true;
         public $result;
 
-        private $dbobj;
-        private $is_connected = false;
-        private $transaction_open = false;
-        private $qresult;
-        private $stmt;
+        protected $dbobj;
+        protected $is_connected = false;
+        protected $transaction_open = false;
+        protected $qresult;
+        protected $stmt;
 
         /**
          * Construct DB object.

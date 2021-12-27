@@ -24,6 +24,6 @@
             $class->set_session($container->get('session'));
             $class->set_config($container->get('config'));
             $class->set_user($container->get(user::class));
-            $class->set_view(new view());
+            $class->set_view($container->get(view::class));
         }
     }

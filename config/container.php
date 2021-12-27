@@ -20,6 +20,7 @@
             mvc\router::class => mvc\factory\router_factory::class,
             mvc\command::class => mvc\factory\command_factory::class,
             mvc\session::class => mvc\factory\session_factory::class,
+            mvc\view::class => mvc\factory\view_factory::class,
             controller\login::class => controller\factory\base_factory::class,
             controller\main::class => controller\factory\base_factory::class,
             controller\form_test::class => controller\factory\base_factory::class,
