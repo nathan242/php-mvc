@@ -89,5 +89,9 @@
 
             return new $name(...$dependencies);
         }
+
+        public function has_instance($name) {
+            return array_key_exists($name, $this->instances);
+        }
     }
 

@@ -21,14 +21,13 @@
             mvc\command::class => mvc\factory\command_factory::class,
             mvc\session::class => mvc\factory\session_factory::class,
             mvc\view::class => mvc\factory\view_factory::class,
+            db\interfaces\db_interface::class => db\factory\db_factory::class,
+            db\sql_builder::class => db\factory\sql_builder_factory::class,
             controller\login::class => controller\factory\base_factory::class,
             controller\main::class => controller\factory\base_factory::class,
             controller\form_test::class => controller\factory\base_factory::class,
             controller\records::class => controller\factory\base_factory::class,
             controller\table_crud::class => controller\factory\base_factory::class,
-            command\test_commands::class => command\factory\base_factory::class,
-            command\initialization_commands::class => command\factory\initialization_commands_factory::class,
-            model\user::class => model\factory\user_factory::class,
-            model\test::class => model\factory\model_factory::class
+            command\test_commands::class => command\factory\base_factory::class
         ]
     ];

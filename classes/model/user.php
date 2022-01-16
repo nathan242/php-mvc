@@ -3,12 +3,13 @@
 
     use db\interfaces\db_interface;
     use db\sql_builder;
+    use mvc\session;
 
     class user extends model {
         protected $table = 'users';
         protected $session;
 
-        public function __construct(db_interface $db, sql_builder $sql_builder, model_collection $model_collection, $session) {
+        public function __construct(db_interface $db, sql_builder $sql_builder, model_collection $model_collection, session $session) {
             $this->session = $session;
             parent::__construct($db, $sql_builder, $model_collection);
         }
