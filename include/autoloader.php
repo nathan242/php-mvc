@@ -1,9 +1,9 @@
 <?php
 // Class autoloader
 spl_autoload_register(
-    function ($class) {
+    function ($class) use ($root_path) {
         $class = str_replace('\\', '/', $class);
-        require ROOT_PATH.'/classes/'.$class.'.php';
+        require "{$root_path}/classes/{$class}.php";
     }
 );
 

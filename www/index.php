@@ -11,11 +11,11 @@
     use mvc\exceptions\command_method_not_found;
     use mvc\exceptions\command_controller_not_found;
 
-    define('ROOT_PATH', __DIR__.'/..');
+    $root_path = __DIR__.'/..';
 
-    require_once ROOT_PATH.'/include/autoloader.php';
+    require_once "{$root_path}/include/autoloader.php";
 
-    $config = new config(ROOT_PATH.'/config');
+    $config = new config("{$root_path}/config", ['root_path' => $root_path]);
     $container = new container($config->get('container'));
     $db = db_factory::get($config);
     $container->set(config::class, $config);
