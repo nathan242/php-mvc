@@ -1,6 +1,7 @@
 <?php
     return [
         'namespace' => 'command',
+        'default' => ['default_command', 'list_commands'],
         'commands' => [
             'create-users-table' => ['initialization_commands', 'create_users_table', 'Create users table'],
             'create-test-table' => ['initialization_commands', 'create_test_table', 'Create test table'],
