@@ -1,4 +1,6 @@
 <?php
+    $local_config = $local['view'] ?? [];
+
     return [
-        'path' => "{$local['root_path']}/view/"
+        'path' => $local_config['path'] ?? "{$local['root_path']}/view/"
     ];
