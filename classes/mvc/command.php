@@ -3,6 +3,7 @@
 
     use mvc\exceptions\command_not_found;
     use mvc\exceptions\command_method_not_found;
+    use mvc\exceptions\class_not_found;
     use mvc\exceptions\command_controller_not_found;
     use mvc\interfaces\container_interface;
 
@@ -52,7 +53,12 @@
             }
 
             $controller = $this->namespace.'\\'.$action[0];
-            $controller = $this->container->create($controller);
+
+            try {
+                $controller = $this->container->create($controller);
+            } catch (class_not_found $e) {
+                throw new command_controller_not_found($e->getMessage());
+            }
 
             if (method_exists($controller, 'init')) {
                 $controller->init();
