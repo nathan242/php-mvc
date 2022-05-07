@@ -12,7 +12,9 @@
                 '/records/(\d+)' => ['records', 'edit'],
                 '/table_crud' => ['table_crud', 'list_all'],
                 '/table_crud/add' => ['table_crud', 'create'],
-                '/table_crud/(\d+)' => ['table_crud', 'edit']
+                '/table_crud/(\d+)' => ['table_crud', 'edit'],
+                '/no_method' => ['main', 'no_exist'],
+                '/no_controller' => ['no_exist', 'test']
             ],
             'POST' => [
                 '/' => ['login', 'login'],

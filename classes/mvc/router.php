@@ -3,6 +3,7 @@
 
     use mvc\exceptions\page_not_found;
     use mvc\exceptions\method_not_found;
+    use mvc\exceptions\class_not_found;
     use mvc\exceptions\controller_not_found;
     use mvc\interfaces\container_interface;
     use mvc\interfaces\request_interface;
@@ -57,7 +58,12 @@
             }
 
             $controller = $this->namespace.'\\'.$action[0];
-            $controller = $this->container->create($controller);
+
+            try {
+                $controller = $this->container->create($controller);
+            } catch (class_not_found $e) {
+                throw new controller_not_found($e->getMessage());
+            }
 
             if (method_exists($controller, 'init')) {
                 $controller->init();

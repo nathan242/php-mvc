@@ -2,6 +2,7 @@
     namespace mvc;
 
     use mvc\interfaces\container_interface;
+    use mvc\exceptions\class_not_found;
     use ReflectionClass;
     use Exception;
     use RuntimeException;
@@ -72,7 +73,7 @@
             try {
                 $reflection = new ReflectionClass($name);
             } catch (ReflectionException $e) {
-                throw new RuntimeException("Class {$name} not found");
+                throw new class_not_found("Class {$name} not found");
             }
 
             $constructor = $reflection->getConstructor();
