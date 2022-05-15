@@ -6,8 +6,8 @@
 
     if ($local_config === []) {
         return [
-            'driver' => $local_config['driver'] ?? sqlite3db::class,
-            'sql_builder' => $local_config['sql_builder'] ?? sqlite3_builder::class,
+            'driver' => sqlite3db::class,
+            'sql_builder' => sqlite3_builder::class,
             'db_filename' => "{$local['root_path']}/database.sqlite3"
         ];
     }
