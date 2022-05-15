@@ -23,6 +23,7 @@
             $this->config = $this->get_config_instance();
             $this->container = $this->get_container_instance();
             $this->container->set(config::class, $this->config);
+            $this->container->set(application::class, $this);
 
             return $this;
         }
