@@ -24,6 +24,7 @@
             $this->container = $this->get_container_instance();
             $this->container->set(config::class, $this->config);
             $this->container->set(application::class, $this);
+            $this->container->set(container::class, $this->container);
 
             return $this;
         }

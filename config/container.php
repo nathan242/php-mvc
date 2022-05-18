@@ -1,7 +1,6 @@
 <?php
     return [
         'store_instances' => [
-            mvc\config::class,
             mvc\request::class,
             mvc\response::class,
             mvc\router::class,
