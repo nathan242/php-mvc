@@ -44,6 +44,14 @@
             return new $class($this->config->get('container'));
         }
 
+        public function get_config() {
+            return $this->config;
+        }
+
+        public function get_container() {
+            return $this->container;
+        }
+
         public function run_cli($arg = []) {
             try {
                 return $this->container->get('command')->process($arg);
