@@ -29,9 +29,7 @@
         }
 
         public function create($name) {
-            if (array_key_exists($name, $this->aliases)) {
-                $name = $this->aliases[$name];
-            }
+            $name = $this->get_name($name);
 
             if (array_key_exists($name, $this->factories)) {
                 $object = new $this->factories[$name]();
@@ -48,9 +46,7 @@
         }
 
         public function get($name) {
-            if (array_key_exists($name, $this->aliases)) {
-                $name = $this->aliases[$name];
-            }
+            $name = $this->get_name($name);
 
             try {
                 if (array_key_exists($name, $this->instances)) {
@@ -93,6 +89,10 @@
 
         public function has_instance($name) {
             return array_key_exists($name, $this->instances);
+        }
+
+        public function get_name($name) {
+            return $this->aliases[$name] ?? $name;
         }
     }
 
