@@ -48,20 +48,16 @@
         public function get($name) {
             $name = $this->get_name($name);
 
-            try {
-                if (array_key_exists($name, $this->instances)) {
-                    return $this->instances[$name];
-                } else {
-                    $object = $this->create($name);
+            if (array_key_exists($name, $this->instances)) {
+                return $this->instances[$name];
+            } else {
+                $object = $this->create($name);
 
-                    if (in_array($name, $this->store_instances, true)) {
-                        $this->set($name, $object);
-                    }
-
-                    return $object;
+                if (in_array($name, $this->store_instances, true)) {
+                    $this->set($name, $object);
                 }
-            } catch (Exception $e) {
-                throw new RuntimeException("Cannot get {$name} from container");
+
+                return $object;
             }
         }
 
