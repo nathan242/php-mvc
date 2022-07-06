@@ -2,7 +2,7 @@
     namespace command;
 
     class default_command extends base_command {
-        public function list_commands() {
+        public function list_commands($args = []) {
             $app_config = $this->config->get('application');
             $app_name = $app_config['name'] ?? '<not configured>';
             $app_ver = $app_config['version'] ?? '<not configured>';

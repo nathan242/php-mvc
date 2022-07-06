@@ -13,7 +13,7 @@
             $this->sql_builder = $sql_builder;
         }
 
-        public function create_users_table() {
+        public function create_users_table($args = []) {
             echo "Creating users table ... ";
 
             $sql = $this->sql_builder
@@ -56,7 +56,7 @@
             return 0;
         }
 
-        public function create_test_table() {
+        public function create_test_table($args = []) {
             echo "Creating test table ... ";
 
             $sql = $this->sql_builder

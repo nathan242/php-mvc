@@ -10,7 +10,7 @@
             $this->container = $container;
         }
 
-        public function shell() {
+        public function shell($args = []) {
             echo "Starting shell\n";
             require $this->config->local['root_path'].'/include/repl.php';
         }

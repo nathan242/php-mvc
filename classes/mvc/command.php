@@ -38,19 +38,21 @@
         }
 
         public function process($arguments) {
-            if (count($arguments) < 2) {
+            array_shift($arguments);
+            if (count($arguments) === 0) {
                 if ($this->default !== null) {
                     $action = $this->default;
                 } else {
                     return 0;
                 }
             } else {
-                if (!array_key_exists($arguments[1], $this->commands)) {
+                $command = $arguments[0];
+
+                if (!array_key_exists($command, $this->commands)) {
                     throw new command_not_found();
                 }
 
-                $action = $this->commands[$arguments[1]];
-                unset($arguments[0], $arguments[1]);
+                $action = $this->commands[$command];
             }
 
             return $this->run_command($action, $arguments);
@@ -77,7 +79,7 @@
                 throw new command_method_not_found();
             }
 
-            return call_user_func_array([$controller, $action[1]], $arguments);
+            return $controller->{$action[1]}($arguments);
         }
     }
 
