@@ -67,7 +67,7 @@
             }
         }
 
-        public function run_web($request = null) {
+        public function run_web($request = null, $return_response = false) {
             try {
                 if ($request === null) {
                     $request = $this->container->get('request');
@@ -75,19 +75,22 @@
                 }
 
                 $response = $this->container->get('router')->process($request);
-                if ($response instanceof response_interface) {
-                    $response->send();
-                } elseif (is_string($response)) {
-                    echo $response;
-                }
             } catch (response_exception $e) {
-                $e->get_response()->send();
+                $response = $e->get_response();
             } catch (page_not_found $e) {
-                $this->container->get('response')->set(404, 'Page not found')->send();
+                $response = $this->container->get('response')->set(404, 'Page not found');
             } catch (method_not_found $e) {
-                $this->container->get('response')->set(500, 'Internal error')->send();
+                $response = $this->container->get('response')->set(500, 'Internal error');
             } catch (controller_not_found $e) {
-                $this->container->get('response')->set(500, 'Internal error')->send();
+                $response = $this->container->get('response')->set(500, 'Internal error');
+            }
+
+            if ($return_response) {
+                return $response;
+            } elseif ($response instanceof response_interface) {
+                $response->send();
+            } elseif (is_string($response)) {
+                echo $response;
             }
         }
     }
