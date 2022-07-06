@@ -22,9 +22,9 @@
             $this->local_config = $local_config;
             $this->config = $this->get_config_instance();
             $this->container = $this->get_container_instance();
-            $this->container->set(config::class, $this->config);
-            $this->container->set(application::class, $this);
-            $this->container->set(container::class, $this->container);
+            $this->container->set(get_class($this->config), $this->config);
+            $this->container->set(get_class($this), $this);
+            $this->container->set(get_class($this->container), $this->container);
 
             return $this;
         }
