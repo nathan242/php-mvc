@@ -17,7 +17,7 @@
         }
 
         public function init() {
-            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Table CRUD', '/table_crud']]]);
+            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Table CRUD', '/table_crud']]]);
             parent::init();
         }
 

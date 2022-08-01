@@ -15,9 +15,9 @@
         }
 
         public function login() {
-            if (!$this->session->has('user_id') && !$this->request->has_param('username', 'POST') && !$this->request->has_param('password', 'POST')) {
+            if (!isset($this->session->user_id) && !$this->request->has_param('username', 'POST') && !$this->request->has_param('password', 'POST')) {
                 return $this->response->set(200, $this->view->get('login.php', ['app_name' => $this->app_config['name']]));
-            } elseif (!$this->session->has('user_id') && $this->request->has_param('username', 'POST')  && $this->request->has_param('password', 'POST')) {
+            } elseif (!isset($this->session->user_id) && $this->request->has_param('username', 'POST')  && $this->request->has_param('password', 'POST')) {
                 if ($this->user->login($this->request->param('username', null, 'POST'), $this->request->param('password', null, 'POST'))) {
                     return $this->response->set(302, '', ['Location' => 'main']);
                 } else {

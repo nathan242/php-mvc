@@ -21,8 +21,8 @@
          */
         public function check_logged_in() {
             if (
-                !$this->session->has('user_id')
-                || !$this->retrieve_where(['id' => $this->session->get('user_id'), 'enabled' => 1])
+                !isset($this->session->user_id)
+                || !$this->retrieve_where(['id' => $this->session->user_id, 'enabled' => 1])
             ) {
                 return false;
             }
@@ -42,8 +42,8 @@
             if (!$this->retrieve_where(['username' => $username, 'password' => $hash, 'enabled' => 1])) {
                 return false;
             } else {
-                $this->session->set('user_id', $this->id);
-                $this->session->set('loginuser', $username);
+                $this->session->user_id = $this->id;
+                $this->session->loginuser = $username;
                 return true;
             }
         }

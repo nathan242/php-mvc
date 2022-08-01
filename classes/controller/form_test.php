@@ -16,7 +16,7 @@
         }
 
         public function init() {
-            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Form Test', $_SERVER['REQUEST_URI']]]]);
+            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Form Test', $_SERVER['REQUEST_URI']]]]);
 
             $this->form->init('test');
             $this->form->input('data1', 'data1', 'text', true);

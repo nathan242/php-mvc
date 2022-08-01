@@ -18,7 +18,6 @@
         'factories' => [
             mvc\router::class => mvc\factory\router_factory::class,
             mvc\command::class => mvc\factory\command_factory::class,
-            mvc\session::class => mvc\factory\session_factory::class,
             mvc\view::class => mvc\factory\view_factory::class,
             db\interfaces\db_interface::class => db\factory\db_factory::class,
             db\sql_builder::class => db\factory\sql_builder_factory::class,

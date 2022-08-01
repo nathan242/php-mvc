@@ -16,12 +16,12 @@
         }
 
         public function init() {
-            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->get('loginuser'), 'pagepath' => [['MAIN', '/main'], ['Records', '/records']]]);
+            $this->view->set_view('template.php', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Records', '/records']]]);
             parent::init();
         }
 
         private function get_records() {
-            $records = $this->session->get('records');
+            $records = $this->session->records;
             if (false === $records) {
                 $records = [];
             }
@@ -47,13 +47,13 @@
             $result = $this->form->handle(
                 $this->request->params['POST'],
                 function ($session, $data) {
-                    $records = $session->get('records');
+                    $records = $session->records;
                     if (false === $records) {
                         $records = [];
                     }
 
                     $records[] = $data['value'];
-                    $session->set('records', $records);
+                    $session->records = $records;
 
                     return true;
                 },
@@ -80,13 +80,13 @@
             $result = $this->form->handle(
                 $this->request->params['POST'],
                 function ($id, $session, $data) {
-                    $records = $session->get('records');
+                    $records = $session->records;
                     if (false === $records || !array_key_exists($id, $records)) {
                         return false;
                     }
 
                     $records[$id] = $data['value'];
-                    $session->set('records', $records);
+                    $session->records = $records;
 
                     return true;
                 },

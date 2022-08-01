@@ -2,28 +2,20 @@
     namespace mvc;
 
     class session {
-        private $name;
-
-        public function __construct($name) {
+        public function start() {
             session_start();
-
-            $this->name = $name;
-
-            if (!array_key_exists($name, $_SESSION) || !is_array($_SESSION[$name])) {
-                $_SESSION[$name] = [];
-            }
         }
 
-        public function get($key) {
-            return array_key_exists($key, $_SESSION[$this->name]) ? $_SESSION[$this->name][$key] : false;
+        public function __isset($name) {
+            return array_key_exists($name, $_SESSION);
         }
 
-        public function set($key, $value) {
-            $_SESSION[$this->name][$key] = $value;
+        public function __get($name) {
+            return $_SESSION[$name] ?? null;
         }
 
-        public function has($key) {
-            return array_key_exists($key, $_SESSION[$this->name]);
+        public function __set($name, $value) {
+            $_SESSION[$name] = $value;
         }
 
         public function destroy() {
