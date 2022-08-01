@@ -58,7 +58,7 @@
                 throw new controller_not_found();
             }
 
-            $controller = $this->namespace.'\\'.$action[0];
+            $controller = strpos($action[0], '\\') === 0 ? $action[0] : $this->namespace.'\\'.$action[0];
 
             try {
                 $controller = $this->container->create($controller);
