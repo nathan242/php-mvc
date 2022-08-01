@@ -27,6 +27,7 @@
             controller\form_test::class => controller\factory\base_factory::class,
             controller\records::class => controller\factory\base_factory::class,
             controller\table_crud::class => controller\factory\base_factory::class,
+            controller\not_found::class => controller\factory\base_factory::class,
             command\test_commands::class => command\factory\base_factory::class,
             command\default_command::class => command\factory\base_factory::class,
             command\repl::class => command\factory\base_factory::class

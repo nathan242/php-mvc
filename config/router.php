@@ -14,7 +14,8 @@
                 '/table_crud/add' => ['table_crud', 'create'],
                 '/table_crud/(\d+)' => ['table_crud', 'edit'],
                 '/no_method' => ['main', 'no_exist'],
-                '/no_controller' => ['no_exist', 'test']
+                '/no_controller' => ['no_exist', 'test'],
+                '/(.*)' => ['not_found', 'error_404']
             ],
             'POST' => [
                 '/' => ['login', 'login'],
@@ -22,7 +23,8 @@
                 '/records/add' => ['records', 'create'],
                 '/records/(\d+)' => ['records', 'edit'],
                 '/table_crud/add' => ['table_crud', 'create'],
-                '/table_crud/(\d+)' => ['table_crud', 'edit']
+                '/table_crud/(\d+)' => ['table_crud', 'edit'],
+                '/(.*)' => ['not_found', 'error_404']
             ]
         ]
     ];

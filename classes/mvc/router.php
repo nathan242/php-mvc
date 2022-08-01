@@ -35,12 +35,13 @@
 	}
 
         public function process(request_interface $request) {
-            foreach (array_keys($this->routes[$request->method]) as $path) {
+            foreach ($this->routes[$request->method] as $path => $config) {
                 $matches = [];
                 if (preg_match('/^'.str_replace('/', '\\/', $path).'$/', $request->path, $matches)) {
-                    $action = $this->routes[$request->method][$path];
+                    $action = $config;
                     $params = $matches;
                     unset($params[0]);
+                    break;
                 }
             }
 
