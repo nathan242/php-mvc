@@ -1,0 +1,85 @@
+<?php
+    namespace framework\mvc;
+
+    use framework\mvc\exceptions\command_not_found;
+    use framework\mvc\exceptions\command_method_not_found;
+    use framework\mvc\exceptions\class_not_found;
+    use framework\mvc\exceptions\command_controller_not_found;
+    use framework\mvc\interfaces\container_interface;
+
+    class command {
+        protected $namespace = '\\';
+        protected $commands = [];
+        protected $default = null;
+        protected $container;
+
+        public function __construct(container_interface $container, $config = []) {
+            $this->container = $container;
+
+            if (array_key_exists('namespace', $config)) {
+                $this->namespace = $config['namespace'];
+            }
+
+            if (array_key_exists('commands', $config)) {
+                $this->commands = $config['commands'];
+            }
+
+            if (array_key_exists('default', $config)) {
+                $this->default = $config['default'];
+            }
+        }
+
+        public function set_namespace($namespace) {
+            $this->namespace = $namespace;
+        }
+
+        public function command($name, $action) {
+            $this->commands[$name] = $action;
+        }
+
+        public function process($arguments) {
+            array_shift($arguments);
+            if (count($arguments) === 0) {
+                if ($this->default !== null) {
+                    $action = $this->default;
+                } else {
+                    return 0;
+                }
+            } else {
+                $command = $arguments[0];
+
+                if (!array_key_exists($command, $this->commands)) {
+                    throw new command_not_found();
+                }
+
+                $action = $this->commands[$command];
+            }
+
+            return $this->run_command($action, $arguments);
+        }
+
+        public function run_command($action, $arguments) {
+            if (!is_array($action) || count($action) < 2) {
+                throw new command_controller_not_found();
+            }
+
+            $controller = strpos($action[0], '\\') === 0 ? substr($action[0], 1) : $this->namespace.'\\'.$action[0];
+
+            try {
+                $controller = $this->container->create($controller);
+            } catch (class_not_found $e) {
+                throw new command_controller_not_found($e->getMessage());
+            }
+
+            if (method_exists($controller, 'init')) {
+                $controller->init();
+            }
+
+            if (!method_exists($controller, $action[1])) {
+                throw new command_method_not_found();
+            }
+
+            return $controller->{$action[1]}($arguments);
+        }
+    }
+
