@@ -5,6 +5,8 @@
 
     abstract class base_auth_controller extends base_app_controller {
         public function init() {
+            parent::init();
+
             if (!$this->user->check_logged_in()) {
                 $this->session->destroy();
 

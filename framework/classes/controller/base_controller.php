@@ -18,7 +18,6 @@
         }
 
         public function set_session($session) {
-            $session->start();
             $this->session = $session;
         }
 

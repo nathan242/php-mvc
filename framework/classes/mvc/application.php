@@ -72,6 +72,8 @@
                 if ($request === null) {
                     $request = $this->container->get('request');
                     $request->get();
+                } else {
+                    $this->container->set(get_class($request), $request);
                 }
 
                 $response = $this->container->get('router')->process($request);
