@@ -1,12 +1,8 @@
 <?php
-    use db\mdb;
-    use db\mysql_builder;
+    use framework\db\mdb;
+    use framework\db\mysql_builder;
 
     return [
-        'application' => [
-            'name' => 'Development Framework'
-        ],
-
         'db' => [
             'driver' => mdb::class,
             'sql_builder' => mysql_builder::class,
