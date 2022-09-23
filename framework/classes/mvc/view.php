@@ -18,14 +18,17 @@
         public function set_view($view, $variables = []) {
             $this->view_view = $view;
             $this->view_variables = $variables;
+            return $this;
         }
 
         public function variables($variables = []) {
             $this->view_variables = array_merge($this->view_variables, $variables);
+            return $this;
         }
 
         public function sub_view($view, $variables, $name) {
             $this->variables([$name => self::set(['path' => $this->view_path], $view, $variables)]);
+            return $this;
         }
 
         public function get($view, $variables = [], $name = 'view') {

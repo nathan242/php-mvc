@@ -13,11 +13,12 @@
             $this->path = preg_replace('/\?(.+)?/', '', $_SERVER['REQUEST_URI']);
             $this->params = [
                 'GET' => $_GET,
-                'POST' => $_POST
+                'POST' => $_POST,
+                'FILES' => $_FILES
             ];
         }
 
-        public function param($name, $default, $type = null) {
+        public function param($name, $default = null, $type = null) {
             $return = $default;
             $type = null === $type ? ['GET', 'POST'] : (array)$type;
 
@@ -33,6 +34,32 @@
 
         public function has_param($name, $type = null) {
             return null !== $this->param($name, null, $type);
+        }
+
+        public function files() {
+            $files = [];
+
+            foreach ($this->params['FILES'] as $file) {
+                $files[] = $file['name'];
+            }
+
+            return $files;
+        }
+
+        public function store_file($name, $dest) {
+            $file_data = null;
+
+            foreach ($this->params['FILES'] as $file) {
+                if ($name === null || $file['name'] === $name) {
+                    $file_data = $file;
+
+                    break;
+                }
+            }
+
+            if ($file_data === null) { return false; }
+
+            return move_uploaded_file($file_data['tmp_name'], $dest);
         }
     }
 

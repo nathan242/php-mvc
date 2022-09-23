@@ -13,6 +13,8 @@
                 '/table_crud' => ['table_crud', 'list_all'],
                 '/table_crud/add' => ['table_crud', 'create'],
                 '/table_crud/(\d+)' => ['table_crud', 'edit'],
+                '/file_upload' => ['files', 'index'],
+                '/file_upload/(.+)' => ['files', 'download'],
                 '/no_method' => ['main', 'no_exist'],
                 '/no_controller' => ['no_exist', 'test'],
                 '/(.*)' => ['not_found', 'error_404']
@@ -24,6 +26,7 @@
                 '/records/(\d+)' => ['records', 'edit'],
                 '/table_crud/add' => ['table_crud', 'create'],
                 '/table_crud/(\d+)' => ['table_crud', 'edit'],
+                '/file_upload' => ['files', 'upload'],
                 '/(.*)' => ['not_found', 'error_404']
             ]
         ]

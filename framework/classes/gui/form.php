@@ -7,7 +7,8 @@
         protected $submit;
         protected $submit_colour;
         protected $method;
-        
+        protected $form_params;
+
         public $result;
 
         /**
@@ -17,17 +18,20 @@
          * @param string $submit Submit button text
          * @param string $submit_colour Submit button colour
          * @param string $method Form submit method
+         * @param array $form_params Additional form parameters
          */
         public function init(
                 $title = '',
                 $submit = 'Submit',
                 $submit_colour = 'primary',
-                $method = 'post'
+                $method = 'post',
+                $form_params = []
         ) {
             $this->title = $title;
             $this->submit = $submit;
             $this->submit_colour = $submit_colour;
             $this->method = $method;
+            $this->form_params = $form_params;
         }
 
         /**
@@ -110,7 +114,13 @@
             }
             
             ob_start();
-            echo '<form method="'.$this->method.'">';
+
+            $form_params = '';
+            foreach ($this->form_params as $key => $value) {
+                $form_params .= " {$key}=\"{$value}\"";
+            }
+
+            echo '<form method="'.$this->method.'"'.$form_params.'>';
             if ($table) {
                 echo '<table class="table table-hover" border="1">';
                 if ($inline) {
