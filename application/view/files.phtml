@@ -1,0 +1,8 @@
+<h4>Files</h4>
+<?php
+    foreach ($files as $file) {
+        echo "<p><a href='/file_upload/{$file}'>{$file}</a></p>";
+    }
+?>
+<hr>
+<?= $form->html() ?>
