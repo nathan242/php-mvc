@@ -1,4 +1,4 @@
 # PHP-MVC
 
-PHP MVC framework WIP.
+PHP MVC framework.
 
