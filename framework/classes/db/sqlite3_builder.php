@@ -127,4 +127,18 @@
 
             return $sql;
         }
+
+        public function field_date($name, $params) {
+            $sql = "`{$name}` TEXT";
+            $sql .= $this->get_field_params($params);
+
+            return $sql;
+        }
+
+        public function field_decimal($name, $params) {
+            $sql = "`{$name}` NUMERIC";
+            $sql .= $this->get_field_params($params);
+
+            return $sql;
+        }
     }

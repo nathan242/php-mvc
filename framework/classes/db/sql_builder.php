@@ -87,5 +87,7 @@
         abstract public function field_int($name, $params);
         abstract public function field_string($name, $params);
         abstract public function field_boolean($name, $params);
+        abstract public function field_date($name, $params);
+        abstract public function field_decimal($name, $params);
         abstract public function sql();
     }

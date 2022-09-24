@@ -146,4 +146,19 @@
 
             return $sql;
         }
+
+        public function field_date($name, $params) {
+            $sql = "`{$name}` DATE";
+            $sql .= $this->get_field_params($params);
+
+            return $sql;
+        }
+
+        public function field_decimal($name, $params) {
+            $size = $params['size'] ?? '10,2';
+            $sql = "`{$name}` DECIMAL({$size})";
+            $sql .= $this->get_field_params($params);
+
+            return $sql;
+        }
     }
