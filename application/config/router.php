@@ -17,7 +17,6 @@
                 '/file_upload/(.+)' => ['files', 'download'],
                 '/no_method' => ['main', 'no_exist'],
                 '/no_controller' => ['no_exist', 'test'],
-                '/(.*)' => ['not_found', 'error_404']
             ],
             'POST' => [
                 '/' => ['login', 'login'],
@@ -27,6 +26,10 @@
                 '/table_crud/add' => ['table_crud', 'create'],
                 '/table_crud/(\d+)' => ['table_crud', 'edit'],
                 '/file_upload' => ['files', 'upload'],
+                '/api_post' => ['api', 'post_test'],
+            ],
+            '*' => [
+                '/api' => ['api', 'api_test'],
                 '/(.*)' => ['not_found', 'error_404']
             ]
         ]

@@ -7,6 +7,7 @@
         public $method;
         public $path;
         public $params;
+        public $body;
 
         public function get() {
             $this->method = $_SERVER['REQUEST_METHOD'];
@@ -16,6 +17,7 @@
                 'POST' => $_POST,
                 'FILES' => $_FILES
             ];
+            $this->body = file_get_contents('php://input');
         }
 
         public function param($name, $default = null, $type = null) {
