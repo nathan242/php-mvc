@@ -15,6 +15,7 @@
                 '/table_crud/(\d+)' => ['table_crud', 'edit'],
                 '/file_upload' => ['files', 'index'],
                 '/file_upload/(.+)' => ['files', 'download'],
+                '/cookies' => ['cookies', 'index'],
                 '/no_method' => ['main', 'no_exist'],
                 '/no_controller' => ['no_exist', 'test'],
             ],
@@ -27,6 +28,7 @@
                 '/table_crud/(\d+)' => ['table_crud', 'edit'],
                 '/file_upload' => ['files', 'upload'],
                 '/api_post' => ['api', 'post_test'],
+                '/cookies' => ['cookies', 'save'],
             ],
             '*' => [
                 '/api' => ['api', 'api_test'],

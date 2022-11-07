@@ -15,7 +15,8 @@
             $this->params = [
                 'GET' => $_GET,
                 'POST' => $_POST,
-                'FILES' => $_FILES
+                'FILES' => $_FILES,
+                'COOKIE' => $_COOKIE
             ];
             $this->body = file_get_contents('php://input');
         }

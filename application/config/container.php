@@ -28,6 +28,7 @@
             application\controller\table_crud::class => application\controller\factory\base_app_factory::class,
             application\controller\files::class => application\controller\factory\base_app_factory::class,
             application\controller\api::class => framework\controller\factory\base_factory::class,
+            application\controller\cookies::class => application\controller\factory\base_app_factory::class,
             application\controller\not_found::class => framework\controller\factory\base_factory::class,
             application\command\test_commands::class => framework\command\factory\base_factory::class,
             framework\command\default_command::class => framework\command\factory\base_factory::class,
