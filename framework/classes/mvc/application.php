@@ -76,7 +76,7 @@
                     $this->container->set(get_class($request), $request);
                 }
 
-                $response = $this->container->get('router')->process($request);
+                $response = $this->container->get('web_handler')->process($request);
             } catch (response_exception $e) {
                 $response = $e->get_response();
             } catch (page_not_found $e) {
@@ -89,11 +89,9 @@
 
             if ($return_response) {
                 return $response;
-            } elseif ($response instanceof response_interface) {
-                $response->send();
-            } elseif (is_string($response)) {
-                echo $response;
             }
+
+            $response->send();
         }
     }
 
