@@ -6,7 +6,7 @@
 
     class postaction implements postaction_interface {
         public function process(response_interface $response) {
-            //echo '<pre>'.print_r($response, 1).'</pre>';
+            echo '<pre>'.print_r($response, 1).'</pre>';
         }
     }
 

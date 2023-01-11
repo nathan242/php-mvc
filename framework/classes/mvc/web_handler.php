@@ -9,9 +9,6 @@
     use framework\mvc\interfaces\router_interface;
     use framework\mvc\interfaces\request_interface;
     use framework\mvc\interfaces\response_interface;
-    use framework\mvc\interfaces\web_handler\preroute_interface;
-    use framework\mvc\interfaces\web_handler\preaction_interface;
-    use framework\mvc\interfaces\web_handler\postaction_interface;
 
     class web_handler {
         protected $namespace = '\\';
@@ -46,15 +43,15 @@
             $this->namespace = $namespace;
         }
 
-        public function add_preroute(preroute_interace $class) {
+        public function add_preroute($class) {
             $this->preroute[] = $class;
         }
 
-        public function add_preaction(preaction_interface $class) {
+        public function add_preaction($class) {
             $this->preaction[] = $class;
         }
 
-        public function add_postaction(postaction_interface $class) {
+        public function add_postaction($class) {
             $this->postaction[] = $class;
         }
 

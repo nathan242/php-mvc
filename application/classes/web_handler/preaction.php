@@ -6,7 +6,7 @@
 
     class preaction implements preaction_interface {
         public function process(&$matched_route) {
-            //echo '<pre>'.print_r($matched_route, 1).'</pre>';
+            echo '<pre>'.print_r($matched_route, 1).'</pre>';
             /*
             $matched_route = [
                 [
