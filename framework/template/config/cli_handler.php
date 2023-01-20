@@ -1,6 +1,6 @@
 <?php
     return [
-        'namespace' => 'application\controller'
+        'namespace' => 'application\command',
         'preroute' => [
             
         ],

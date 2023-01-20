@@ -54,7 +54,7 @@
 
         public function run_cli($arg = []) {
             try {
-                return $this->container->get('command')->process($arg);
+                return $this->container->get('cli_handler')->process($arg);
             } catch (command_not_found $e) {
                 echo "Command not found.\n";
                 return 1;
