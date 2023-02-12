@@ -16,7 +16,7 @@
 
             $this->form->init('Cookies');
             $this->form->input('name', 'Name:');
-            $this->form->input('value', 'Value:');
+            $this->form->input('value', 'Value:', 'text', true);
         }
 
         public function index() {
@@ -32,7 +32,11 @@
             $this->form->handle(
                 $this->request->params['POST'],
                 function ($response, $data) {
-                     $response->add_cookie($data['name'], $data['value']);
+                     if ($data['value'] === '') {
+                         $response->add_cookie($data['name'], '', time() - 3600);
+                     } else {
+                         $response->add_cookie($data['name'], $data['value']);
+                     }
                 },
                 [$this->response]
             );

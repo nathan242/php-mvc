@@ -52,22 +52,25 @@
             return $this->container;
         }
 
-        public function run_cli($arg = []) {
+        public function run_cli($arg = [], $throw_exceptions = false) {
             try {
-                return $this->container->get('command')->process($arg);
+                return $this->container->get('cli_handler')->process($arg);
             } catch (command_not_found $e) {
+                if ($throw_exceptions) throw $e;
                 echo "Command not found.\n";
                 return 1;
             } catch (command_method_not_found $e) {
+                if ($throw_exceptions) throw $e;
                 echo "Command method not found.\n";
                 return 2;
             } catch (command_controller_not_found $e) {
+                if ($throw_exceptions) throw $e;
                 echo "Command controller not found.\n";
                 return 2;
             }
         }
 
-        public function run_web($request = null, $return_response = false) {
+        public function run_web($request = null, $return_response = false, $throw_exceptions = false) {
             try {
                 if ($request === null) {
                     $request = $this->container->get('request');
@@ -76,24 +79,26 @@
                     $this->container->set(get_class($request), $request);
                 }
 
-                $response = $this->container->get('router')->process($request);
+                $response = $this->container->get('web_handler')->process($request);
             } catch (response_exception $e) {
+                if ($throw_exceptions) throw $e;
                 $response = $e->get_response();
             } catch (page_not_found $e) {
+                if ($throw_exceptions) throw $e;
                 $response = $this->container->get('response')->set(404, 'Page not found');
             } catch (method_not_found $e) {
+                if ($throw_exceptions) throw $e;
                 $response = $this->container->get('response')->set(500, 'Internal error');
             } catch (controller_not_found $e) {
+                if ($throw_exceptions) throw $e;
                 $response = $this->container->get('response')->set(500, 'Internal error');
             }
 
             if ($return_response) {
                 return $response;
-            } elseif ($response instanceof response_interface) {
-                $response->send();
-            } elseif (is_string($response)) {
-                echo $response;
             }
+
+            $response->send();
         }
     }
 
