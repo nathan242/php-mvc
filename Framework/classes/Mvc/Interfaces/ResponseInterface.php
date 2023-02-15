@@ -22,7 +22,7 @@ interface ResponseInterface
      * @param array $headers
      * @return $this
      */
-    public function set(int $code, $content, array $headers);
+    public function set(int $code = 200, $content = '', array $headers = []);
 
     /**
      * Add response headers
