@@ -1,0 +1,241 @@
+<?php
+
+namespace Framework\Database;
+
+/**
+ * Base SQL builder class
+ *
+ * @package Framework\Database
+ */
+abstract class SqlBuilder
+{
+    /** @var array|null $select */
+    protected $select;
+
+    /** @var string|null $table */
+    protected $table;
+
+    /** @var array|null $where */
+    protected $where;
+
+    /** @var int|null limit */
+    protected $limit;
+
+    /** @var array|null $insert */
+    protected $insert;
+
+    /** @var bool $update */
+    protected $update = false;
+
+    /** @var array|null $set */
+    protected $set;
+
+    /** @var string|null $createTable */
+    protected $createTable;
+
+    /** @var array|null $createTableParams */
+    protected $createTableParams;
+
+    /** @var array|null $createFields */
+    protected $createFields;
+
+    /**
+     * Add SELECT fields
+     *
+     * @param array $select
+     * @return $this
+     */
+    public function select($select = []): self
+    {
+        $this->select = $select;
+        return $this;
+    }
+
+    /**
+     * Add INSERT fields
+     *
+     * @param array $insert
+     * @return $this
+     */
+    public function insert($insert = []): self
+    {
+        $this->insert = $insert;
+        return $this;
+    }
+
+    /**
+     * Set table to update
+     *
+     * @param string $update
+     * @return $this
+     */
+    public function update(string $update): self
+    {
+        $this->table = $update;
+        $this->update = true;
+        return $this;
+    }
+
+    /**
+     * Set table to select from
+     *
+     * @param string $table
+     * @return $this
+     */
+    public function from(string $table): self
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    /**
+     * Set table to insert into
+     *
+     * @param string $table
+     * @return $this
+     */
+    public function into(string $table): self
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    /**
+     * Set WHERE parameters
+     *
+     * @param array $where
+     * @return $this
+     */
+    public function where(array $where = []): self
+    {
+        $this->where = $where;
+        return $this;
+    }
+
+    /**
+     * Set SET parameters
+     *
+     * @param array $set
+     * @return $this
+     */
+    public function set(array $set): self
+    {
+        $this->set = $set;
+        return $this;
+    }
+
+    /**
+     * Set query limit
+     *
+     * @param int $limit
+     * @return $this
+     */
+    public function limit(int $limit): self
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * Reset query state
+     *
+     * @return $this
+     */
+    public function reset(): self
+    {
+        $this->select = null;
+        $this->table = null;
+        $this->where = null;
+        $this->limit = null;
+        $this->insert = null;
+        $this->update = false;
+        $this->set = null;
+        $this->createTable = null;
+        $this->createTableParams = null;
+        $this->createFields = null;
+
+        return $this;
+    }
+
+    /**
+     * Create table
+     *
+     * @param string $table
+     * @param array $params
+     * @return $this
+     */
+    public function create(string $table, array $params = []): self
+    {
+        $this->createTable = $table;
+        $this->createTableParams = $params;
+        return $this;
+    }
+
+    /**
+     * Add field to table
+     *
+     * @param string $name
+     * @param string $type
+     * @param array $params
+     * @return $this
+     */
+    public function field(string $name, string $type, array $params = []): self
+    {
+        $typeMethod = 'field'.ucfirst($type);
+        $this->createFields[] = $this->{$typeMethod}($name, $params);
+
+        return $this;
+    }
+
+    /**
+     * Get INT field SQL
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    abstract public function fieldInt(string $name, array $params): string;
+
+    /**
+     * Get STRING field SQL
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    abstract public function fieldString(string $name, array $params): string;
+
+    /**
+     * Get BOOL field SQL
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    abstract public function fieldBoolean(string $name, array $params): string;
+
+    /**
+     * Get DATE field SQL
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    abstract public function fieldDate(string $name, array $params): string;
+
+    /**
+     * Get DECIMAL field SQL
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    abstract public function fieldDecimal(string $name, array $params): string;
+
+    /**
+     * Output SQL, datatypes and parameters
+     *
+     * @return array
+     */
+    abstract public function sql(): array;
+}
