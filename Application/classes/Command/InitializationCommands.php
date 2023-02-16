@@ -51,7 +51,7 @@ class InitializationCommands extends BaseCommand
             ->into('users')
             ->sql();
 
-        if (!$this->db->prepared_query($sql['sql'], $sql['types'], $sql['params'])) {
+        if (!$this->db->preparedQuery($sql['sql'], $sql['types'], $sql['params'])) {
             echo "Failed\n\nFailed to insert admin user.\nError: " . $this->db->last_error() . "\n";
             return 1;
         }

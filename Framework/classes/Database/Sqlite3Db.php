@@ -109,7 +109,7 @@ class Sqlite3Db implements DatabaseInterface
         $this->debugPrint("QUERY = {$query}");
 
         if ($this->qResult = $this->dbobj->query($query)) {
-            $this->result = $this->getResult($this->qresult);
+            $this->result = $this->getResult($this->qResult);
             $this->disconnectIfAllowed();
 
             return true;
