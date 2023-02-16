@@ -62,7 +62,7 @@ class Application
         if (array_key_exists('config_instance', $this->localConfig)) return $this->localConfig['config_instance'];
 
         $configPath = $this->localConfig['config_path'] ?? '/config';
-        $class = $localConfig['config_class'] ?? Config::class;
+        $class = $this->localConfig['config_class'] ?? Config::class;
         return new $class("{$this->localConfig['root_path']}{$configPath}", $this->localConfig);
     }
 

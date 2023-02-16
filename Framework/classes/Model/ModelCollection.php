@@ -15,6 +15,7 @@ class ModelCollection implements ArrayAccess
     /** @var array $items */
     protected $items = [];
 
+    #[\ReturnTypeWillChange]
     /**
      * Set collection item
      *
@@ -34,6 +35,7 @@ class ModelCollection implements ArrayAccess
         }
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * Check if collection item exists
      *
@@ -45,6 +47,7 @@ class ModelCollection implements ArrayAccess
         return isset($this->items[$offset]);
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * Remove collection item
      *
@@ -55,6 +58,7 @@ class ModelCollection implements ArrayAccess
         unset($this->items[$offset]);
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * Get collection item
      *

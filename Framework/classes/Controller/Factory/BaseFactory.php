@@ -2,7 +2,7 @@
 
 namespace Framework\Controller\Factory;
 
-use Framework\mvc\interfaces\ContainerInterface;
+use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\FactoryInterface;
 use Framework\Mvc\View;
 

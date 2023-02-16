@@ -6,6 +6,10 @@ namespace Framework\Mvc\Interfaces;
  * Request interface
  *
  * @package Framework\Mvc\Interfaces
+ * @property string $method
+ * @property string $path
+ * @property array $params
+ * @property string $body
  */
 interface RequestInterface
 {

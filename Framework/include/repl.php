@@ -11,12 +11,12 @@ $__colours = [
     'YELLOW' => "\033[1;33m"
 ];
 
-$__consts = null;
-$__funcs = null;
-$__classes = null;
-$__interfaces = null;
-$__traits = null;
-$__vars = null;
+$__consts = [];
+$__funcs = [];
+$__classes = [];
+$__interfaces = [];
+$__traits = [];
+$__vars = [];
 
 $__readline = function_exists('readline');
 
@@ -35,7 +35,7 @@ if ($__readline) {
             &$__traits,
             &$__vars
         ) {
-            return array_merge(array_keys($__vars), array_keys($__consts), array_values($__funcs['user']), array_values($__funcs['internal']), array_values($__classes), array_values($__interfaces), array_values($__traits));
+            return array_merge(array_keys($__vars), array_keys($__consts), array_values($__funcs['user'] ?? []), array_values($__funcs['internal'] ?? []), array_values($__classes), array_values($__interfaces), array_values($__traits));
         });
 }
 

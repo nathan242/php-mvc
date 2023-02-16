@@ -30,7 +30,7 @@ class Gui
      * @param array|bool $headings Optional array of table headers
      * @param array|bool $select Configuration array for table row link
      * @param array|bool $buttons Configuration array for table row buttons
-     * @return bool False if no table data
+     * @return bool|void False if no table data
      */
     public static function table(array $data, $headings = false, $select = false, $buttons = false)
     {

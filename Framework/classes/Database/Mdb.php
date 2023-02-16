@@ -3,6 +3,7 @@
 namespace Framework\Database;
 
 use mysqli;
+use mysqli_result;
 use Framework\Database\Interfaces\DatabaseInterface;
 
 /**
@@ -51,7 +52,7 @@ class Mdb implements DatabaseInterface
     /** @var bool $transactionOpen Transaction status */
     protected $transactionOpen = false;
 
-    /** @var mixed|null $qResult Query result */
+    /** @var mysqli_result $qResult Query result */
     protected $qResult;
 
     /** @var mixed|null $stmt Prepared statement */
@@ -74,38 +75,28 @@ class Mdb implements DatabaseInterface
 
     /**
      * Connect to the DB server.
-     *
-     * @return bool
      */
-    public function connect(): bool
+    public function connect()
     {
-        if (!$this->isConnected) {
-            if ($this->dbobj = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port, $this->socket)) {
-                $this->isConnected = true;
-                $this->transactionOpen = false;
-                //TODO: Else, throw error
-            } else {
-                return false;
-            }
-        }
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-        return true;
+        if (!$this->isConnected) {
+            $this->dbobj = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port, $this->socket);
+            $this->isConnected = true;
+            $this->transactionOpen = false;
+        }
     }
 
     /**
      * Disconnect from the database server.
-     *
-     * @return bool
      */
-    public function disconnect(): bool
+    public function disconnect()
     {
         if ($this->isConnected) {
             $this->dbobj->close();
             $this->isConnected = false;
             $this->transactionOpen = false;
         }
-
-        return true;
     }
 
     /**
@@ -194,7 +185,7 @@ class Mdb implements DatabaseInterface
      */
     public function execute(array $types, array $data): bool
     {
-        $this->debugPrint('EXECUTE_PREPARED_QUERY | TYPES = ' . print_r($types, 1) . ' | DATA = ' . print_r($data, 1));
+        $this->debugPrint('EXECUTE_PREPARED_QUERY | TYPES = ' . print_r($types, true) . ' | DATA = ' . print_r($data, true));
 
         $bindParams = [];
         $paramType = '';

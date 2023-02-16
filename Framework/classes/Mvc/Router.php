@@ -50,9 +50,11 @@ class Router implements RouterInterface
      */
     public function process(RequestInterface $request): array
     {
-        foreach ([$request->method, '*'] as $method) {
+        $action = null;
+        $params = null;
 
-            if (isset($action)) {
+        foreach ([$request->method, '*'] as $method) {
+            if ($action !== null) {
                 break;
             }
 
@@ -69,7 +71,7 @@ class Router implements RouterInterface
             }
         }
 
-        if (!isset($action)) {
+        if ($action === null) {
             // No route
             return [];
         }

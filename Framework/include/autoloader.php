@@ -1,5 +1,9 @@
 <?php
 // Class autoloader
+if (!isset($rootPath)) {
+    throw new RuntimeException('Root path not set when setting up autoloader');
+}
+
 spl_autoload_register(
     function ($class) use ($rootPath) {
         $class = str_replace('\\', '/', $class);

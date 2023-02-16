@@ -3,6 +3,10 @@
 use Framework\Database\Sqlite3Builder;
 use Framework\Database\Sqlite3Db;
 
+if (!isset($local)) {
+    throw new RuntimeException('Local config not passed into DB config');
+}
+
 $localConfig = $local['db'] ?? [];
 
     if ($localConfig === []) {

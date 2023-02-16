@@ -6,22 +6,21 @@ namespace Framework\Database\Interfaces;
  * Database interface
  *
  * @package Framework\Database\Interfaces
+ * @property bool $debugPrint
+ * @property bool $debugLog
+ * @property mixed|null $result
  */
 interface DatabaseInterface
 {
     /**
      * Connect to DB
-     *
-     * @return bool
      */
-    public function connect(): bool;
+    public function connect();
 
     /**
      * Disconnect from DB
-     *
-     * @return bool
      */
-    public function disconnect(): bool;
+    public function disconnect();
 
     /**
      * Execute a SQL query and store result in $this->result

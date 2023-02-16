@@ -3,6 +3,7 @@
 namespace Framework\Database;
 
 use SQLite3;
+use SQLite3Result;
 use Framework\Database\Interfaces\DatabaseInterface;
 
 /**
@@ -36,7 +37,7 @@ class Sqlite3Db implements DatabaseInterface
     /** @var bool $transactionOpen Transaction status */
     protected $transactionOpen = false;
 
-    /** @var mixed|null $qResult Query result */
+    /** @var SQLite3Result|bool $qResult Query result */
     protected $qResult;
 
     /** @var mixed|null $stmt Prepared statement */
@@ -54,37 +55,26 @@ class Sqlite3Db implements DatabaseInterface
 
     /**
      * Connect to DB
-     *
-     * @return bool
      */
-    public function connect(): bool
+    public function connect()
     {
         if (!$this->isConnected) {
-            if ($this->dbobj = new SQLite3($this->dbFilename)) {
-                $this->isConnected = true;
-                $this->transactionOpen = false;
-            } else {
-                return false;
-            }
+            $this->dbobj = new SQLite3($this->dbFilename);
+            $this->isConnected = true;
+            $this->transactionOpen = false;
         }
-
-        return true;
     }
 
     /**
      * Disconnect from DB
-     *
-     * @return bool
      */
-    public function disconnect(): bool
+    public function disconnect()
     {
         if ($this->isConnected) {
             $this->dbobj->close();
             $this->isConnected = false;
             $this->transactionOpen = false;
         }
-
-        return true;
     }
 
     /**
@@ -146,7 +136,7 @@ class Sqlite3Db implements DatabaseInterface
      */
     public function execute(array $types, array $data): bool
     {
-        $this->debugPrint('EXECUTE_PREPARED_QUERY | TYPES = ' . print_r($types, 1) . ' | DATA = ' . print_r($data, 1));
+        $this->debugPrint('EXECUTE_PREPARED_QUERY | TYPES = ' . print_r($types, true) . ' | DATA = ' . print_r($data, true));
 
         $paramCount = count($types);
 

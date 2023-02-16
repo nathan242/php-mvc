@@ -6,6 +6,7 @@ namespace Framework\Mvc\Interfaces;
  * Config interface
  *
  * @package Framework\Mvc\Interfaces
+ * @property array $local
  */
 interface ConfigInterface
 {
