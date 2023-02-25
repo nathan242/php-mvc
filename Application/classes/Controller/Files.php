@@ -3,41 +3,74 @@
 namespace Application\Controller;
 
 use Framework\Gui\Form;
+use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\FileOutput;
+use Framework\Mvc\Interfaces\ResponseInterface;
 
+/**
+ * File upload/download controller
+ *
+ * @package Application\Controller
+ */
 class Files extends BaseAuthController
 {
+    /** @var Form $form */
     private $form;
-    private $file_output;
-    private $upload_dir;
 
-    public function __construct(Form $form, FileOutput $file_output)
+    /** @var FileOutput $fileOutput */
+    private $fileOutput;
+
+    /** @var string $uploadDir */
+    private $uploadDir;
+
+    /**
+     * Files constructor
+     *
+     * @param Form $form
+     * @param FileOutput $fileOutput
+     */
+    public function __construct(Form $form, FileOutput $fileOutput)
     {
         $this->form = $form;
-        $this->file_output = $file_output;
+        $this->fileOutput = $fileOutput;
     }
 
+    /**
+     * Initialize class and form
+     *
+     * @throws ResponseException
+     */
     public function init()
     {
         parent::init();
 
-        $this->upload_dir = $this->config->get('application')['upload_dir'];
+        $this->uploadDir = $this->config->get('application')['upload_dir'];
 
-        $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Files', $_SERVER['REQUEST_URI']]]]);
+        $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Files', $this->request->path]]]);
 
         $this->form->init('Upload file', 'Upload', 'primary', 'post', ['enctype' => 'multipart/form-data']);
         $this->form->input('file_upload', 'Upload', 'file');
     }
 
-    public function index()
+    /**
+     * Get files page
+     *
+     * @return ResponseInterface
+     */
+    public function index(): ResponseInterface
     {
-        $files = scandir($this->upload_dir);
+        $files = scandir($this->uploadDir);
         $files = array_diff($files, ['.', '..']);
 
         return $this->response->set(200, $this->view->get('files.phtml', ['files' => $files, 'form' => $this->form]));
     }
 
-    public function upload()
+    /**
+     * Upload file
+     *
+     * @return ResponseInterface
+     */
+    public function upload(): ResponseInterface
     {
         $files = $this->request->files();
 
@@ -45,7 +78,7 @@ class Files extends BaseAuthController
             return $this->response->set(500, 'No file uploaded');
         }
 
-        $result = $this->request->storeFile($files[0], $this->upload_dir . '/' . $files[0]);
+        $result = $this->request->storeFile($files[0], $this->uploadDir . '/' . $files[0]);
 
         if (!$result) {
             return $this->response->set(500, 'Failed to save file');
@@ -54,14 +87,20 @@ class Files extends BaseAuthController
         return $this->response->set(302, '', ['Location' => 'file_upload']);
     }
 
-    public function download($name)
+    /**
+     * Download file
+     *
+     * @param string $name
+     * @return ResponseInterface
+     */
+    public function download(string $name): ResponseInterface
     {
-        $path = "{$this->upload_dir}/{$name}";
+        $path = "{$this->uploadDir}/{$name}";
         if (!file_exists($path)) {
             return $this->response->set(404, 'File not found');
         }
 
-        return $this->response->set(200, $this->file_output->set($path), $this->file_output->getHeaders());
+        return $this->response->set(200, $this->fileOutput->set($path), $this->fileOutput->getHeaders());
     }
 }
 

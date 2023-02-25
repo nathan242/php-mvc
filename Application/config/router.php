@@ -6,17 +6,17 @@ return [
             '/logout' => ['Login', 'logout'],
             '/main' => ['Main', 'main'],
             '/form_test' => ['FormTest', 'get'],
-            '/records' => ['Records', 'list_all'],
+            '/records' => ['Records', 'listAll'],
             '/records/add' => ['Records', 'create'],
             '/records/(\d+)' => ['Records', 'edit'],
-            '/table_crud' => ['TableCrud', 'list_all'],
+            '/table_crud' => ['TableCrud', 'listAll'],
             '/table_crud/add' => ['TableCrud', 'create'],
             '/table_crud/(\d+)' => ['TableCrud', 'edit'],
             '/file_upload' => ['Files', 'index'],
             '/file_upload/(.+)' => ['Files', 'download'],
             '/cookies' => ['Cookies', 'index'],
-            '/no_method' => ['Main', 'no_exist'],
-            '/no_controller' => ['no_exist', 'test'],
+            '/no_method' => ['Main', 'noExist'],
+            '/no_controller' => ['noExist', 'test'],
         ],
         'POST' => [
             '/' => ['Login', 'login'],
@@ -26,12 +26,12 @@ return [
             '/table_crud/add' => ['TableCrud', 'create'],
             '/table_crud/(\d+)' => ['TableCrud', 'edit'],
             '/file_upload' => ['Files', 'upload'],
-            '/api_post' => ['Api', 'post_test'],
+            '/api_post' => ['Api', 'postTest'],
             '/cookies' => ['Cookies', 'save'],
         ],
         '*' => [
-            '/api' => ['Api', 'api_test'],
-            '/(.*)' => ['NotFound', 'error_404']
+            '/api' => ['Api', 'apiTest'],
+            '/(.*)' => ['NotFound', 'error404']
         ]
     ]
 ];

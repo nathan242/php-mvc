@@ -4,31 +4,62 @@ namespace Application\Controller;
 
 use Framework\Gui\Form;
 use Application\Model\Test;
+use Framework\Mvc\Exceptions\ResponseException;
+use Framework\Mvc\Interfaces\ResponseInterface;
 
+/**
+ * DB table CRUD test
+ *
+ * @package Application\Controller
+ */
 class TableCrud extends BaseAuthController
 {
+    /** @var Form $form */
     private $form;
+
+    /** @var Test $model */
     private $model;
 
+    /**
+     * TableCrud constructor
+     *
+     * @param Form $form
+     * @param Test $model
+     */
     public function __construct(Form $form, Test $model)
     {
         $this->form = $form;
         $this->model = $model;
     }
 
+    /**
+     * Initialize class
+     *
+     * @throws ResponseException
+     */
     public function init()
     {
         parent::init();
         $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Table CRUD', '/table_crud']]]);
     }
 
-    public function list_all()
+    /**
+     * List all records
+     *
+     * @return ResponseInterface
+     */
+    public function listAll(): ResponseInterface
     {
         $all_records = $this->model->all()->toArray();
         return $this->response->set(200, $this->view->get('table_crud.phtml', ['records' => $all_records]));
     }
 
-    public function create()
+    /**
+     * Create record
+     *
+     * @return ResponseInterface
+     */
+    public function create(): ResponseInterface
     {
         $this->form->init('New record');
         $this->form->input('text', 'Text', 'text', true);
@@ -45,14 +76,20 @@ class TableCrud extends BaseAuthController
         );
 
         if (!$result) {
-            $this->view->pagepath = array_merge($this->view->pagepath, [['New', $_SERVER['REQUEST_URI']]]);
+            $this->view->pagepath = array_merge($this->view->pagepath, [['New', $this->request->path]]);
             return $this->response->set(200, $this->view->get('table_crud_edit.phtml', ['form' => $this->form]));
         }
 
         return $this->response->set(302, '', ['Location' => '/table_crud']);
     }
 
-    public function edit($id)
+    /**
+     * Edit record
+     *
+     * @param int $id
+     * @return ResponseInterface
+     */
+    public function edit(int $id): ResponseInterface
     {
         if (!$this->model->retrieve($id)) {
             return $this->response->set(404, 'Record not found');
@@ -73,7 +110,7 @@ class TableCrud extends BaseAuthController
         );
 
         if (!$result) {
-            $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $_SERVER['REQUEST_URI']]]);
+            $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $this->request->path]]);
             return $this->response->set(200, $this->view->get('table_crud_edit.phtml', ['form' => $this->form]));
         }
 

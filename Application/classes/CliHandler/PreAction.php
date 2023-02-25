@@ -4,12 +4,20 @@ namespace Application\CliHandler;
 
 use Framework\Mvc\Interfaces\CliHandler\PreActionInterface;
 
+/**
+ * Test pre action
+ *
+ * @package Application\CliHandler
+ */
 class PreAction implements PreActionInterface
 {
-    public function process(&$matched_route)
+    /**
+     * @param array $matchedRoute
+     */
+    public function process(array &$matchedRoute)
     {
-        echo 'PREACTION: ' . print_r($matched_route, 1);
-        //$matched_route[0] = 'repl';
+        echo 'PREACTION: ' . print_r($matchedRoute, 1);
+        //$matchedRoute[0] = 'repl';
     }
 
 }

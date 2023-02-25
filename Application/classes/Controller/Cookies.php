@@ -3,16 +3,34 @@
 namespace Application\Controller;
 
 use Framework\Gui\Form;
+use Framework\Mvc\Exceptions\ResponseException;
+use Framework\Mvc\Interfaces\ResponseInterface;
 
+/**
+ * Cookies test controller
+ *
+ * @package Application\Controller
+ */
 class Cookies extends BaseAuthController
 {
+    /** @var Form $form */
     private $form;
 
+    /**
+     * Cookies constructor
+     *
+     * @param Form $form
+     */
     public function __construct(Form $form)
     {
         $this->form = $form;
     }
 
+    /**
+     * Initialize class and form
+     *
+     * @throws ResponseException
+     */
     public function init()
     {
         parent::init();
@@ -23,7 +41,12 @@ class Cookies extends BaseAuthController
         $this->form->input('value', 'Value:', 'text', true);
     }
 
-    public function index()
+    /**
+     * Cookies index page
+     *
+     * @return ResponseInterface
+     */
+    public function index(): ResponseInterface
     {
         $cookies = [];
         foreach ($this->request->params['COOKIE'] as $name => $value) {
@@ -33,7 +56,12 @@ class Cookies extends BaseAuthController
         return $this->response->set(200, $this->view->get('cookies.phtml', ['cookies' => $cookies, 'form' => $this->form]));
     }
 
-    public function save()
+    /**
+     * Save cookie
+     *
+     * @return ResponseInterface
+     */
+    public function save(): ResponseInterface
     {
         $this->form->handle(
             $this->request->params['POST'],

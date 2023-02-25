@@ -5,16 +5,33 @@ namespace Application\Command;
 use Application\Model\Test;
 use Framework\Command\BaseCommand;
 
+/**
+ * Test commands
+ *
+ * @package Application\Command
+ */
 class TestCommands extends BaseCommand
 {
-    protected $test_model;
+    /** @var Test $testModel */
+    protected $testModel;
 
+    /**
+     * TestCommands constructor
+     *
+     * @param Test $test
+     */
     public function __construct(Test $test)
     {
-        $this->test_model = $test;
+        $this->testModel = $test;
     }
 
-    public function dump_config($args = [])
+    /**
+     * Dump config data for specified key
+     *
+     * @param array $args
+     * @return int
+     */
+    public function dumpConfig(array $args = []): int
     {
         if (isset($args[1])) {
             echo print_r($this->config->get($args[1]), 1) . "\n";
@@ -23,8 +40,16 @@ class TestCommands extends BaseCommand
         return 0;
     }
 
-    public function show_test_records()
+    /**
+     * Dump records in the test table
+     *
+     * @param array $args
+     * @return int
+     */
+    public function showTestRecords(array $args = []): int
     {
-        echo print_r($this->test_model->all()->toArray(), true) . "\n";
+        echo print_r($this->testModel->all()->toArray(), true) . "\n";
+
+        return 0;
     }
 }

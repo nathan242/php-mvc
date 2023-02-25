@@ -4,11 +4,19 @@ namespace Application\WebHandler;
 
 use Framework\Mvc\Interfaces\WebHandler\PreActionInterface;
 
+/**
+ * Test pre action
+ *
+ * @package Application\WebHandler
+ */
 class PreAction implements PreActionInterface
 {
-    public function process(array &$matched_route)
+    /**
+     * @param array $matchedRoute
+     */
+    public function process(array &$matchedRoute)
     {
-        echo '<pre>' . print_r($matched_route, 1) . '</pre>';
+        echo '<pre>' . print_r($matchedRoute, 1) . '</pre>';
         /*
         $matched_route = [
             [

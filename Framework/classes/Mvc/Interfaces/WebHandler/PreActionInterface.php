@@ -12,7 +12,7 @@ interface PreActionInterface
     /**
      * Process matched route
      *
-     * @param array $matched_route
+     * @param array $matchedRoute
      */
-    public function process(array &$matched_route);
+    public function process(array &$matchedRoute);
 }

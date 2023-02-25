@@ -133,9 +133,9 @@ class Mdb implements DatabaseInterface
     /**
      * Fetch query results
      *
-     * @return array|boolean
+     * @return array
      */
-    private function queryFetch()
+    private function queryFetch(): array
     {
         $output = [];
         if (isset($this->qResult->num_rows) && $this->qResult->num_rows > 0) {
@@ -150,11 +150,9 @@ class Mdb implements DatabaseInterface
                 $tableRow = array_combine($fieldNames, $row);
                 $output[] = $tableRow;
             }
-
-            return $output;
-        } else {
-            return false;
         }
+
+        return $output;
     }
 
     /**
@@ -237,10 +235,12 @@ class Mdb implements DatabaseInterface
     /**
      * Fetch prepared query results.
      *
-     * @return array|bool
+     * @return array
      */
-    private function preparedQueryFetch()
+    private function preparedQueryFetch(): array
     {
+        $output = [];
+
         if ($meta = $this->stmt->result_metadata()) {
             $names = [];
             $result = [];
@@ -252,7 +252,6 @@ class Mdb implements DatabaseInterface
 
             call_user_func_array(array($this->stmt, 'bind_result'), $result);
 
-            $output = [];
             while ($this->stmt->fetch()) {
                 $resultTemp = [];
                 foreach ($result as $key => $value) {
@@ -260,11 +259,9 @@ class Mdb implements DatabaseInterface
                 }
                 $output[] = $resultTemp;
             }
-
-            return $output;
-        } else {
-            return false;
         }
+
+        return $output;
     }
 
     /**

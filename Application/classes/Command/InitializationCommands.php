@@ -6,22 +6,42 @@ use Framework\Command\BaseCommand;
 use Framework\Database\Interfaces\DatabaseInterface;
 use Framework\Database\SqlBuilder;
 
+/**
+ * Initialization commands for the test application
+ *
+ * @package Application\Command
+ */
 class InitializationCommands extends BaseCommand
 {
+    /** @var DatabaseInterface $db */
     protected $db;
-    protected $sql_builder;
 
-    public function __construct(DatabaseInterface $db, SqlBuilder $sql_builder)
+    /** @var SqlBuilder $sqlBuilder */
+    protected $sqlBuilder;
+
+    /**
+     * InitializationCommands constructor
+     *
+     * @param DatabaseInterface $db
+     * @param SqlBuilder $sqlBuilder
+     */
+    public function __construct(DatabaseInterface $db, SqlBuilder $sqlBuilder)
     {
         $this->db = $db;
-        $this->sql_builder = $sql_builder;
+        $this->sqlBuilder = $sqlBuilder;
     }
 
-    public function create_users_table($args = [])
+    /**
+     * Create users table and insert admin user
+     *
+     * @param array $args
+     * @return int
+     */
+    public function createUsersTable(array $args = []): int
     {
         echo "Creating users table ... ";
 
-        $sql = $this->sql_builder
+        $sql = $this->sqlBuilder
             ->reset()
             ->create('users', ['mysql_engine' => 'InnoDB', 'charset' => 'latin1'])
             ->field('id', 'int', ['unsigned' => true, 'required' => true, 'increment' => true, 'primary' => true])
@@ -31,7 +51,7 @@ class InitializationCommands extends BaseCommand
             ->sql();
 
         if (!$this->db->query($sql['sql'])) {
-            echo "Failed\n\nFailed to create user table.\nError: " . $this->db->last_error() . "\n";
+            echo "Failed\n\nFailed to create user table.\nError: " . $this->db->lastError() . "\n";
             return 1;
         }
 
@@ -39,7 +59,7 @@ class InitializationCommands extends BaseCommand
 
         echo "Inserting admin user ... ";
 
-        $sql = $this->sql_builder
+        $sql = $this->sqlBuilder
             ->reset()
             ->insert(
                 [
@@ -52,7 +72,7 @@ class InitializationCommands extends BaseCommand
             ->sql();
 
         if (!$this->db->preparedQuery($sql['sql'], $sql['types'], $sql['params'])) {
-            echo "Failed\n\nFailed to insert admin user.\nError: " . $this->db->last_error() . "\n";
+            echo "Failed\n\nFailed to insert admin user.\nError: " . $this->db->lastError() . "\n";
             return 1;
         }
 
@@ -61,11 +81,17 @@ class InitializationCommands extends BaseCommand
         return 0;
     }
 
-    public function create_test_table($args = [])
+    /**
+     * Create test table
+     *
+     * @param array $args
+     * @return int
+     */
+    public function createTestTable(array $args = []): int
     {
         echo "Creating test table ... ";
 
-        $sql = $this->sql_builder
+        $sql = $this->sqlBuilder
             ->reset()
             ->create('test', ['mysql_engine' => 'InnoDB', 'charset' => 'latin1'])
             ->field('id', 'int', ['unsigned' => true, 'required' => true, 'increment' => true, 'primary' => true])
@@ -74,11 +100,13 @@ class InitializationCommands extends BaseCommand
             ->sql();
 
         if (!$this->db->query($sql['sql'])) {
-            echo "Failed\n\nFailed to create test table.\nError: " . $this->db->last_error() . "\n";
+            echo "Failed\n\nFailed to create test table.\nError: " . $this->db->lastError() . "\n";
             return 1;
         }
 
         echo "Done\n";
+
+        return 0;
     }
 }
 
