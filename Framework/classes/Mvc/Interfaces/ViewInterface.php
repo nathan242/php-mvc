@@ -45,4 +45,28 @@ interface ViewInterface extends ResponseContentInterface
      * @return $this
      */
     public function get(string $view, array $variables = [], string $name = 'view');
+
+    /**
+     * Get view variable
+     *
+     * @param mixed $name
+     * @return mixed|null
+     */
+    public function __get($name);
+
+    /**
+     * Set view variable
+     *
+     * @param mixed $name
+     * @param mixed $value
+     */
+    public function __set($name, $value);
+
+    /**
+     * Check if view variable is set
+     *
+     * @param mixed $name
+     * @return bool
+     */
+    public function __isset($name): bool;
 }

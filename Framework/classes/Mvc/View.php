@@ -166,7 +166,7 @@ class View implements ViewInterface
      * @param mixed $name
      * @return bool
      */
-    public function __isset($name)
+    public function __isset($name): bool
     {
         return array_key_exists($name, $this->viewVariables);
     }
