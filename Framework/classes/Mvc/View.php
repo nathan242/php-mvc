@@ -16,12 +16,17 @@ class View implements ViewInterface
     /** @var string $viewPath */
     protected $viewPath;
 
-    /** @var array $viewVariables */
+    /** @var array<string, mixed> $viewVariables */
     protected $viewVariables;
 
     /** @var string|ResponseContentInterface */
     protected $viewView;
 
+    /**
+     * View constructor
+     *
+     * @param array<string, mixed> $config
+     */
     public function __construct(array $config = [])
     {
         if (array_key_exists('path', $config)) {
@@ -33,7 +38,7 @@ class View implements ViewInterface
      * Set base view
      *
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @return $this
      */
     public function setView(string $view, array $variables = [])
@@ -46,7 +51,7 @@ class View implements ViewInterface
     /**
      * Update view variables
      *
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @return $this
      */
     public function variables(array $variables = [])
@@ -59,7 +64,7 @@ class View implements ViewInterface
      * Set view for variable
      *
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @param string $name
      * @return $this
      */
@@ -73,7 +78,7 @@ class View implements ViewInterface
      * Get view with subview
      *
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @param string $name
      * @return $this
      */
@@ -110,9 +115,9 @@ class View implements ViewInterface
     /**
      * Create a view object
      *
-     * @param array $config
+     * @param array<string, mixed> $config
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @return View
      */
     public static function set(array $config, string $view, array $variables = [])
@@ -125,9 +130,9 @@ class View implements ViewInterface
     /**
      * Render a view
      *
-     * @param array $config
+     * @param array<string, mixed> $config
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      */
     public static function render(array $config, string $view, array $variables = [])
     {

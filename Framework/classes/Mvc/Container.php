@@ -14,22 +14,22 @@ use ReflectionException;
  */
 class Container implements ContainerInterface
 {
-    /** @var array $aliases */
+    /** @var array<string, string> $aliases */
     protected $aliases = [];
 
-    /** @var array $factories */
+    /** @var array<string, string> $factories */
     protected $factories = [];
 
-    /** @var array $storeInstances */
+    /** @var array<string> $storeInstances */
     protected $storeInstances = [];
 
-    /** @var array $instances */
+    /** @var array<mixed> $instances */
     protected $instances = [];
 
     /**
      * Container constructor
      *
-     * @param array $config
+     * @param array<string, mixed> $config
      */
     public function __construct(array $config = [])
     {

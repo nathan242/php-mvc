@@ -13,15 +13,15 @@ interface CommandRouterInterface
      * Add command route
      *
      * @param string $name
-     * @param array $action
+     * @param array<string> $action
      */
     public function command(string $name, array $action);
 
     /**
      * Get route from command arguments
      *
-     * @param array $arguments
-     * @return array
+     * @param array<string> $arguments
+     * @return array<int, array<mixed>>
      */
     public function process(array $arguments): array;
 }

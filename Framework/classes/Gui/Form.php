@@ -9,7 +9,7 @@ namespace Framework\Gui;
  */
 class Form extends Gui
 {
-    /** @var array $inputs */
+    /** @var array<string, array<string, mixed>> $inputs */
     protected $inputs = [];
 
     /** @var string $title */
@@ -24,7 +24,7 @@ class Form extends Gui
     /** @var string $method */
     protected $method;
 
-    /** @var array $formParams */
+    /** @var array<string, mixed> $formParams */
     protected $formParams;
 
     /** @var bool|null $result */
@@ -37,7 +37,7 @@ class Form extends Gui
      * @param string $submit Submit button text
      * @param string $submitColour Submit button colour
      * @param string $method Form submit method
-     * @param array $formParams Additional form parameters
+     * @param array<string, mixed> $formParams Additional form parameters
      */
     public function init(
         string $title = '',
@@ -62,7 +62,7 @@ class Form extends Gui
      * @param string $type Field type
      * @param bool $allowEmpty Allow empty values
      * @param string|bool $value Optional default value
-     * @param array $options Array of additional parameters
+     * @param array<string, mixed> $options Array of additional parameters
      */
     public function input(
         string $name,
@@ -86,9 +86,9 @@ class Form extends Gui
     /**
      * Check for and handle submitted form
      *
-     * @param array $params Submitted form values
+     * @param array<string, mixed> $params Submitted form values
      * @param callable $function Function to process submitted data
-     * @param array $pass Array of additional parameters for function
+     * @param array<mixed> $pass Array of additional parameters for function
      * @return bool Returns true if form submit is valid
      */
     public function handle(array $params, callable $function, array $pass = []): bool

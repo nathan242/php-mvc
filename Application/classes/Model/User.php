@@ -12,6 +12,7 @@ use Framework\Mvc\Session;
  * User table model
  *
  * @package Application\Model
+ * @property int $id
  */
 class User extends Model
 {

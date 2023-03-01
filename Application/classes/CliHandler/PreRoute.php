@@ -12,7 +12,7 @@ use Framework\Mvc\Interfaces\CliHandler\PreRouteInterface;
 class PreRoute implements PreRouteInterface
 {
     /**
-     * @param array $arguments
+     * @param array<string> $arguments
      */
     public function process(array &$arguments)
     {

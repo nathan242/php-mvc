@@ -12,7 +12,7 @@ interface PreRouteInterface
     /**
      * Process arguments
      *
-     * @param array $arguments
+     * @param array<string> $arguments
      */
     public function process(array &$arguments);
 }

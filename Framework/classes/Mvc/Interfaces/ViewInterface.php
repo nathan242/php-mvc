@@ -13,7 +13,7 @@ interface ViewInterface extends ResponseContentInterface
      * Set base view
      *
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @return $this
      */
     public function setView(string $view, array $variables = []);
@@ -21,7 +21,7 @@ interface ViewInterface extends ResponseContentInterface
     /**
      * Update view variables
      *
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @return $this
      */
     public function variables(array $variables = []);
@@ -30,7 +30,7 @@ interface ViewInterface extends ResponseContentInterface
      * Set view for variable
      *
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @param string $name
      * @return $this
      */
@@ -40,7 +40,7 @@ interface ViewInterface extends ResponseContentInterface
      * Get view with subview
      *
      * @param string $view
-     * @param array $variables
+     * @param array<string, mixed> $variables
      * @param string $name
      * @return $this
      */

@@ -12,7 +12,7 @@ class MysqlBuilder extends SqlBuilder
     /**
      * Output SQL, datatypes and parameters
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function sql(): array
     {
@@ -89,7 +89,7 @@ class MysqlBuilder extends SqlBuilder
     /**
      * Output CREATE TABLE SQL
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function createSql(): array
     {
@@ -115,7 +115,7 @@ class MysqlBuilder extends SqlBuilder
     /**
      * Get field parameters SQL string
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     protected function getFieldParams(array $params): string
@@ -153,7 +153,7 @@ class MysqlBuilder extends SqlBuilder
      * Get INT field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     public function fieldInt(string $name, array $params): string
@@ -169,7 +169,7 @@ class MysqlBuilder extends SqlBuilder
      * Get STRING field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     public function fieldString(string $name, array $params): string
@@ -185,7 +185,7 @@ class MysqlBuilder extends SqlBuilder
      * Get BOOL field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     public function fieldBoolean(string $name, array $params): string
@@ -201,7 +201,7 @@ class MysqlBuilder extends SqlBuilder
      * Get DATE field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     public function fieldDate(string $name, array $params): string
@@ -216,7 +216,7 @@ class MysqlBuilder extends SqlBuilder
      * Get DECIMAL field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     public function fieldDecimal(string $name, array $params): string

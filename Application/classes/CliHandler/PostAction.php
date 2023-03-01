@@ -12,11 +12,11 @@ use Framework\Mvc\Interfaces\CliHandler\PostActionInterface;
 class PostAction implements PostActionInterface
 {
     /**
-     * @param mixed $response
+     * @param int $response
      */
     public function process(&$response)
     {
-        echo 'POSTACTION: ' . print_r($response, 1);
+        echo 'POSTACTION: ' . print_r($response, true);
         //$response = 255;
     }
 }

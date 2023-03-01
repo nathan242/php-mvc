@@ -27,10 +27,10 @@ abstract class Model
     /** @var string $primaryKey */
     protected $primaryKey = 'id';
 
-    /** @var array $data */
+    /** @var array<string, mixed> $data */
     protected $data = [];
 
-    /** @var array $changed */
+    /** @var array<string> $changed */
     protected $changed = [];
 
     /**
@@ -96,7 +96,7 @@ abstract class Model
     /**
      * Get records matching criteria as a collection
      *
-     * @param array $where
+     * @param array<string, mixed> $where
      * @return ModelCollection|false
      */
     public function where(array $where)
@@ -131,7 +131,7 @@ abstract class Model
     /**
      * Load data into model
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return $this
      */
     public function setRecord(array $data): self
@@ -145,7 +145,7 @@ abstract class Model
     /**
      * Get record with primary key
      *
-     * @param $id
+     * @param mixed $id
      * @return bool
      */
     public function retrieve($id): bool
@@ -156,7 +156,7 @@ abstract class Model
     /**
      * Populate this model with data matching criteria
      *
-     * @param array $where
+     * @param array<string, mixed> $where
      * @return bool
      */
     public function retrieveWhere(array $where): bool
@@ -236,7 +236,7 @@ abstract class Model
     /**
      * Return model data as an array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

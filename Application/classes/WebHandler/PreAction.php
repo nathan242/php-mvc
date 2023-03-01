@@ -12,11 +12,11 @@ use Framework\Mvc\Interfaces\WebHandler\PreActionInterface;
 class PreAction implements PreActionInterface
 {
     /**
-     * @param array $matchedRoute
+     * @param array<array<mixed>> $matchedRoute
      */
     public function process(array &$matchedRoute)
     {
-        echo '<pre>' . print_r($matchedRoute, 1) . '</pre>';
+        echo '<pre>' . print_r($matchedRoute, true) . '</pre>';
         /*
         $matched_route = [
             [

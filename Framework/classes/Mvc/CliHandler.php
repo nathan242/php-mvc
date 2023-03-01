@@ -25,13 +25,13 @@ class CliHandler
     /** @var CommandRouterInterface $command */
     protected $command;
 
-    /** @var array $preroute */
+    /** @var array<string> $preroute */
     protected $preRoute = [];
 
-    /** @var array $preaction */
+    /** @var array<string> $preaction */
     protected $preAction = [];
 
-    /** @var array $postaction */
+    /** @var array<string> $postaction */
     protected $postAction = [];
 
     /**
@@ -39,7 +39,7 @@ class CliHandler
      *
      * @param ContainerInterface $container
      * @param CommandRouterInterface $command
-     * @param array $config
+     * @param array<string, mixed> $config
      */
     public function __construct(ContainerInterface $container, CommandRouterInterface $command, array $config = [])
     {
@@ -106,7 +106,7 @@ class CliHandler
     /**
      * Run pre route tasks
      *
-     * @param array $arguments
+     * @param array<string> $arguments
      */
     protected function runPreRoute(array &$arguments)
     {
@@ -119,7 +119,7 @@ class CliHandler
     /**
      * Run pre action tasks
      *
-     * @param array $matchedRoute
+     * @param array<int, array<mixed>> $matchedRoute
      */
     protected function runPreAction(array &$matchedRoute)
     {
@@ -132,7 +132,7 @@ class CliHandler
     /**
      * Run post action tasks
      *
-     * @param mixed $response
+     * @param int $response
      */
     protected function runPostAction(&$response)
     {
@@ -145,7 +145,7 @@ class CliHandler
     /**
      * Handle CLI commands
      *
-     * @param array $arguments
+     * @param array<string> $arguments
      * @return int
      * @throws CommandControllerNotFound
      * @throws CommandMethodNotFound
@@ -177,9 +177,9 @@ class CliHandler
     /**
      * Run CLI command
      *
-     * @param array $action
-     * @param array $arguments
-     * @return mixed
+     * @param array<int, mixed> $action
+     * @param array<string> $arguments
+     * @return int
      * @throws CommandControllerNotFound
      * @throws CommandMethodNotFound
      */

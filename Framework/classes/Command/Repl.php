@@ -29,7 +29,7 @@ class Repl extends BaseCommand
     /**
      * Start framework shell
      *
-     * @param array $args Command arguments
+     * @param array<string> $args Command arguments
      */
     public function shell(array $args = [])
     {

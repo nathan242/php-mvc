@@ -12,13 +12,13 @@ use Framework\Mvc\Interfaces\RouterInterface;
  */
 class Router implements RouterInterface
 {
-    /** @var array $routes */
+    /** @var array<string, array<string, array<string, array<string>>>> $routes */
     protected $routes = [];
 
     /**
      * Router constructor
      *
-     * @param array $config
+     * @param array<string, mixed> $config
      */
     public function __construct(array $config = [])
     {
@@ -32,7 +32,7 @@ class Router implements RouterInterface
      *
      * @param string $path
      * @param string $method
-     * @param array $action
+     * @param array<string> $action
      */
     public function route(string $path, string $method, array $action)
     {
@@ -46,7 +46,7 @@ class Router implements RouterInterface
      * Get route from request
      *
      * @param RequestInterface $request
-     * @return array
+     * @return array<array<mixed>>
      */
     public function process(RequestInterface $request): array
     {

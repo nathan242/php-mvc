@@ -10,7 +10,7 @@ class Gui
      * @param string $heading Panel heading
      * @param string $content Panel content
      * @param string $colour Panel colour
-     * @param array $options Array of additional parameters
+     * @param array<string, mixed> $options Array of additional parameters
      */
     public static function panel(string $heading, string $content, string $colour = 'primary', array $options = [])
     {
@@ -26,10 +26,10 @@ class Gui
     /**
      * Output a bootstrap table
      *
-     * @param array $data Array containing table data
-     * @param array|bool $headings Optional array of table headers
-     * @param array|bool $select Configuration array for table row link
-     * @param array|bool $buttons Configuration array for table row buttons
+     * @param array<mixed> $data Array containing table data
+     * @param array<mixed>|bool $headings Optional array of table headers
+     * @param array<string, mixed>|bool $select Configuration array for table row link
+     * @param array<string, array<string, mixed>>|bool $buttons Configuration array for table row buttons
      * @return bool|void False if no table data
      */
     public static function table(array $data, $headings = false, $select = false, $buttons = false)
@@ -124,7 +124,7 @@ class Gui
      * @param string $link Button link URL
      * @param string $colour Button colour
      * @param bool $prompt Prompt for confirmation
-     * @param array $options Array of additional parameters
+     * @param array<string, mixed> $options Array of additional parameters
      */
     public static function button(string $text, string $link, string $colour = 'primary', bool $prompt = false, array $options = [])
     {

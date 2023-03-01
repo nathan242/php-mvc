@@ -34,7 +34,7 @@ class TestCommands extends BaseCommand
     public function dumpConfig(array $args = []): int
     {
         if (isset($args[1])) {
-            echo print_r($this->config->get($args[1]), 1) . "\n";
+            echo print_r($this->config->get($args[1]), true) . "\n";
         }
 
         return 0;

@@ -31,7 +31,7 @@ class ResponseException extends Exception
      *
      * @return ResponseInterface
      */
-    public function getResponse()
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }

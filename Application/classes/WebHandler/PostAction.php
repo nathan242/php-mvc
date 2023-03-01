@@ -17,7 +17,7 @@ class PostAction implements PostActionInterface
      */
     public function process(ResponseInterface $response)
     {
-        echo '<pre>' . print_r($response, 1) . '</pre>';
+        echo '<pre>' . print_r($response, true) . '</pre>';
     }
 }
 

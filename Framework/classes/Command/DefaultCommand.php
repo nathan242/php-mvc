@@ -14,7 +14,7 @@ class DefaultCommand extends BaseCommand
     /**
      * List supported commands with descriptions
      *
-     * @param array $args Command arguments
+     * @param array<string> $args Command arguments
      * @return int Return code
      */
     public function listCommands(array $args = []): int

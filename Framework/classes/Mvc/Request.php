@@ -17,7 +17,7 @@ class Request implements RequestInterface
     /** @var string $path */
     public $path;
 
-    /** @var array $params */
+    /** @var array<string, array<mixed>> $params */
     public $params;
 
     /** @var string $body */
@@ -77,7 +77,7 @@ class Request implements RequestInterface
     /**
      * Get information about files sent in request
      *
-     * @return array
+     * @return array<string>
      */
     public function files(): array
     {

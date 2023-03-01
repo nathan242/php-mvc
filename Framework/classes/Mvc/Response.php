@@ -18,10 +18,10 @@ class Response implements ResponseInterface
     /** @var ResponseContentInterface|string $content */
     public $content = '';
 
-    /** @var array $headers */
+    /** @var array<string, mixed> $headers */
     public $headers = [];
 
-    /** @var array $cookies */
+    /** @var array<string, array<string, mixed>> $cookies */
     public $cookies = [];
 
     /**
@@ -51,7 +51,7 @@ class Response implements ResponseInterface
      *
      * @param int $code
      * @param string|ResponseContentInterface $content
-     * @param array $headers
+     * @param array<string, mixed> $headers
      * @return $this
      */
     public function set(int $code = 200, $content = '', array $headers = [])
@@ -66,7 +66,7 @@ class Response implements ResponseInterface
     /**
      * Add response headers
      *
-     * @param array $headers
+     * @param array<string, mixed> $headers
      * @return $this
      */
     public function addHeaders(array $headers)

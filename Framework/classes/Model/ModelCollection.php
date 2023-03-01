@@ -12,7 +12,7 @@ use RuntimeException;
  */
 class ModelCollection implements ArrayAccess
 {
-    /** @var array $items */
+    /** @var array<Model> $items */
     protected $items = [];
 
     #[\ReturnTypeWillChange]
@@ -73,7 +73,7 @@ class ModelCollection implements ArrayAccess
     /**
      * Get all collection data as an array
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     public function toArray(): array
     {

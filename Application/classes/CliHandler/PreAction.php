@@ -12,11 +12,11 @@ use Framework\Mvc\Interfaces\CliHandler\PreActionInterface;
 class PreAction implements PreActionInterface
 {
     /**
-     * @param array $matchedRoute
+     * @param array<array, array<mixed>> $matchedRoute
      */
     public function process(array &$matchedRoute)
     {
-        echo 'PREACTION: ' . print_r($matchedRoute, 1);
+        echo 'PREACTION: ' . print_r($matchedRoute, true);
         //$matchedRoute[0] = 'repl';
     }
 

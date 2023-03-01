@@ -23,7 +23,7 @@ use Framework\Mvc\Interfaces\ResponseInterface;
  */
 class Application
 {
-    /** @var array $localConfig */
+    /** @var array<string, mixed> $localConfig */
     protected $localConfig;
 
     /** @var ConfigInterface $config */
@@ -36,7 +36,7 @@ class Application
      * Initialize application
      *
      * @param string $rootPath Path to application directory
-     * @param array $localConfig Local configuration
+     * @param array<string, mixed> $localConfig Local configuration
      * @return $this
      */
     public function init(string $rootPath, array $localConfig = [])
@@ -102,17 +102,17 @@ class Application
     /**
      * Run CLI command
      *
-     * @param array $arg Command arguments
+     * @param array<string> $args Command arguments
      * @param bool $throwExceptions Set true to pass exceptions on
      * @return int Return code
      * @throws CommandControllerNotFound
      * @throws CommandMethodNotFound
      * @throws CommandNotFound
      */
-    public function runCli(array $arg = [], bool $throwExceptions = false)
+    public function runCli(array $args = [], bool $throwExceptions = false)
     {
         try {
-            return $this->container->get('cli_handler')->process($arg);
+            return $this->container->get('cli_handler')->process($args);
         } catch (CommandNotFound $e) {
             if ($throwExceptions) throw $e;
             echo "Command not found.\n";

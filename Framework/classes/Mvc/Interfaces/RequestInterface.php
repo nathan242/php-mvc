@@ -8,7 +8,7 @@ namespace Framework\Mvc\Interfaces;
  * @package Framework\Mvc\Interfaces
  * @property string $method
  * @property string $path
- * @property array $params
+ * @property array<string, array<mixed>> $params
  * @property string $body
  */
 interface RequestInterface
@@ -40,7 +40,7 @@ interface RequestInterface
     /**
      * Get information about files sent in request
      *
-     * @return array
+     * @return array<string>
      */
     public function files(): array;
 

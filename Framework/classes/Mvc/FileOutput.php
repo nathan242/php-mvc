@@ -40,9 +40,9 @@ class FileOutput implements ResponseContentInterface
     /**
      * Get response headers for file download
      *
-     * @return array
+     * @return array<string, string>
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         $headers = [];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);

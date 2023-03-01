@@ -11,16 +11,16 @@ use Framework\Mvc\Interfaces\CommandRouterInterface;
  */
 class Command implements CommandRouterInterface
 {
-    /** @var array $commands */
+    /** @var array<string, array<string>> $commands */
     protected $commands = [];
 
-    /** @var array|null $default */
+    /** @var array<string>|null $default */
     protected $default = null;
 
     /**
      * Command constructor
      *
-     * @param array $config
+     * @param array<string, mixed> $config
      */
     public function __construct(array $config = [])
     {
@@ -37,7 +37,7 @@ class Command implements CommandRouterInterface
      * Add command route
      *
      * @param string $name
-     * @param array $action
+     * @param array<string> $action
      */
     public function command(string $name, array $action)
     {
@@ -47,8 +47,8 @@ class Command implements CommandRouterInterface
     /**
      * Get route from command arguments
      *
-     * @param array $arguments
-     * @return array
+     * @param array<string> $arguments
+     * @return array<int, array<mixed>>
      */
     public function process(array $arguments): array
     {

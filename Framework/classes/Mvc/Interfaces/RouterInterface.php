@@ -14,7 +14,7 @@ interface RouterInterface
      *
      * @param string $path
      * @param string $method
-     * @param array $action
+     * @param array<string> $action
      */
     public function route(string $path, string $method, array $action);
 
@@ -22,7 +22,7 @@ interface RouterInterface
      * Get route from request
      *
      * @param RequestInterface $request
-     * @return array
+     * @return array<array<mixed>>
      */
     public function process(RequestInterface $request): array;
 }

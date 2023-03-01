@@ -2,6 +2,11 @@
 
 namespace Framework\Util;
 
+/**
+ * Data escape functions
+ *
+ * @package Framework\Util
+ */
 class Escaper
 {
     /**
@@ -18,8 +23,8 @@ class Escaper
     /**
      * Escapes keys and values for safe use in HTML
      *
-     * @param array $arr Array with values to escape
-     * @return array|boolean
+     * @param array<mixed> $arr Array with values to escape
+     * @return array<mixed>|boolean
      */
     public static function escapeHtmlArray(array $arr)
     {

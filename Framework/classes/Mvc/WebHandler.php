@@ -27,13 +27,13 @@ class WebHandler
     /** @var RouterInterface $router */
     protected $router;
 
-    /** @var array $preRoute */
+    /** @var array<string> $preRoute */
     protected $preRoute = [];
 
-    /** @var array $preAction */
+    /** @var array<string> $preAction */
     protected $preAction = [];
 
-    /** @var array $postAction */
+    /** @var array<string> $postAction */
     protected $postAction = [];
 
     /**
@@ -41,7 +41,7 @@ class WebHandler
      *
      * @param ContainerInterface $container
      * @param RouterInterface $router
-     * @param array $config
+     * @param array<string, mixed> $config
      */
     public function __construct(ContainerInterface $container, RouterInterface $router, array $config = [])
     {
@@ -121,7 +121,7 @@ class WebHandler
     /**
      * Run pre action task
      *
-     * @param $matchedRoute
+     * @param array<array<mixed>> $matchedRoute
      */
     protected function runPreAction(&$matchedRoute)
     {
@@ -176,8 +176,8 @@ class WebHandler
     /**
      * Run web action
      *
-     * @param array $action
-     * @param array $params
+     * @param array<int, string> $action
+     * @param array<string> $params
      * @return ResponseInterface
      * @throws ControllerNotFound
      * @throws MethodNotFound

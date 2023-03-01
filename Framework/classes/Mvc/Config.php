@@ -15,14 +15,14 @@ class Config implements ConfigInterface
     /** @var string $configPath */
     protected $configPath;
 
-    /** @var array $local */
+    /** @var array<string, mixed> $local */
     public $local = [];
 
     /**
      * Config constructor
      *
      * @param string $configPath
-     * @param array $local
+     * @param array<string, mixed> $local
      */
     public function __construct(string $configPath, array $local = [])
     {
@@ -38,7 +38,7 @@ class Config implements ConfigInterface
      * Get config
      *
      * @param string $name
-     * @return array
+     * @return array<string, mixed>
      */
     public function get(string $name): array
     {

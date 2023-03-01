@@ -9,40 +9,40 @@ namespace Framework\Database;
  */
 abstract class SqlBuilder
 {
-    /** @var array|null $select */
+    /** @var array<string>|null $select */
     protected $select;
 
     /** @var string|null $table */
     protected $table;
 
-    /** @var array|null $where */
+    /** @var array<string, mixed>|null $where */
     protected $where;
 
     /** @var int|null limit */
     protected $limit;
 
-    /** @var array|null $insert */
+    /** @var array<string, mixed>|null $insert */
     protected $insert;
 
     /** @var bool $update */
     protected $update = false;
 
-    /** @var array|null $set */
+    /** @var array<string, mixed>|null $set */
     protected $set;
 
     /** @var string|null $createTable */
     protected $createTable;
 
-    /** @var array|null $createTableParams */
+    /** @var array<string, mixed>|null $createTableParams */
     protected $createTableParams;
 
-    /** @var array|null $createFields */
+    /** @var array<string>|null $createFields */
     protected $createFields;
 
     /**
      * Add SELECT fields
      *
-     * @param array $select
+     * @param array<string> $select
      * @return $this
      */
     public function select($select = []): self
@@ -54,7 +54,7 @@ abstract class SqlBuilder
     /**
      * Add INSERT fields
      *
-     * @param array $insert
+     * @param array<string, mixed> $insert
      * @return $this
      */
     public function insert($insert = []): self
@@ -103,7 +103,7 @@ abstract class SqlBuilder
     /**
      * Set WHERE parameters
      *
-     * @param array $where
+     * @param array<string, mixed> $where
      * @return $this
      */
     public function where(array $where = []): self
@@ -115,7 +115,7 @@ abstract class SqlBuilder
     /**
      * Set SET parameters
      *
-     * @param array $set
+     * @param array<string, mixed> $set
      * @return $this
      */
     public function set(array $set): self
@@ -161,7 +161,7 @@ abstract class SqlBuilder
      * Create table
      *
      * @param string $table
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return $this
      */
     public function create(string $table, array $params = []): self
@@ -176,7 +176,7 @@ abstract class SqlBuilder
      *
      * @param string $name
      * @param string $type
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return $this
      */
     public function field(string $name, string $type, array $params = []): self
@@ -191,7 +191,7 @@ abstract class SqlBuilder
      * Get INT field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     abstract public function fieldInt(string $name, array $params): string;
@@ -200,7 +200,7 @@ abstract class SqlBuilder
      * Get STRING field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     abstract public function fieldString(string $name, array $params): string;
@@ -209,7 +209,7 @@ abstract class SqlBuilder
      * Get BOOL field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     abstract public function fieldBoolean(string $name, array $params): string;
@@ -218,7 +218,7 @@ abstract class SqlBuilder
      * Get DATE field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     abstract public function fieldDate(string $name, array $params): string;
@@ -227,7 +227,7 @@ abstract class SqlBuilder
      * Get DECIMAL field SQL
      *
      * @param string $name
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return string
      */
     abstract public function fieldDecimal(string $name, array $params): string;
@@ -235,7 +235,7 @@ abstract class SqlBuilder
     /**
      * Output SQL, datatypes and parameters
      *
-     * @return array
+     * @return array<string, mixed>
      */
     abstract public function sql(): array;
 }

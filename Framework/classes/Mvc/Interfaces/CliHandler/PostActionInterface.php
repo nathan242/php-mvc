@@ -12,7 +12,7 @@ interface PostActionInterface
     /**
      * Process response
      *
-     * @param mixed $response
+     * @param int $response
      */
     public function process(&$response);
 }

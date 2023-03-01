@@ -19,7 +19,7 @@ interface ResponseInterface
      *
      * @param int $code
      * @param string|ResponseContentInterface $content
-     * @param array $headers
+     * @param array<string, mixed> $headers
      * @return $this
      */
     public function set(int $code = 200, $content = '', array $headers = []);
@@ -27,7 +27,7 @@ interface ResponseInterface
     /**
      * Add response headers
      *
-     * @param array $headers
+     * @param array<string, mixed> $headers
      * @return $this
      */
     public function addHeaders(array $headers);

@@ -41,8 +41,8 @@ interface DatabaseInterface
     /**
      * Execute the prepared query and store result in $this->result
      *
-     * @param array $types Array of data types for prepared parameters
-     * @param array $data Array of data for prepared parameters
+     * @param array<mixed> $types Array of data types for prepared parameters
+     * @param array<mixed> $data Array of data for prepared parameters
      * @return bool
      */
     public function execute(array $types, array $data): bool;
@@ -51,8 +51,8 @@ interface DatabaseInterface
      * Prepare and execute an SQL query and store result in $this->result
      *
      * @param string $query SQL query
-     * @param array $types Array of data types for prepared parameters
-     * @param array $data Array of data for prepared parameters
+     * @param array<mixed> $types Array of data types for prepared parameters
+     * @param array<mixed> $data Array of data for prepared parameters
      * @return bool
      */
     public function preparedQuery(string $query, array $types, array $data): bool;
