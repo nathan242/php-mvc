@@ -1,0 +1,7 @@
+<?php
+use Framework\Gui\Gui;
+
+ob_start();
+Gui::button('Add', 'table_crud/add');
+Gui::panel('Test table', ob_get_clean());
+Gui::table($records, ['id', 'text', 'number'], ['route' => '/table_crud/', 'vkey' => 'id']);

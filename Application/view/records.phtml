@@ -1,0 +1,7 @@
+<?php
+use Framework\Gui\Gui;
+
+ob_start();
+Gui::button('Add', 'records/add');
+Gui::panel('Records', ob_get_clean());
+Gui::table($records, ['key', 'value'], ['route' => '/records/', 'vkey' => '0']);
