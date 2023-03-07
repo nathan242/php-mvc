@@ -126,7 +126,15 @@ class Container implements ContainerInterface
 
         $dependencies = [];
         foreach ($parameters as $parameter) {
-            $dependencies[] = $this->get((string)$parameter->getType());
+            $type = (string)$parameter->getType();
+
+            try {
+                $dependencies[] = $this->get($type);
+            } catch (ClassNotFound $e) {
+                if (!$parameter->isOptional()) {
+                    throw $e;
+                }
+            }
         }
 
         return new $name(...$dependencies);

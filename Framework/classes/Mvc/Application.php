@@ -152,7 +152,6 @@ class Application
 
             $response = $this->container->get('web_handler')->process($request);
         } catch (ResponseException $e) {
-            if ($throwExceptions) throw $e;
             $response = $e->getResponse();
         } catch (PageNotFound $e) {
             if ($throwExceptions) throw $e;
