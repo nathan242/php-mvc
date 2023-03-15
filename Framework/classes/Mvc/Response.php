@@ -39,7 +39,7 @@ class Response implements ResponseInterface
         }
 
         if (is_object($this->content) && $this->content instanceof ResponseContentInterface) {
-            echo $this->content->outputContent();
+            $this->content->outputContent();
             return;
         }
 

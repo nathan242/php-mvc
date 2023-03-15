@@ -13,4 +13,11 @@ interface ResponseContentInterface
      * Output response content
      */
     public function outputContent();
+
+    /**
+     * Get response content as string
+     *
+     * @return string
+     */
+    public function __toString(): string;
 }

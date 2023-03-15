@@ -93,20 +93,14 @@ class View implements ViewInterface
      */
     public function outputContent()
     {
-        foreach ($this->viewVariables as $key => $value) {
-            if (!isset($$key)) {
-                if ($value instanceof ResponseContentInterface) {
-                    ob_start();
-                    $value->outputContent();
-                    $$key = ob_get_clean();
-                } else {
-                    $$key = $value;
-                }
-            }
-        }
-
         if (null === $this->viewPath) {
             throw new RuntimeException('View path is not configured');
+        }
+
+        foreach ($this->viewVariables as $key => $value) {
+            if (!isset($$key)) {
+                $$key = $value;
+            }
         }
 
         require $this->viewPath . $this->viewView;
@@ -174,5 +168,17 @@ class View implements ViewInterface
     public function __isset($name): bool
     {
         return array_key_exists($name, $this->viewVariables);
+    }
+
+    /**
+     * Get response content as string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        ob_start();
+        $this->outputContent();
+        return ob_get_clean();
     }
 }

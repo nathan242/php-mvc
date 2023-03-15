@@ -12,7 +12,7 @@ use Framework\Mvc\Interfaces\CliHandler\PreActionInterface;
 class PreAction implements PreActionInterface
 {
     /**
-     * @param array<array, array<mixed>> $matchedRoute
+     * @param array<int, array<mixed>> $matchedRoute
      */
     public function process(array &$matchedRoute)
     {

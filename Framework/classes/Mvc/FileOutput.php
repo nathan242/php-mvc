@@ -61,5 +61,17 @@ class FileOutput implements ResponseContentInterface
     {
         echo fread($this->handle, filesize($this->path));
     }
+
+    /**
+     * Get response content as string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        ob_start();
+        $this->outputContent();
+        return ob_get_clean();
+    }
 }
 
