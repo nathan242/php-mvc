@@ -1,0 +1,17 @@
+<?php
+
+use Framework\Database\Mdb;
+use Framework\Database\MysqlBuilder;
+
+return [
+    'db' => [
+        'driver' => Mdb::class,
+        'sql_builder' => MysqlBuilder::class,
+        'host' => 'localhost',
+        'username' => 'php_mvc',
+        'password' => 'P4p_Mvc!!2019',
+        'db' => 'php_mvc'
+        //'db_filename' => '/srv/sqlite3/database.sqlite3'
+    ]
+];
+
