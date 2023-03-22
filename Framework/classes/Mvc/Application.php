@@ -170,5 +170,29 @@ class Application
 
         $response->send();
     }
+
+    public function runServer(): int
+    {
+        $server = $this->container->get('server');
+        return $server->start($this);
+    }
+
+    public function runClient($request = null, bool $returnResponse = false)
+    {
+        $client = $this->container->get('client');
+
+        if ($request === null) {
+            $request = $this->container->get('request');
+            $request->get();
+        }
+
+        $response = $client->process($request);
+
+        if ($returnResponse) {
+            return $response;
+        }
+
+        $response->send();
+    }
 }
 
