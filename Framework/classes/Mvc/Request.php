@@ -20,6 +20,9 @@ class Request implements RequestInterface
     /** @var array<string, array<mixed>> $params */
     public $params;
 
+    /** @var array<string, string> $headers */
+    public $headers;
+
     /** @var string $body */
     public $body;
 
@@ -36,6 +39,15 @@ class Request implements RequestInterface
             'FILES' => $_FILES,
             'COOKIE' => $_COOKIE
         ];
+
+        $this->headers = [];
+        foreach($_SERVER as $key => $value) {
+            if (substr($key, 0, 5) === 'HTTP_') {
+                $header = ucwords(strtolower(str_replace('_', '-', substr($key, 5))), '-');
+                $this->headers[$header] = $value;
+            }
+        }
+
         $this->body = file_get_contents('php://input');
     }
 

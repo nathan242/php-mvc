@@ -34,7 +34,17 @@ class Api extends BaseController
             'body' => $this->request->body
         ];
 
-        return $this->response->set(200, json_encode($ret));
+        return $this->response->set(200, json_encode($ret, JSON_PRETTY_PRINT));
+    }
+
+    /**
+     * Return request headers
+     *
+     * @return ResponseInterface
+     */
+    public function headers(): ResponseInterface
+    {
+        return $this->response->set(200, json_encode($this->request->headers, JSON_PRETTY_PRINT));
     }
 }
 
