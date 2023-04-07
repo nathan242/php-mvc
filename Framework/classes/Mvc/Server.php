@@ -91,21 +91,18 @@ class Server
 
     public function handle(Application $application, $conn)
     {
-        $requestData = '';
-        while ($read = socket_read($conn, 4096, PHP_NORMAL_READ)) {
-            $requestData .= $read;
-            if (substr($requestData, -1) === "\n") break;
-        }
+        $size = (int)socket_read($conn, 4096, PHP_NORMAL_READ);
+        $requestData = socket_read($conn, $size);
 
-        $decoded = base64_decode($requestData);
-        if ($decoded === false) return;
-
-        $request = unserialize($decoded);
+        $request = unserialize($requestData);
         if ($request === false || !$request instanceof RequestInterface) return;
 
         $response = $application->runWeb($request, true);
 
-        socket_write($conn, base64_encode(serialize($response))."\n");
+        $responseData = serialize($response);
+        $responseSize = strlen($responseData);
+
+        socket_write($conn, "{$responseSize}\n{$responseData}");
     }
 }
 

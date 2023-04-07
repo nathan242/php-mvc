@@ -32,22 +32,17 @@ class Client
             throw new RuntimeException('Unable to connect to socket. '.$this->getSocketErrorString($socket));
         }
 
-        if (socket_write($socket, base64_encode(serialize($request))."\n") === false) {
+        $requestData = serialize($request);
+        $requestSize = strlen($requestData);
+
+        if (socket_write($socket, "{$requestSize}\n{$requestData}") === false) {
             throw new RuntimeException('Unable to write to socket. '.$this->getSocketErrorString($socket));
         }
 
-        $responseData = '';
-        while ($read = socket_read($socket, 4096, PHP_NORMAL_READ)) {
-            $responseData .= $read;
-            if (substr($responseData, -1) === "\n") break;
-        }
+        $size = (int)socket_read($socket, 4096, PHP_NORMAL_READ);
+        $responseData = socket_read($socket, $size);
 
-        $decoded = base64_decode($responseData);
-        if ($decoded === false) {
-            throw new RuntimeException('Unable to decode response');
-        }
-
-        $response = unserialize($decoded);
+        $response = unserialize($responseData);
         if ($response === false || !$response instanceof ResponseInterface) {
             throw new RuntimeException('Invalid response');
         }

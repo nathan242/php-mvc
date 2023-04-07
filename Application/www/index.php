@@ -2,6 +2,8 @@
 
 use Framework\Mvc\Application;
 
+//$start = hrtime(true);
+
 $rootPath = __DIR__ . '/..';
 
 require_once "{$rootPath}/../Framework/include/autoloader.php";
@@ -20,4 +22,5 @@ if ('cli' === php_sapi_name()) {
 }
 
 $application->runWeb();
-
+//$end = hrtime(true);
+//echo '<p><strong>TIME: '.($end - $start).'</strong></p>';
