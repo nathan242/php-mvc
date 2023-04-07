@@ -31,6 +31,7 @@ return [
         ],
         '*' => [
             '/api' => ['Api', 'apiTest'],
+            '/headers' => ['Api', 'headers'],
             '/(.*)' => ['NotFound', 'error404']
         ]
     ]
