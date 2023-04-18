@@ -1,0 +1,84 @@
+<?php
+use Framework\Gui\Gui;
+
+echo $form->html();
+
+if ($error !== null) {
+    Gui::panel('Error', "<p>{$error}</p>", 'danger');
+}
+
+if (is_array($functions) && count($functions) > 0) {
+    ob_start();
+    echo '<form method="post">';
+    echo '<p><select name="call_function" id="call_function">';
+
+    foreach ($functions as $func => $params) {
+        echo '<option value="'.$func.'">'.$func.'</option>';
+    }
+
+    echo '</select></p>';
+
+    // TODO
+    foreach ($functions as $func => $params) {
+        echo '<p id="params_'.$func.'" style="display: none;">';
+        foreach ($params as $param) {
+            echo '<strong>'.$param.':</strong> <input type="text" name="param_'.$func.'_'.$param.'"> ';
+            echo '<input type="checkbox" name="array_'.$func.'_'.$param.'"><label for="array_'.$func.'_'.$param.'">JSON to array</label>';
+        }
+        echo '</p>';
+    }
+    // ====
+
+    echo '<p><input class="btn btn-primary" type="submit" value="Call"></p>';
+    echo '</form>';
+
+    Gui::panel('Call', ob_get_clean());
+}
+
+if ($response !== null) {
+    ob_start();
+    echo '<pre>'.print_r($response, true).'</pre>';
+    Gui::panel('Response', ob_get_clean());
+}
+
+ob_start();
+if (is_array($function_defs) && count($function_defs) > 0) {
+  echo '<p>';
+  foreach ($function_defs as $def) {
+    echo "{$def}<br>";
+  }
+  echo '</p>';
+} else {
+  echo '<p>No functions</p>';
+}
+
+Gui::panel('Functions', ob_get_clean());
+
+ob_start();
+if (is_array($type_defs) && count($type_defs) > 0) {
+  echo '<p>';
+  foreach ($type_defs as $def) {
+    echo "{$def}<br>";
+  }
+  echo '</p>';
+} else {
+  echo '<p>No types</p>';
+}
+
+Gui::panel('Types', ob_get_clean());
+?>
+<script>
+    let callFunction = document.getElementById('call_function');
+    let currentFunctionId = 0;
+
+    document.getElementById('params_'+callFunction.options[currentFunctionId].value).style.display = '';
+
+    function showParams() {
+        document.getElementById('params_'+callFunction.options[currentFunctionId].value).style.display = 'none';
+        currentFunctionId = callFunction.options.selectedIndex;
+        document.getElementById('params_'+callFunction.options[currentFunctionId].value).style.display = '';
+    }
+
+    callFunction.addEventListener('change', showParams);
+</script>
+
