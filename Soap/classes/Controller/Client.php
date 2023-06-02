@@ -21,10 +21,11 @@ class Client extends BaseController {
     }
 
     public function client() {
+        $soapConfig = $this->config->get('soap') ?? [];
         $wsdlUrl = $this->request->param('wsdl_url', null);
         $functionDefs = null;
         $typeDefs = null;
-        $functions = null;
+        $functions = [];
         $error = null;
         $response = null;
 
@@ -33,7 +34,7 @@ class Client extends BaseController {
 
         if ($wsdlUrl !== null) {
             try {
-                $client = $this->soapClientFactory->create($wsdlUrl);
+                $client = $this->soapClientFactory->create($wsdlUrl, $soapConfig['options'] ?? []);
                 $functionDefs = $client->__getFunctions();
                 $typeDefs = $client->__getTypes();
             } catch (Exception $e) {
@@ -42,11 +43,13 @@ class Client extends BaseController {
 
             if (is_array($functionDefs)) {
                 foreach ($functionDefs as $def) {
-                    $parts = explode(' ', $def);
-                    $params = [];
-                    preg_match_all('/\$[a-zA-Z0-9]+/', $def, $params);
-                    $functionName = explode('(', $parts[1])[0];
-                    $functions[$functionName] = $params[0];
+                    $matches = [];
+                    if (preg_match('/(?<=\ )[a-zA-Z0-9]+\([^\)]*\)/', $def, $matches)) {
+                        $params = [];
+                        preg_match_all('/\$[a-zA-Z0-9]+/', $matches[0], $params);
+                        $functionName = explode('(', $matches[0])[0];
+                        $functions[$functionName] = $params[0];
+                    }
                 }
             }
 
@@ -58,7 +61,7 @@ class Client extends BaseController {
                         if ($this->request->param("array_{$callFunction}_{$param}", null, 'POST') !== null) {
                             $callParams[] = json_decode($this->request->param("param_{$callFunction}_{$param}", null, 'POST'), true);
                         } else {
-                            $callParams[] = $this->request->param("param_{$param}", null, 'POST');
+                            $callParams[] = $this->request->param("param_{$callFunction}_{$param}", null, 'POST');
                         }
                     }
 

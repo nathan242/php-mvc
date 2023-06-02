@@ -1,10 +1,11 @@
 <?php
 use Framework\Gui\Gui;
+use Framework\Util\Escaper;
 
 echo $form->html();
 
 if ($error !== null) {
-    Gui::panel('Error', "<p>{$error}</p>", 'danger');
+    Gui::panel('Error', '<p>'.Escaper::escapeHtml($error).'</p>', 'danger');
 }
 
 if (is_array($functions) && count($functions) > 0) {
@@ -18,16 +19,15 @@ if (is_array($functions) && count($functions) > 0) {
 
     echo '</select></p>';
 
-    // TODO
     foreach ($functions as $func => $params) {
         echo '<p id="params_'.$func.'" style="display: none;">';
         foreach ($params as $param) {
             echo '<strong>'.$param.':</strong> <input type="text" name="param_'.$func.'_'.$param.'"> ';
-            echo '<input type="checkbox" name="array_'.$func.'_'.$param.'"><label for="array_'.$func.'_'.$param.'">JSON to array</label>';
+            echo '<input type="checkbox" name="array_'.$func.'_'.$param.'"> <label for="array_'.$func.'_'.$param.'">JSON to array</label>';
+            echo '<br>';
         }
         echo '</p>';
     }
-    // ====
 
     echo '<p><input class="btn btn-primary" type="submit" value="Call"></p>';
     echo '</form>';
@@ -37,7 +37,7 @@ if (is_array($functions) && count($functions) > 0) {
 
 if ($response !== null) {
     ob_start();
-    echo '<pre>'.print_r($response, true).'</pre>';
+    echo '<pre>'.Escaper::escapeHtml(print_r($response, true)).'</pre>';
     Gui::panel('Response', ob_get_clean());
 }
 
