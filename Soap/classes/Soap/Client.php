@@ -1,0 +1,72 @@
+<?php
+namespace Soap\Soap;
+
+use Soap\Soap\Factory\SoapClientFactory;
+use Exception;
+
+class Client
+{
+    protected $soapClientFactory;
+    protected $soapClient;
+    protected $config;
+    public $functionDefs;
+    public $typeDefs;
+
+    public function __construct(SoapClientFactory $soapClientFactory, array $config = [])
+    {
+        $this->soapClientFactory = $soapClientFactory;
+        $this->config = $config;
+    }
+
+    public function wsdl(string $wsdl): void
+    {
+        $this->soapClient = null;
+        $this->functionDefs = null;
+        $this->typeDefs = null;
+
+        try {
+            $this->soapClient = $this->soapClientFactory->create($wsdl, $this->config['options'] ?? []);
+            $this->functionDefs = $this->soapClient->__getFunctions();
+            $this->typeDefs = $this->soapClient->__getTypes();
+        } catch (Exception $e) {
+            $this->soapClient = null;
+            $this->functionDefs = null;
+            $this->typeDefs = null;
+
+            throw $e;
+        }
+    }
+
+    public function getInfo(): array
+    {
+        return [
+            'functions' => $this->functionDefs,
+            'types' => $this->typeDefs
+        ];
+    }
+
+    public function getFunctionInfo(): array
+    {
+        $functions = [];
+
+        if (is_array($this->functionDefs)) {
+            foreach ($this->functionDefs as $def) {
+                $matches = [];
+                if (preg_match('/(?<=\ )[a-zA-Z0-9]+\([^\)]*\)/', $def, $matches)) {
+                    $params = [];
+                    preg_match_all('/\$[a-zA-Z0-9]+/', $matches[0], $params);
+                    $functionName = explode('(', $matches[0])[0];
+                    $functions[$functionName] = $params[0];
+                }
+            }
+        }
+
+        return $functions;
+    }
+
+    public function call(string $function, array $params)
+    {
+        return $this->soapClient->{$function}(...$params);
+    }
+}
+

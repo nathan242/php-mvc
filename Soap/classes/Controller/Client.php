@@ -1,30 +1,34 @@
 <?php
+
 namespace Soap\Controller;
 
 use Framework\Controller\BaseController;
+use Framework\Mvc\Interfaces\ResponseInterface;
 use Framework\Gui\Form;
-use Soap\Factory\SoapClientFactory;
+use Soap\Soap\Client as ClientObj;
 use Exception;
 
-class Client extends BaseController {
+class Client extends BaseController
+{
     protected $form;
-    protected $soapClientFactory;
+    protected $client;
 
-    public function __construct(Form $form, SoapClientFactory $soapClientFactory) {
+    public function __construct(Form $form, ClientObj $client)
+    {
         $this->form = $form;
-        $this->soapClientFactory = $soapClientFactory;
+        $this->client = $client;
     }
 
-    public function init() {
+    public function init(): void
+    {
         parent::init();
         $this->view->SetView('template.phtml');
     }
 
-    public function client() {
-        $soapConfig = $this->config->get('soap') ?? [];
+    public function client(): ResponseInterface
+    {
         $wsdlUrl = $this->request->param('wsdl_url', null);
-        $functionDefs = null;
-        $typeDefs = null;
+        $wsdlInfo = [];
         $functions = [];
         $error = null;
         $response = null;
@@ -34,24 +38,13 @@ class Client extends BaseController {
 
         if ($wsdlUrl !== null) {
             try {
-                $client = $this->soapClientFactory->create($wsdlUrl, $soapConfig['options'] ?? []);
-                $functionDefs = $client->__getFunctions();
-                $typeDefs = $client->__getTypes();
+                $this->client->wsdl($wsdlUrl);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
 
-            if (is_array($functionDefs)) {
-                foreach ($functionDefs as $def) {
-                    $matches = [];
-                    if (preg_match('/(?<=\ )[a-zA-Z0-9]+\([^\)]*\)/', $def, $matches)) {
-                        $params = [];
-                        preg_match_all('/\$[a-zA-Z0-9]+/', $matches[0], $params);
-                        $functionName = explode('(', $matches[0])[0];
-                        $functions[$functionName] = $params[0];
-                    }
-                }
-            }
+            $wsdlInfo = $this->client->getInfo();
+            $functions = $this->client->getFunctionInfo();
 
             if ($this->request->method === 'POST') {
                 $callFunction = $this->request->param('call_function', null, 'POST');
@@ -66,8 +59,7 @@ class Client extends BaseController {
                     }
 
                     try {
-                        //$response = $client->__soapCall($callFunction, $callParams);
-                        $response = $client->{$callFunction}(...$callParams);
+                        $response = $this->client->call($callFunction, $callParams);
                     } catch (Exception $e) {
                         $error = $e->getMessage();
                     }
@@ -75,7 +67,20 @@ class Client extends BaseController {
             }
         }
 
-        return $this->response->set(200, $this->view->get('client.phtml', ['form' => $this->form, 'function_defs' => $functionDefs, 'type_defs' => $typeDefs, 'functions' => $functions, 'error' => $error, 'response' => $response]));
+        return $this->response->set(
+            200,
+            $this->view->get(
+                'client.phtml',
+                [
+                    'form' => $this->form,
+                    'function_defs' => $wsdlInfo['functions'] ?? null,
+                    'type_defs' => $wsdlInfo['types'] ?? null,
+                    'functions' => $functions,
+                    'error' => $error,
+                    'response' => $response
+                ]
+            )
+        );
     }
 }
 

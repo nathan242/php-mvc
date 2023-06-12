@@ -26,6 +26,8 @@ return [
         Framework\Database\Interfaces\DatabaseInterface::class => Framework\Database\Factory\DbFactory::class,
         Framework\Database\SqlBuilder::class => Framework\Database\Factory\SqlBuilderFactory::class,
         Framework\Command\DefaultCommand::class => Framework\Command\Factory\BaseFactory::class,
-        Soap\Controller\Client::class => Framework\Controller\Factory\BaseFactory::class
+        Soap\Controller\Client::class => Framework\Controller\Factory\BaseFactory::class,
+        Soap\Command\Client::class => Framework\Command\Factory\BaseFactory::class,
+        Soap\Soap\Client::class => Soap\Soap\Factory\ClientFactory::class
     ]
 ];
