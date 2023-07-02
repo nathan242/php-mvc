@@ -84,6 +84,56 @@ abstract class Model
     }
 
     /**
+     * Get database
+     *
+     * @return DatabaseInterface
+     */
+    public function getDatabase(): DatabaseInterface
+    {
+        return $this->db;
+    }
+
+    /**
+     * Get SQL builder
+     *
+     * @return SqlBuilder
+     */
+    public function getSqlBuilder(): SqlBuilder
+    {
+        return $this->sqlBuilder;
+    }
+
+    /**
+     * Get table name
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return $this->table;
+    }
+
+    /**
+     * Get primary key
+     *
+     * @return string
+     */
+    public function getPrimaryKey(): string
+    {
+        return $this->primaryKey;
+    }
+
+    /**
+     * Get array of changed records
+     *
+     * @return array<string>
+     */
+    public function getChanged(): array
+    {
+        return $this->changed;
+    }
+
+    /**
      * Get all records as a collection
      *
      * @return ModelCollection|false
