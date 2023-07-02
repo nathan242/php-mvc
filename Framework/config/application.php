@@ -1,6 +1,6 @@
 <?php
 return [
     'name' => 'PHP-MVC',
-    'version' => 'v0.2.0'
+    'version' => 'v0.2.2'
 ];
 
