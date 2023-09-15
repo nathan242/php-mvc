@@ -68,5 +68,13 @@ class Client
     {
         return $this->soapClient->{$function}(...$params);
     }
+
+    public function getRawData(): array
+    {
+        return [
+            'request' => $this->soapClient->__getLastRequest(),
+            'response' => $this->soapClient->__getLastResponse()
+        ];
+    }
 }
 

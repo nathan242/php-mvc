@@ -32,6 +32,10 @@ class Client extends BaseController
         $functions = [];
         $error = null;
         $response = null;
+        $callFunction = null;
+        $callParams = [];
+        $showRaw = false;
+        $rawData = [];
 
         $this->form->init('SOAP API Client', 'Submit', 'primary', 'get');
         $this->form->input('wsdl_url', 'WSDL URL: ', 'text', false, $wsdlUrl);
@@ -48,8 +52,8 @@ class Client extends BaseController
 
             if ($this->request->method === 'POST') {
                 $callFunction = $this->request->param('call_function', null, 'POST');
+                $showRaw = $this->request->param('raw') === '1' ? true : false;
                 if (array_key_exists($callFunction, $functions)) {
-                    $callParams = [];
                     foreach ($functions[$callFunction] as $param) {
                         if ($this->request->param("array_{$callFunction}_{$param}", null, 'POST') !== null) {
                             $callParams[] = json_decode($this->request->param("param_{$callFunction}_{$param}", null, 'POST'), true);
@@ -62,6 +66,10 @@ class Client extends BaseController
                         $response = $this->client->call($callFunction, $callParams);
                     } catch (Exception $e) {
                         $error = $e->getMessage();
+                    }
+
+                    if ($showRaw) {
+                        $rawData = $this->client->getRawData();
                     }
                 }
             }
@@ -77,7 +85,11 @@ class Client extends BaseController
                     'type_defs' => $wsdlInfo['types'] ?? null,
                     'functions' => $functions,
                     'error' => $error,
-                    'response' => $response
+                    'response' => $response,
+                    'call_function' => $callFunction,
+                    'call_params' => $callParams,
+                    'raw_request' => $rawData['request'] ?? null,
+                    'raw_response' => $rawData['response'] ?? null
                 ]
             )
         );

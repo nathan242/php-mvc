@@ -14,16 +14,28 @@ if (is_array($functions) && count($functions) > 0) {
     echo '<p><select name="call_function" id="call_function">';
 
     foreach ($functions as $func => $params) {
-        echo '<option value="'.$func.'">'.$func.'</option>';
+        $selected = $call_function === $func ? ' selected ' : '';
+        echo '<option '.$selected.'value="'.$func.'">'.$func.'</option>';
     }
 
     echo '</select></p>';
 
     foreach ($functions as $func => $params) {
         echo '<p id="params_'.$func.'" style="display: none;">';
-        foreach ($params as $param) {
-            echo '<strong>'.$param.':</strong> <input type="text" name="param_'.$func.'_'.$param.'"> ';
-            echo '<input type="checkbox" name="array_'.$func.'_'.$param.'"> <label for="array_'.$func.'_'.$param.'">JSON to array</label>';
+        foreach ($params as $key => $param) {
+            $value = '';
+            $jtaChecked = '';
+            if ($call_function === $func) {
+                $param_value = $call_params[$key] ?? '';
+                if (is_array($param_value)) {
+                    $param_value = json_encode($param_value);
+                    $jtaChecked = ' checked';
+                }
+                $value = ' value="'.Escaper::escapeHtml($param_value).'"';
+            }
+
+            echo '<strong>'.$param.':</strong> <input type="text" name="param_'.$func.'_'.$param.'"'.$value.'> ';
+            echo '<input type="checkbox" name="array_'.$func.'_'.$param.'"'.$jtaChecked.'> <label for="array_'.$func.'_'.$param.'">JSON to array</label>';
             echo '<br>';
         }
         echo '</p>';
@@ -39,6 +51,18 @@ if ($response !== null) {
     ob_start();
     echo '<pre>'.Escaper::escapeHtml(print_r($response, true)).'</pre>';
     Gui::panel('Response', ob_get_clean());
+}
+
+if ($raw_request !== null ) {
+    ob_start();
+    echo '<pre>'.Escaper::escapeHtml(print_r($raw_request, true)).'</pre>';
+    Gui::panel('Raw Request', ob_get_clean());
+}
+
+if ($raw_response !== null ) {
+    ob_start();
+    echo '<pre>'.Escaper::escapeHtml(print_r($raw_response, true)).'</pre>';
+    Gui::panel('Raw Response', ob_get_clean());
 }
 
 ob_start();
@@ -71,14 +95,15 @@ Gui::panel('Types', ob_get_clean());
     let callFunction = document.getElementById('call_function');
     let currentFunctionId = 0;
 
-    document.getElementById('params_'+callFunction.options[currentFunctionId].value).style.display = '';
-
     function showParams() {
         document.getElementById('params_'+callFunction.options[currentFunctionId].value).style.display = 'none';
         currentFunctionId = callFunction.options.selectedIndex;
         document.getElementById('params_'+callFunction.options[currentFunctionId].value).style.display = '';
     }
 
-    callFunction.addEventListener('change', showParams);
+    if (callFunction !== null) {
+        showParams();
+        callFunction.addEventListener('change', showParams);
+    }
 </script>
 

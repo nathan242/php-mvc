@@ -1,5 +1,7 @@
 <?php
 return [
-    'options' => []
+    'options' => [
+        'trace' => true
+    ]
 ];
 
