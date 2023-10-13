@@ -76,7 +76,7 @@ class Mdb implements DatabaseInterface
     /**
      * Connect to the DB server.
      */
-    public function connect()
+    public function connect(): void
     {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -90,7 +90,7 @@ class Mdb implements DatabaseInterface
     /**
      * Disconnect from the database server.
      */
-    public function disconnect()
+    public function disconnect(): void
     {
         if ($this->isConnected) {
             $this->dbobj->close();
@@ -102,7 +102,7 @@ class Mdb implements DatabaseInterface
     /**
      * Disconnect from the DB server if set to not remain connected or a transaction is not open
      */
-    private function disconnectIfAllowed()
+    protected function disconnectIfAllowed(): void
     {
         if (!$this->keepConnected && !$this->transactionOpen) {
             $this->disconnect();
@@ -267,7 +267,7 @@ class Mdb implements DatabaseInterface
     /**
      * Start a transaction.
      */
-    public function startTransaction()
+    public function startTransaction(): void
     {
         $this->connect();
         $this->dbobj->begin_transaction();
@@ -277,7 +277,7 @@ class Mdb implements DatabaseInterface
     /**
      * Commit a transaction.
      */
-    public function commit()
+    public function commit(): void
     {
         $this->dbobj->commit();
         $this->transactionOpen = false;
@@ -287,7 +287,7 @@ class Mdb implements DatabaseInterface
     /**
      * Rollback a transaction.
      */
-    public function rollback()
+    public function rollback(): void
     {
         $this->dbobj->rollback();
         $this->transactionOpen = false;
@@ -334,7 +334,7 @@ class Mdb implements DatabaseInterface
      *
      * @param string $data Data to output
      */
-    private function debugPrint(string $data)
+    protected function debugPrint(string $data): void
     {
         if ($this->debugPrint) {
             if (php_sapi_name() === 'cli') {

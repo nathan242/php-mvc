@@ -29,7 +29,7 @@ class Request implements RequestInterface
     /**
      * Get request data
      */
-    public function get()
+    public function get(): void
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->path = preg_replace('/\?(.+)?/', '', $_SERVER['REQUEST_URI']);

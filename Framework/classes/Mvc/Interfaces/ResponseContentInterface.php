@@ -12,7 +12,7 @@ interface ResponseContentInterface
     /**
      * Output response content
      */
-    public function outputContent();
+    public function outputContent(): void;
 
     /**
      * Get response content as string

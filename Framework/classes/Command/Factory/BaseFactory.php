@@ -38,7 +38,7 @@ class BaseFactory implements FactoryInterface
      * @param ContainerInterface $container
      * @param Object $classObj
      */
-    protected function setObjects(ContainerInterface $container, $classObj)
+    protected function setObjects(ContainerInterface $container, $classObj): void
     {
         $classObj->setConfig($container->get('config'));
     }

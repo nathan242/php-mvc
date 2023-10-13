@@ -31,7 +31,7 @@ interface ContainerInterface
      * @param string $name
      * @param object $object
      */
-    public function set(string $name, $object);
+    public function set(string $name, $object): void;
 
     /**
      * Get object from container

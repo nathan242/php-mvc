@@ -19,7 +19,7 @@ abstract class BaseCommand
      *
      * @param ConfigInterface $config
      */
-    public function setConfig(ConfigInterface $config)
+    public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
     }

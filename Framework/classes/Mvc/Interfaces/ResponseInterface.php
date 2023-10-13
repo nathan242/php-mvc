@@ -12,7 +12,7 @@ interface ResponseInterface
     /**
      * Output response
      */
-    public function send();
+    public function send(): void;
 
     /**
      * Set response content

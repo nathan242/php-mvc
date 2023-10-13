@@ -75,10 +75,10 @@ abstract class Model
      * @param string $name
      * @param mixed $value
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, $value): void
     {
         $this->data[$name] = $value;
-        if (!array_key_exists($name, $this->changed)) {
+        if (!in_array($name, $this->changed)) {
             $this->changed[] = $name;
         }
     }

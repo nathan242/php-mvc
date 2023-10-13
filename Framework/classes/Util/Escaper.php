@@ -24,14 +24,10 @@ class Escaper
      * Escapes keys and values for safe use in HTML
      *
      * @param array<mixed> $arr Array with values to escape
-     * @return array<mixed>|boolean
+     * @return array<mixed>
      */
-    public static function escapeHtmlArray(array $arr)
+    public static function escapeHtmlArray(array $arr): array
     {
-        if (!is_array($arr)) {
-            return false;
-        }
-
         $output = [];
 
         foreach ($arr as $k => $v) {

@@ -17,7 +17,7 @@ class Login extends BaseAppController
     /**
      * Initialize controller
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->appConfig = $this->config->get('application');

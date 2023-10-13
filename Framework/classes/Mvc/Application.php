@@ -46,8 +46,8 @@ class Application
         $this->config = $this->getConfigInstance();
         $this->container = $this->getContainerInstance();
         $this->container->set(get_class($this->config), $this->config);
-        $this->container->set(get_class($this), $this);
         $this->container->set(get_class($this->container), $this->container);
+        $this->container->set(get_class($this), $this);
 
         return $this;
     }
@@ -138,7 +138,6 @@ class Application
      * @throws ControllerNotFound
      * @throws MethodNotFound
      * @throws PageNotFound
-     * @throws ResponseException
      */
     public function runWeb($request = null, bool $returnResponse = false, bool $throwExceptions = false)
     {

@@ -14,7 +14,7 @@ class Session implements SessionInterface
     /**
      * Start session
      */
-    public function start()
+    public function start(): void
     {
         session_start();
     }
@@ -47,7 +47,7 @@ class Session implements SessionInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set($name, $value): void
     {
         $_SESSION[$name] = $value;
     }
@@ -55,7 +55,7 @@ class Session implements SessionInterface
     /**
      * Destroy session
      */
-    public function destroy()
+    public function destroy(): void
     {
         session_destroy();
     }

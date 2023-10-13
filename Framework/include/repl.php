@@ -12,7 +12,7 @@ $__colours = [
 ];
 
 $__consts = [];
-/** @var array<string, array> $__funcs **/
+/** @var array<string, array<string, array<string>>> $__funcs **/
 $__funcs = [];
 $__classes = [];
 $__interfaces = [];

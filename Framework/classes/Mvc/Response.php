@@ -27,7 +27,7 @@ class Response implements ResponseInterface
     /**
      * Output response
      */
-    public function send()
+    public function send(): void
     {
         foreach ($this->cookies as $name => $cookie) {
             setcookie($name, $cookie['value'], $cookie['expires'], $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['http_only']);

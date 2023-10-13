@@ -16,5 +16,5 @@ interface PostActionInterface
      *
      * @param ResponseInterface $response
      */
-    public function process(ResponseInterface $response);
+    public function process(ResponseInterface $response): void;
 }

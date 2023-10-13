@@ -73,7 +73,7 @@ class Container implements ContainerInterface
      * @param string $name
      * @param object $object
      */
-    public function set(string $name, $object)
+    public function set(string $name, $object): void
     {
         $this->instances[$name] = $object;
     }

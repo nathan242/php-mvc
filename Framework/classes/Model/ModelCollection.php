@@ -9,20 +9,20 @@ use RuntimeException;
  * Model collection
  *
  * @package Framework\Model
+ * @implements ArrayAccess<int, Model>
  */
 class ModelCollection implements ArrayAccess
 {
     /** @var array<Model> $items */
     protected $items = [];
 
-    #[\ReturnTypeWillChange]
     /**
      * Set collection item
      *
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!$value instanceof Model) {
             throw new RuntimeException('Attempting to add non model to model collection');
@@ -35,37 +35,34 @@ class ModelCollection implements ArrayAccess
         }
     }
 
-    #[\ReturnTypeWillChange]
     /**
      * Check if collection item exists
      *
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->items[$offset]);
     }
 
-    #[\ReturnTypeWillChange]
     /**
      * Remove collection item
      *
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->items[$offset]);
     }
 
-    #[\ReturnTypeWillChange]
     /**
      * Get collection item
      *
      * @param mixed $offset
      * @return mixed|null
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->items[$offset] ?? null;
     }

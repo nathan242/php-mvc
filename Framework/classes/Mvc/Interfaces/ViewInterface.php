@@ -60,7 +60,7 @@ interface ViewInterface extends ResponseContentInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value);
+    public function __set($name, $value): void;
 
     /**
      * Check if view variable is set

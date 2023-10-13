@@ -70,7 +70,7 @@ class WebHandler
      *
      * @param string $namespace
      */
-    public function setNamespace(string $namespace)
+    public function setNamespace(string $namespace): void
     {
         $this->namespace = $namespace;
     }
@@ -80,7 +80,7 @@ class WebHandler
      *
      * @param string $class
      */
-    public function addPreRoute(string $class)
+    public function addPreRoute(string $class): void
     {
         $this->preRoute[] = $class;
     }
@@ -90,7 +90,7 @@ class WebHandler
      *
      * @param string $class
      */
-    public function addPreAction(string $class)
+    public function addPreAction(string $class): void
     {
         $this->preAction[] = $class;
     }
@@ -100,7 +100,7 @@ class WebHandler
      *
      * @param string $class
      */
-    public function addPostAction(string $class)
+    public function addPostAction(string $class): void
     {
         $this->postAction[] = $class;
     }
@@ -110,7 +110,7 @@ class WebHandler
      *
      * @param RequestInterface $request
      */
-    protected function runPreRoute(RequestInterface $request)
+    protected function runPreRoute(RequestInterface $request): void
     {
         foreach ($this->preRoute as $preRoute) {
             $class = $this->container->get($preRoute);
@@ -123,7 +123,7 @@ class WebHandler
      *
      * @param array<array<mixed>> $matchedRoute
      */
-    protected function runPreAction(&$matchedRoute)
+    protected function runPreAction(&$matchedRoute): void
     {
         foreach ($this->preAction as $preAction) {
             $class = $this->container->get($preAction);
@@ -136,7 +136,7 @@ class WebHandler
      *
      * @param ResponseInterface $response
      */
-    protected function runPostAction(ResponseInterface $response)
+    protected function runPostAction(ResponseInterface $response): void
     {
         foreach ($this->postAction as $postAction) {
             $class = $this->container->get($postAction);
@@ -153,7 +153,7 @@ class WebHandler
      * @throws MethodNotFound
      * @throws PageNotFound
      */
-    public function process(RequestInterface $request)
+    public function process(RequestInterface $request): ResponseInterface
     {
         $this->runPreRoute($request);
 
@@ -182,7 +182,7 @@ class WebHandler
      * @throws ControllerNotFound
      * @throws MethodNotFound
      */
-    public function runAction(array $action, array $params = [])
+    public function runAction(array $action, array $params = []): ResponseInterface
     {
         if (!is_array($action) || count($action) < 2) {
             throw new ControllerNotFound();

@@ -25,13 +25,13 @@ class CliHandler
     /** @var CommandRouterInterface $command */
     protected $command;
 
-    /** @var array<string> $preroute */
+    /** @var array<string> $preRoute */
     protected $preRoute = [];
 
-    /** @var array<string> $preaction */
+    /** @var array<string> $preAction */
     protected $preAction = [];
 
-    /** @var array<string> $postaction */
+    /** @var array<string> $postAction */
     protected $postAction = [];
 
     /**
@@ -68,7 +68,7 @@ class CliHandler
      *
      * @param string $namespace
      */
-    public function setNamespace(string $namespace)
+    public function setNamespace(string $namespace): void
     {
         $this->namespace = $namespace;
     }
@@ -78,7 +78,7 @@ class CliHandler
      *
      * @param string $class
      */
-    public function addPreRoute(string $class)
+    public function addPreRoute(string $class): void
     {
         $this->preRoute[] = $class;
     }
@@ -88,7 +88,7 @@ class CliHandler
      *
      * @param string $class
      */
-    public function addPreAction(string $class)
+    public function addPreAction(string $class): void
     {
         $this->preAction[] = $class;
     }
@@ -98,7 +98,7 @@ class CliHandler
      *
      * @param string $class
      */
-    public function addPostAction(string $class)
+    public function addPostAction(string $class): void
     {
         $this->postAction[] = $class;
     }
@@ -108,7 +108,7 @@ class CliHandler
      *
      * @param array<string> $arguments
      */
-    protected function runPreRoute(array &$arguments)
+    protected function runPreRoute(array &$arguments): void
     {
         foreach ($this->preRoute as $preRoute) {
             $class = $this->container->get($preRoute);
@@ -121,7 +121,7 @@ class CliHandler
      *
      * @param array<int, array<mixed>> $matchedRoute
      */
-    protected function runPreAction(array &$matchedRoute)
+    protected function runPreAction(array &$matchedRoute): void
     {
         foreach ($this->preAction as $preAction) {
             $class = $this->container->get($preAction);
@@ -134,7 +134,7 @@ class CliHandler
      *
      * @param int $response
      */
-    protected function runPostAction(&$response)
+    protected function runPostAction(&$response): void
     {
         foreach ($this->postAction as $postAction) {
             $class = $this->container->get($postAction);
@@ -151,7 +151,7 @@ class CliHandler
      * @throws CommandMethodNotFound
      * @throws CommandNotFound
      */
-    public function process(array $arguments)
+    public function process(array $arguments): int
     {
         $this->runPreRoute($arguments);
 
@@ -183,7 +183,7 @@ class CliHandler
      * @throws CommandControllerNotFound
      * @throws CommandMethodNotFound
      */
-    public function runCommand(array $action, array $arguments)
+    public function runCommand(array $action, array $arguments): int
     {
         if (!is_array($action) || count($action) < 2) {
             throw new CommandControllerNotFound();

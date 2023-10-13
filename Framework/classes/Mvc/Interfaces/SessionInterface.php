@@ -12,12 +12,12 @@ interface SessionInterface
     /**
      * Start session
      */
-    public function start();
+    public function start(): void;
 
     /**
      * Destroy session
      */
-    public function destroy();
+    public function destroy(): void;
 
     /**
      * Check if session key exists
@@ -41,5 +41,5 @@ interface SessionInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value);
+    public function __set($name, $value): void;
 }

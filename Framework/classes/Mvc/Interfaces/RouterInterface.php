@@ -16,7 +16,7 @@ interface RouterInterface
      * @param string $method
      * @param array<string> $action
      */
-    public function route(string $path, string $method, array $action);
+    public function route(string $path, string $method, array $action): void;
 
     /**
      * Get route from request

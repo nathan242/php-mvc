@@ -18,7 +18,7 @@ abstract class BaseAppController extends BaseController
     /**
      * Initialize controller then start session
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->session->start();
@@ -29,7 +29,7 @@ abstract class BaseAppController extends BaseController
      *
      * @param $user
      */
-    public function setUser(User $user)
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }

@@ -57,7 +57,7 @@ class FileOutput implements ResponseContentInterface
     /**
      * Output file data
      */
-    public function outputContent()
+    public function outputContent(): void
     {
         echo fread($this->handle, filesize($this->path));
     }

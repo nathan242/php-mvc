@@ -19,7 +19,7 @@ class BaseAppFactory extends BaseFactory
      * @param ContainerInterface $container
      * @param Object $class
      */
-    protected function setObjects(ContainerInterface $container, $class)
+    protected function setObjects(ContainerInterface $container, $class): void
     {
         $class->setUser($container->get(User::class));
         parent::setObjects($container, $class);

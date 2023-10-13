@@ -35,7 +35,7 @@ abstract class BaseController
      *
      * @param RequestInterface $request
      */
-    public function setRequest(RequestInterface $request)
+    public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;
     }
@@ -45,7 +45,7 @@ abstract class BaseController
      *
      * @param ResponseInterface $response
      */
-    public function setResponse(ResponseInterface $response)
+    public function setResponse(ResponseInterface $response): void
     {
         $this->response = $response;
     }
@@ -55,7 +55,7 @@ abstract class BaseController
      *
      * @param SessionInterface $session
      */
-    public function setSession(SessionInterface $session)
+    public function setSession(SessionInterface $session): void
     {
         $this->session = $session;
     }
@@ -65,7 +65,7 @@ abstract class BaseController
      *
      * @param ConfigInterface $config
      */
-    public function setConfig(ConfigInterface $config)
+    public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
     }
@@ -75,7 +75,7 @@ abstract class BaseController
      *
      * @param ViewInterface $view
      */
-    public function setView(ViewInterface $view)
+    public function setView(ViewInterface $view): void
     {
         $this->view = $view;
     }
@@ -85,7 +85,7 @@ abstract class BaseController
      *
      * Override this in implementing classes. Will be ran before the controller method is called.
      */
-    public function init()
+    public function init(): void
     {
 
     }

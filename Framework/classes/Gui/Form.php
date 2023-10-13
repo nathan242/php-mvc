@@ -45,7 +45,7 @@ class Form extends Gui
         string $submitColour = 'primary',
         string $method = 'post',
         array $formParams = []
-    )
+    ): void
     {
         $this->title = $title;
         $this->submit = $submit;
@@ -71,7 +71,7 @@ class Form extends Gui
         bool $allowEmpty = false,
         $value = false,
         array $options = []
-    )
+    ): void
     {
         $this->inputs[$name] =
             [
@@ -122,7 +122,7 @@ class Form extends Gui
      * @param bool $panel Render on a bootstrap panel
      * @param bool $table Form will be in a table
      */
-    public function html(bool $inline = false, bool $panel = true, bool $table = false)
+    public function html(bool $inline = false, bool $panel = true, bool $table = false): void
     {
         if ($inline) {
             if ($table) {

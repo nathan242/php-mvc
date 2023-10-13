@@ -2,7 +2,6 @@
 
 namespace Framework\Mvc;
 
-use Framework\Mvc\Interfaces\ResponseContentInterface;
 use Framework\Mvc\Interfaces\ViewInterface;
 use RuntimeException;
 
@@ -19,7 +18,7 @@ class View implements ViewInterface
     /** @var array<string, mixed> $viewVariables */
     protected $viewVariables;
 
-    /** @var string|ResponseContentInterface */
+    /** @var string $viewView */
     protected $viewView;
 
     /**
@@ -91,7 +90,7 @@ class View implements ViewInterface
     /**
      * Output response content
      */
-    public function outputContent()
+    public function outputContent(): void
     {
         if (null === $this->viewPath) {
             throw new RuntimeException('View path is not configured');
@@ -128,7 +127,7 @@ class View implements ViewInterface
      * @param string $view
      * @param array<string, mixed> $variables
      */
-    public static function render(array $config, string $view, array $variables = [])
+    public static function render(array $config, string $view, array $variables = []): void
     {
         self::set($config, $view, $variables)->outputContent();
     }
@@ -154,7 +153,7 @@ class View implements ViewInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set($name, $value): void
     {
         $this->viewVariables[$name] = $value;
     }

@@ -16,7 +16,7 @@ interface RequestInterface
     /**
      * Get request data
      */
-    public function get();
+    public function get(): void;
 
     /**
      * Get request parameter

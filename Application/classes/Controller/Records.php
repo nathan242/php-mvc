@@ -31,7 +31,7 @@ class Records extends BaseAuthController
      *
      * @throws ResponseException
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Records', '/records']]]);

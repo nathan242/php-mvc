@@ -16,7 +16,7 @@ abstract class BaseAuthController extends BaseAppController
      *
      * @throws ResponseException
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 

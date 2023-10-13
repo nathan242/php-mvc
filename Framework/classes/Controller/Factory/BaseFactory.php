@@ -39,7 +39,7 @@ class BaseFactory implements FactoryInterface
      * @param ContainerInterface $container
      * @param Object $classObj
      */
-    protected function setObjects(ContainerInterface $container, $classObj)
+    protected function setObjects(ContainerInterface $container, $classObj): void
     {
         $classObj->setRequest($container->get('request'));
         $classObj->setResponse($container->get('response'));
