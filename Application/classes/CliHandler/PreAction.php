@@ -14,7 +14,7 @@ class PreAction implements PreActionInterface
     /**
      * @param array<int, array<mixed>> $matchedRoute
      */
-    public function process(array &$matchedRoute)
+    public function process(array &$matchedRoute): void
     {
         echo 'PREACTION: ' . print_r($matchedRoute, true);
         //$matchedRoute[0] = 'repl';

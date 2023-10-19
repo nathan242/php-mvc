@@ -6,6 +6,7 @@ use Framework\Gui\Form;
 use Application\Model\Test;
 use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ResponseInterface;
+use Application\Exceptions\InvalidCsrfException;
 
 /**
  * DB table CRUD test
@@ -62,18 +63,28 @@ class TableCrud extends BaseAuthController
     public function create(): ResponseInterface
     {
         $this->form->init('New record');
+        $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
         $this->form->input('text', 'Text', 'text', true);
         $this->form->input('number', 'Number', 'text', true);
 
-        $result = $this->form->handle(
-            $this->request->params['POST'],
-            function ($model, $data) {
-                $model->text = $data['text'];
-                $model->number = $data['number'];
-                return $model->insert();
-            },
-            [$this->model]
-        );
+        try {
+            $result = $this->form->handle(
+                $this->request->params['POST'],
+                function ($model, $data) {
+                    if ($data['csrf'] !== $this->session->csrfToken) {
+                        throw new InvalidCsrfException();
+                    }
+
+                    $model->text = $data['text'];
+                    $model->number = $data['number'];
+
+                    return $model->insert();
+                },
+                [$this->model]
+            );
+        } catch (InvalidCsrfException $e) {
+            return $this->response->set(403, 'CSRF token mismatch');
+        }
 
         if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [['New', $this->request->path]]);
@@ -96,18 +107,28 @@ class TableCrud extends BaseAuthController
         }
 
         $this->form->init("Edit record {$id}");
+        $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
         $this->form->input('text', 'Text', 'text', true, $this->model->text);
         $this->form->input('number', 'Number', 'text', true, $this->model->number);
 
-        $result = $this->form->handle(
-            $this->request->params['POST'],
-            function ($id, $model, $data) {
-                $model->text = $data['text'];
-                $model->number = $data['number'];
-                return $model->update();
-            },
-            [$id, $this->model]
-        );
+        try {
+            $result = $this->form->handle(
+                $this->request->params['POST'],
+                function ($id, $model, $data) {
+                    if ($data['csrf'] !== $this->session->csrfToken) {
+                        throw new InvalidCsrfException();
+                    }
+
+                    $model->text = $data['text'];
+                    $model->number = $data['number'];
+
+                    return $model->update();
+                },
+                [$id, $this->model]
+            );
+        } catch (InvalidCsrfException $e) {
+            return $this->response->set(403, 'CSRF token mismatch');
+        }
 
         if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $this->request->path]]);

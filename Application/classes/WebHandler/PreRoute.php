@@ -15,7 +15,7 @@ class PreRoute implements PreRouteInterface
     /**
      * @param RequestInterface $request
      */
-    public function process(RequestInterface $request)
+    public function process(RequestInterface $request): void
     {
         $request->params['COOKIE']['inserted'] = 'Cookie inserted into request via preroute';
     }

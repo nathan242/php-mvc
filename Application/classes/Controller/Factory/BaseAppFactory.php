@@ -2,7 +2,7 @@
 
 namespace Application\Controller\Factory;
 
-use Application\Model\User;
+use Application\Auth\User;
 use Framework\Controller\Factory\BaseFactory;
 use Framework\Mvc\Interfaces\ContainerInterface;
 

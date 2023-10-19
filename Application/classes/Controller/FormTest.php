@@ -5,6 +5,7 @@ namespace Application\Controller;
 use Framework\Gui\Form;
 use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ResponseInterface;
+use Application\Exceptions\InvalidCsrfException;
 
 /**
  * Form test
@@ -37,6 +38,7 @@ class FormTest extends BaseAuthController
         $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Form Test', $this->request->path]]]);
 
         $this->form->init('test');
+        $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
         $this->form->input('data1', 'data1', 'text', true);
         $this->form->input('data2', 'data2', 'text', true);
     }
@@ -58,12 +60,20 @@ class FormTest extends BaseAuthController
      */
     public function post(): ResponseInterface
     {
-        $result = $this->form->handle(
-            $this->request->params['POST'],
-            function ($data) {
-                return $data;
-            }
-        );
+        try {
+            $result = $this->form->handle(
+                $this->request->params['POST'],
+                function ($data) {
+                    if ($data['csrf'] !== $this->session->csrfToken) {
+                        throw new InvalidCsrfException();
+                    }
+
+                    return $data;
+                }
+            );
+        } catch (InvalidCsrfException $e) {
+            return $this->response->set(403, 'CSRF token mismatch');
+        }
 
         if (!$result) {
             return $this->get();

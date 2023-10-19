@@ -2,7 +2,7 @@
 
 namespace Application\Controller;
 
-use Application\Model\User;
+use Application\Auth\User;
 use Framework\Controller\BaseController;
 
 /**
@@ -27,7 +27,7 @@ abstract class BaseAppController extends BaseController
     /**
      * Set the user object
      *
-     * @param $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

@@ -5,6 +5,7 @@ namespace Application\Controller;
 use Framework\Gui\Form;
 use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ResponseInterface;
+use Application\Exceptions\InvalidCsrfException;
 
 /**
  * Session records test
@@ -77,23 +78,32 @@ class Records extends BaseAuthController
     public function create(): ResponseInterface
     {
         $this->form->init('New record');
+        $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
         $this->form->input('value', 'value', 'text', true);
 
-        $result = $this->form->handle(
-            $this->request->params['POST'],
-            function ($session, $data) {
-                $records = $session->records;
-                if (false === $records) {
-                    $records = [];
-                }
+        try {
+            $result = $this->form->handle(
+                $this->request->params['POST'],
+                function ($session, $data) {
+                    if ($data['csrf'] !== $this->session->csrfToken) {
+                        throw new InvalidCsrfException();
+                    }
 
-                $records[] = $data['value'];
-                $session->records = $records;
+                    $records = $session->records;
+                    if (false === $records) {
+                        $records = [];
+                    }
 
-                return true;
-            },
-            [$this->session]
-        );
+                    $records[] = $data['value'];
+                    $session->records = $records;
+
+                    return true;
+                },
+                [$this->session]
+            );
+        } catch (InvalidCsrfException $e) {
+            return $this->response->set(403, 'CSRF token mismatch');
+        }
 
         if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [['New', $this->request->path]]);
@@ -117,23 +127,32 @@ class Records extends BaseAuthController
         }
 
         $this->form->init("Edit record {$id}");
+        $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
         $this->form->input('value', 'value', 'text', true, $records[$id]);
 
-        $result = $this->form->handle(
-            $this->request->params['POST'],
-            function ($id, $session, $data) {
-                $records = $session->records;
-                if (false === $records || !array_key_exists($id, $records)) {
-                    return false;
-                }
+        try {
+            $result = $this->form->handle(
+                $this->request->params['POST'],
+                function ($id, $session, $data) {
+                    if ($data['csrf'] !== $this->session->csrfToken) {
+                        throw new InvalidCsrfException();
+                    }
 
-                $records[$id] = $data['value'];
-                $session->records = $records;
+                    $records = $session->records;
+                    if (false === $records || !array_key_exists($id, $records)) {
+                        return false;
+                    }
 
-                return true;
-            },
-            [$id, $this->session]
-        );
+                    $records[$id] = $data['value'];
+                    $session->records = $records;
+
+                    return true;
+                },
+                [$id, $this->session]
+            );
+        } catch (InvalidCsrfException $e) {
+            return $this->response->set(403, 'CSRF token mismatch');
+        }
 
         if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $this->request->path]]);

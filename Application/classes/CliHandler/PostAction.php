@@ -14,7 +14,7 @@ class PostAction implements PostActionInterface
     /**
      * @param int $response
      */
-    public function process(&$response)
+    public function process(&$response): void
     {
         echo 'POSTACTION: ' . print_r($response, true);
         //$response = 255;
