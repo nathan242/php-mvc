@@ -59,7 +59,8 @@ class FileOutput implements ResponseContentInterface
      */
     public function outputContent(): void
     {
-        echo fread($this->handle, filesize($this->path));
+        rewind($this->handle);
+        fpassthru($this->handle);
     }
 
     /**
