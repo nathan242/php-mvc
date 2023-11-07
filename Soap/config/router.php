@@ -2,10 +2,12 @@
 return [
     'routes' => [
         'GET' => [
-            '/' => ['Client', 'client']
+            '/' => ['Client', 'client'],
+            '/server/(.+)' => ['Server', 'wsdl']
         ],
         'POST' => [
-            '/' => ['Client', 'client']
+            '/' => ['Client', 'client'],
+            '/server/(.+)' => ['Server', 'server']
         ]
     ]
 ];

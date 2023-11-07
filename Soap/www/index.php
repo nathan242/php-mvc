@@ -4,7 +4,8 @@ use Framework\Mvc\Application;
 
 $rootPath = __DIR__ . '/..';
 
-require_once "{$rootPath}/../Framework/include/autoloader.php";
+//require_once "{$rootPath}/../Framework/include/autoloader.php";
+require_once "{$rootPath}/vendor/autoload.php";
 
 $configFile = "{$rootPath}/config.php";
 $localConfig = [];

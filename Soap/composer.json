@@ -1,0 +1,11 @@
+{
+    "require": {
+        "php2wsdl/php2wsdl": "^0.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "../Framework/classes/",
+            "Soap\\": "classes/"
+        }
+    }
+}
