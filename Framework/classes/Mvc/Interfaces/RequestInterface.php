@@ -7,6 +7,10 @@ namespace Framework\Mvc\Interfaces;
  *
  * @package Framework\Mvc\Interfaces
  * @property string $method
+ * @property string $remoteAddr
+ * @property string $remotePort
+ * @property int $requestTime
+ * @property string $protocol
  * @property string $path
  * @property array<string, array<mixed>> $params
  * @property string $body

@@ -34,6 +34,7 @@ return [
         Application\Controller\Api::class => Framework\Controller\Factory\BaseFactory::class,
         Application\Controller\Cookies::class => Application\Controller\Factory\BaseAppFactory::class,
         Application\Controller\Session::class => Application\Controller\Factory\BaseAppFactory::class,
+        Application\Controller\Request::class => Application\Controller\Factory\BaseAppFactory::class,
         Application\Controller\NotFound::class => Framework\Controller\Factory\BaseFactory::class,
         Application\Command\TestCommands::class => Framework\Command\Factory\BaseFactory::class,
         Framework\Command\DefaultCommand::class => Framework\Command\Factory\BaseFactory::class,
