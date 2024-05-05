@@ -53,7 +53,9 @@ while (true) {
         $__vars = get_defined_vars();
 
         $__line_count = $__line > 0 ? (string)$__line : '';
-        $__line_prompt = "{$__colours['GREEN']}\n{$__line_count}> ";
+        $__line_prompt = "{$__line_count}> ";
+
+        echo "{$__colours['GREEN']}\n";
 
         if ($__readline) {
             $__input_line = readline($__line_prompt);
