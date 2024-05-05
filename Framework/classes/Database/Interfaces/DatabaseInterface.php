@@ -92,6 +92,6 @@ interface DatabaseInterface
      *
      * @return bool|int
      */
-    public function getLastInsertId();
+    public function getLastInsertId(): bool|int;
 }
 

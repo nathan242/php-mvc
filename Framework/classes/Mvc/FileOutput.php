@@ -22,7 +22,7 @@ class FileOutput implements ResponseContentInterface
      * Set file for response
      *
      * @param string $path
-     * @return $this
+     * @return self
      */
     public function set(string $path): self
     {

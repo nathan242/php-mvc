@@ -134,7 +134,7 @@ class CliHandler
      *
      * @param int $response
      */
-    protected function runPostAction(&$response): void
+    protected function runPostAction(int &$response): void
     {
         foreach ($this->postAction as $postAction) {
             $class = $this->container->get($postAction);

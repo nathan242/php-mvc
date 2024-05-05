@@ -69,7 +69,7 @@ class Form extends Gui
         string $displayName,
         string $type = 'text',
         bool $allowEmpty = false,
-        $value = false,
+        string|bool $value = false,
         array $options = []
     ): void
     {

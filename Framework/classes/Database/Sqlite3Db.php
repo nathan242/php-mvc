@@ -253,7 +253,7 @@ class Sqlite3Db implements DatabaseInterface
      *
      * @return bool|int
      */
-    public function getLastInsertId()
+    public function getLastInsertId(): bool|int
     {
         if (!$this->query('SELECT last_insert_rowid()') || !isset($this->result[0]['last_insert_rowid()'])) {
             return false;

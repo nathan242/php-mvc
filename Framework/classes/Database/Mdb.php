@@ -320,7 +320,7 @@ class Mdb implements DatabaseInterface
      *
      * @return bool|int
      */
-    public function getLastInsertId()
+    public function getLastInsertId(): bool|int
     {
         if (!$this->query('SELECT LAST_INSERT_ID()') || !isset($this->result[0]['LAST_INSERT_ID()'])) {
             return false;

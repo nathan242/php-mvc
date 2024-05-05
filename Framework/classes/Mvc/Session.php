@@ -25,7 +25,7 @@ class Session implements SessionInterface
      * @param mixed $name
      * @return bool
      */
-    public function __isset($name): bool
+    public function __isset(mixed $name): bool
     {
         return array_key_exists($name, $_SESSION);
     }
@@ -34,9 +34,9 @@ class Session implements SessionInterface
      * Get session value
      *
      * @param mixed $name
-     * @return mixed|null
+     * @return mixed
      */
-    public function __get($name)
+    public function __get(mixed $name): mixed
     {
         return $_SESSION[$name] ?? null;
     }
@@ -47,7 +47,7 @@ class Session implements SessionInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value): void
+    public function __set(mixed $name, mixed $value): void
     {
         $_SESSION[$name] = $value;
     }

@@ -123,7 +123,7 @@ class WebHandler
      *
      * @param array<array<mixed>> $matchedRoute
      */
-    protected function runPreAction(&$matchedRoute): void
+    protected function runPreAction(array &$matchedRoute): void
     {
         foreach ($this->preAction as $preAction) {
             $class = $this->container->get($preAction);

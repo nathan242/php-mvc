@@ -14,17 +14,17 @@ interface ViewInterface extends ResponseContentInterface
      *
      * @param string $view
      * @param array<string, mixed> $variables
-     * @return $this
+     * @return self
      */
-    public function setView(string $view, array $variables = []);
+    public function setView(string $view, array $variables = []): self;
 
     /**
      * Update view variables
      *
      * @param array<string, mixed> $variables
-     * @return $this
+     * @return self
      */
-    public function variables(array $variables = []);
+    public function variables(array $variables = []): self;
 
     /**
      * Get view with subview
@@ -32,17 +32,17 @@ interface ViewInterface extends ResponseContentInterface
      * @param string $view
      * @param array<string, mixed> $variables
      * @param string $name
-     * @return $this
+     * @return self
      */
-    public function get(string $view, array $variables = [], string $name = 'view');
+    public function get(string $view, array $variables = [], string $name = 'view'): self;
 
     /**
      * Get view variable
      *
      * @param mixed $name
-     * @return mixed|null
+     * @return mixed
      */
-    public function __get($name);
+    public function __get(mixed $name): mixed;
 
     /**
      * Set view variable
@@ -50,7 +50,7 @@ interface ViewInterface extends ResponseContentInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value): void;
+    public function __set(mixed $name, mixed $value): void;
 
     /**
      * Check if view variable is set
@@ -58,5 +58,5 @@ interface ViewInterface extends ResponseContentInterface
      * @param mixed $name
      * @return bool
      */
-    public function __isset($name): bool;
+    public function __isset(mixed $name): bool;
 }

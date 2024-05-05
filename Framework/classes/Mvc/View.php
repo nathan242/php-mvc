@@ -38,9 +38,9 @@ class View implements ViewInterface
      *
      * @param string $view
      * @param array<string, mixed> $variables
-     * @return $this
+     * @return self
      */
-    public function setView(string $view, array $variables = [])
+    public function setView(string $view, array $variables = []): self
     {
         $this->viewView = $view;
         $this->viewVariables = $variables;
@@ -51,9 +51,9 @@ class View implements ViewInterface
      * Update view variables
      *
      * @param array<string, mixed> $variables
-     * @return $this
+     * @return self
      */
-    public function variables(array $variables = [])
+    public function variables(array $variables = []): self
     {
         $this->viewVariables = array_merge($this->viewVariables, $variables);
         return $this;
@@ -65,9 +65,9 @@ class View implements ViewInterface
      * @param string $view
      * @param array<string, mixed> $variables
      * @param string $name
-     * @return $this
+     * @return self
      */
-    public function get(string $view, array $variables = [], string $name = 'view')
+    public function get(string $view, array $variables = [], string $name = 'view'): self
     {
         $this->variables([$name => self::set(['path' => $this->viewPath], $view, $variables)]);
         return $this;
@@ -99,7 +99,7 @@ class View implements ViewInterface
      * @param array<string, mixed> $variables
      * @return View
      */
-    public static function set(array $config, string $view, array $variables = [])
+    public static function set(array $config, string $view, array $variables = []): View
     {
         $viewObj = new self($config);
         $viewObj->setView($view, $variables);
@@ -122,9 +122,9 @@ class View implements ViewInterface
      * Get view variable
      *
      * @param mixed $name
-     * @return mixed|null
+     * @return mixed
      */
-    public function __get($name)
+    public function __get(mixed $name): mixed
     {
         if (array_key_exists($name, $this->viewVariables)) {
             return $this->viewVariables[$name];
@@ -139,7 +139,7 @@ class View implements ViewInterface
      * @param mixed $name
      * @param mixed $value
      */
-    public function __set($name, $value): void
+    public function __set(mixed $name, mixed $value): void
     {
         $this->viewVariables[$name] = $value;
     }
@@ -150,7 +150,7 @@ class View implements ViewInterface
      * @param mixed $name
      * @return bool
      */
-    public function __isset($name): bool
+    public function __isset(mixed $name): bool
     {
         return array_key_exists($name, $this->viewVariables);
     }

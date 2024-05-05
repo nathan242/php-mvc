@@ -22,7 +22,7 @@ class ModelCollection implements ArrayAccess
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!$value instanceof Model) {
             throw new RuntimeException('Attempting to add non model to model collection');
@@ -41,7 +41,7 @@ class ModelCollection implements ArrayAccess
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->items[$offset]);
     }
@@ -51,7 +51,7 @@ class ModelCollection implements ArrayAccess
      *
      * @param mixed $offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->items[$offset]);
     }
@@ -60,9 +60,9 @@ class ModelCollection implements ArrayAccess
      * Get collection item
      *
      * @param mixed $offset
-     * @return mixed|null
+     * @return mixed
      */
-    public function offsetGet($offset): mixed
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->items[$offset] ?? null;
     }

@@ -14,5 +14,5 @@ interface PostActionInterface
      *
      * @param int $response
      */
-    public function process(&$response): void;
+    public function process(int &$response): void;
 }

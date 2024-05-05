@@ -30,7 +30,7 @@ interface RequestInterface
      * @param string|null $type
      * @return mixed
      */
-    public function param(string $name, $default =  null, string $type = null);
+    public function param(string $name, mixed $default =  null, string $type = null);
 
     /**
      * Check if request parameter exists
@@ -55,5 +55,5 @@ interface RequestInterface
      * @param string $dest
      * @return bool
      */
-    public function storeFile($name, string $dest): bool;
+    public function storeFile(string|null $name, string $dest): bool;
 }

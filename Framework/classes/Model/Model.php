@@ -62,9 +62,9 @@ abstract class Model
      * Get field value
      *
      * @param string $name
-     * @return mixed|null
+     * @return mixed
      */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         return $this->data[$name] ?? null;
     }
@@ -75,7 +75,7 @@ abstract class Model
      * @param string $name
      * @param mixed $value
      */
-    public function __set(string $name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         $this->data[$name] = $value;
         if (!in_array($name, $this->changed)) {
@@ -149,7 +149,7 @@ abstract class Model
      * @param array<string, mixed> $where
      * @return ModelCollection|false
      */
-    public function where(array $where)
+    public function where(array $where): ModelCollection|false
     {
         $sql = $this
             ->sqlBuilder
@@ -182,7 +182,7 @@ abstract class Model
      * Load data into model
      *
      * @param array<string, mixed> $data
-     * @return $this
+     * @return self
      */
     public function setRecord(array $data): self
     {
@@ -198,7 +198,7 @@ abstract class Model
      * @param mixed $id
      * @return bool
      */
-    public function retrieve($id): bool
+    public function retrieve(mixed $id): bool
     {
         return $this->retrieveWhere([$this->primaryKey => $id]);
     }
@@ -261,7 +261,7 @@ abstract class Model
      *
      * @return int|bool
      */
-    public function insert()
+    public function insert(): int|bool
     {
         $sql = $this
             ->sqlBuilder

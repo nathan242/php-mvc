@@ -18,19 +18,19 @@ interface ResponseInterface
      * Set response content
      *
      * @param int $code
-     * @param string|ResponseContentInterface $content
+     * @param ResponseContentInterface|string $content
      * @param array<string, mixed> $headers
-     * @return $this
+     * @return self
      */
-    public function set(int $code = 200, $content = '', array $headers = []);
+    public function set(int $code = 200, ResponseContentInterface|string $content = '', array $headers = []): self;
 
     /**
      * Add response headers
      *
      * @param array<string, mixed> $headers
-     * @return $this
+     * @return self
      */
-    public function addHeaders(array $headers);
+    public function addHeaders(array $headers): self;
 
     /**
      * Add response cookie
@@ -42,7 +42,7 @@ interface ResponseInterface
      * @param string $domain
      * @param bool $secure
      * @param bool $httpOnly
-     * @return $this
+     * @return self
      */
-    public function addCookie(string $name, string $value = '', int $expires = 0, string $path = '', string $domain = '', bool $secure = false, bool $httpOnly = false);
+    public function addCookie(string $name, string $value = '', int $expires = 0, string $path = '', string $domain = '', bool $secure = false, bool $httpOnly = false): self;
 }

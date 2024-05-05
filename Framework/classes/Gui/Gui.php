@@ -32,7 +32,7 @@ class Gui
      * @param array<string, array<string, mixed>>|bool $buttons Configuration array for table row buttons
      * @return bool|void False if no table data
      */
-    public static function table(array $data, $headings = false, $select = false, $buttons = false)
+    public static function table(array $data, array|bool $headings = false, $select = false, $buttons = false)
     {
         if (!is_array($data) || !isset($data[0])) {
             return false;

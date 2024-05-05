@@ -43,7 +43,7 @@ abstract class SqlBuilder
      * Add SELECT fields
      *
      * @param array<string> $select
-     * @return $this
+     * @return self
      */
     public function select($select = []): self
     {
@@ -55,7 +55,7 @@ abstract class SqlBuilder
      * Add INSERT fields
      *
      * @param array<string, mixed> $insert
-     * @return $this
+     * @return self
      */
     public function insert($insert = []): self
     {
@@ -67,7 +67,7 @@ abstract class SqlBuilder
      * Set table to update
      *
      * @param string $update
-     * @return $this
+     * @return self
      */
     public function update(string $update): self
     {
@@ -80,7 +80,7 @@ abstract class SqlBuilder
      * Set table to select from
      *
      * @param string $table
-     * @return $this
+     * @return self
      */
     public function from(string $table): self
     {
@@ -92,7 +92,7 @@ abstract class SqlBuilder
      * Set table to insert into
      *
      * @param string $table
-     * @return $this
+     * @return self
      */
     public function into(string $table): self
     {
@@ -104,7 +104,7 @@ abstract class SqlBuilder
      * Set WHERE parameters
      *
      * @param array<string, mixed> $where
-     * @return $this
+     * @return self
      */
     public function where(array $where = []): self
     {
@@ -116,7 +116,7 @@ abstract class SqlBuilder
      * Set SET parameters
      *
      * @param array<string, mixed> $set
-     * @return $this
+     * @return self
      */
     public function set(array $set): self
     {
@@ -128,7 +128,7 @@ abstract class SqlBuilder
      * Set query limit
      *
      * @param int $limit
-     * @return $this
+     * @return self
      */
     public function limit(int $limit): self
     {
@@ -139,7 +139,7 @@ abstract class SqlBuilder
     /**
      * Reset query state
      *
-     * @return $this
+     * @return self
      */
     public function reset(): self
     {
@@ -162,7 +162,7 @@ abstract class SqlBuilder
      *
      * @param string $table
      * @param array<string, mixed> $params
-     * @return $this
+     * @return self
      */
     public function create(string $table, array $params = []): self
     {
@@ -177,7 +177,7 @@ abstract class SqlBuilder
      * @param string $name
      * @param string $type
      * @param array<string, mixed> $params
-     * @return $this
+     * @return self
      */
     public function field(string $name, string $type, array $params = []): self
     {
