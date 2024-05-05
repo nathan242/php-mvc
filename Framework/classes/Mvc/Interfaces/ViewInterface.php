@@ -27,16 +27,6 @@ interface ViewInterface extends ResponseContentInterface
     public function variables(array $variables = []);
 
     /**
-     * Set view for variable
-     *
-     * @param string $view
-     * @param array<string, mixed> $variables
-     * @param string $name
-     * @return $this
-     */
-    public function subView(string $view, array $variables, string $name);
-
-    /**
      * Get view with subview
      *
      * @param string $view

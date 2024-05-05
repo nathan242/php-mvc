@@ -60,20 +60,6 @@ class View implements ViewInterface
     }
 
     /**
-     * Set view for variable
-     *
-     * @param string $view
-     * @param array<string, mixed> $variables
-     * @param string $name
-     * @return $this
-     */
-    public function subView(string $view, array $variables, string $name)
-    {
-        $this->variables([$name => self::set(['path' => $this->viewPath], $view, $variables)]);
-        return $this;
-    }
-
-    /**
      * Get view with subview
      *
      * @param string $view
@@ -83,7 +69,7 @@ class View implements ViewInterface
      */
     public function get(string $view, array $variables = [], string $name = 'view')
     {
-        $this->subView($view, $variables, $name);
+        $this->variables([$name => self::set(['path' => $this->viewPath], $view, $variables)]);
         return $this;
     }
 
