@@ -15,12 +15,12 @@ interface DatabaseInterface
     /**
      * Connect to DB
      */
-    public function connect();
+    public function connect(): void;
 
     /**
      * Disconnect from DB
      */
-    public function disconnect();
+    public function disconnect(): void;
 
     /**
      * Execute a SQL query and store result in $this->result
@@ -60,17 +60,17 @@ interface DatabaseInterface
     /**
      * Start a transaction
      */
-    public function startTransaction();
+    public function startTransaction(): void;
 
     /**
      * Commit a transaction
      */
-    public function commit();
+    public function commit(): void;
 
     /**
      * Rollback a transaction
      */
-    public function rollback();
+    public function rollback(): void;
 
     /**
      * Escape a string on the server
@@ -92,6 +92,6 @@ interface DatabaseInterface
      *
      * @return bool|int
      */
-    public function getLastInsertId();
+    public function getLastInsertId(): bool|int;
 }
 

@@ -16,5 +16,5 @@ interface PreRouteInterface
      *
      * @param RequestInterface $request
      */
-    public function process(RequestInterface $request);
+    public function process(RequestInterface $request): void;
 }

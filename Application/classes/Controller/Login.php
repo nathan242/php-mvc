@@ -11,13 +11,13 @@ use Framework\Mvc\Interfaces\ResponseInterface;
  */
 class Login extends BaseAppController
 {
-    /** @var array $appConfig */
+    /** @var array<string, mixed> $appConfig */
     protected $appConfig;
 
     /**
      * Initialize controller
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->appConfig = $this->config->get('application');
@@ -31,17 +31,21 @@ class Login extends BaseAppController
      */
     public function login(): ResponseInterface
     {
-        if (!isset($this->session->userId) && !$this->request->hasParam('username', 'POST') && !$this->request->hasParam('password', 'POST')) {
-            return $this->response->set(200, $this->view->get('login.phtml', ['app_name' => $this->appConfig['name']]));
-        } elseif (!isset($this->session->userId) && $this->request->hasParam('username', 'POST') && $this->request->hasParam('password', 'POST')) {
+        $error = null;
+
+        if ($this->user->checkLoggedIn()) {
+            return $this->response->set(302, '', ['Location' => 'main']);
+        }
+
+        if ($this->request->hasParam('username', 'POST') && $this->request->hasParam('password', 'POST')) {
             if ($this->user->login($this->request->param('username', null, 'POST'), $this->request->param('password', null, 'POST'))) {
                 return $this->response->set(302, '', ['Location' => 'main']);
             } else {
-                return $this->response->set(200, $this->view->get('login-fail.phtml'));
+                $error = 'ERROR: Unknown username or password.';
             }
-        } else {
-            return $this->response->set(302, '', ['Location' => 'main']);
         }
+
+        return $this->response->set(200, $this->view->get('login.phtml', ['app_name' => $this->appConfig['name'], 'error' => $error]));
     }
 
     /**

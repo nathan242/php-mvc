@@ -22,7 +22,7 @@ class FileOutput implements ResponseContentInterface
      * Set file for response
      *
      * @param string $path
-     * @return $this
+     * @return self
      */
     public function set(string $path): self
     {
@@ -57,9 +57,10 @@ class FileOutput implements ResponseContentInterface
     /**
      * Output file data
      */
-    public function outputContent()
+    public function outputContent(): void
     {
-        echo fread($this->handle, filesize($this->path));
+        rewind($this->handle);
+        fpassthru($this->handle);
     }
 
     /**

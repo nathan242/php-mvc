@@ -31,7 +31,7 @@ class Cookies extends BaseAuthController
      *
      * @throws ResponseException
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Cookies', $this->request->path]]]);
@@ -65,7 +65,7 @@ class Cookies extends BaseAuthController
     {
         $this->form->handle(
             $this->request->params['POST'],
-            function ($response, $data) {
+            function (ResponseInterface $response, array $data) {
                 if ($data['value'] === '') {
                     $response->addCookie($data['name'], '', time() - 3600);
                 } else {

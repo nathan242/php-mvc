@@ -15,7 +15,7 @@ interface CommandRouterInterface
      * @param string $name
      * @param array<string> $action
      */
-    public function command(string $name, array $action);
+    public function command(string $name, array $action): void;
 
     /**
      * Get route from command arguments

@@ -40,7 +40,7 @@ class Files extends BaseAuthController
      *
      * @throws ResponseException
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 

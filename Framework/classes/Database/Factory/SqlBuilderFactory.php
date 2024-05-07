@@ -17,9 +17,9 @@ class SqlBuilderFactory implements FactoryInterface
      *
      * @param ContainerInterface $container
      * @param string $class
-     * @return mixed
+     * @return object
      */
-    public function __invoke(ContainerInterface $container, string $class)
+    public function __invoke(ContainerInterface $container, string $class): object
     {
         $config = $container->get('config');
         $dbConfig = $config->get('db');

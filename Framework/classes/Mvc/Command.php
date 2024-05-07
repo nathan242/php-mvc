@@ -39,7 +39,7 @@ class Command implements CommandRouterInterface
      * @param string $name
      * @param array<string> $action
      */
-    public function command(string $name, array $action)
+    public function command(string $name, array $action): void
     {
         $this->commands[$name] = $action;
     }

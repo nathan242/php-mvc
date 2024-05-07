@@ -18,9 +18,9 @@ class BaseFactory implements FactoryInterface
      *
      * @param ContainerInterface $container
      * @param string $class
-     * @return Object
+     * @return object
      */
-    public function __invoke(ContainerInterface $container, string $class)
+    public function __invoke(ContainerInterface $container, string $class): object
     {
         if (method_exists($this, 'create')) {
             $classObj = $this->create($container, $class);
@@ -37,9 +37,9 @@ class BaseFactory implements FactoryInterface
      * Inject objects into the class
      *
      * @param ContainerInterface $container
-     * @param Object $classObj
+     * @param object $classObj
      */
-    protected function setObjects(ContainerInterface $container, $classObj)
+    protected function setObjects(ContainerInterface $container, object $classObj): void
     {
         $classObj->setRequest($container->get('request'));
         $classObj->setResponse($container->get('response'));

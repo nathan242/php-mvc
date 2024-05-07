@@ -1,3 +1,11 @@
+<?php if ($error !== null) { ?>
+<div class="panel panel-danger control-box login-panel">
+  <div class="panel-body">
+    <?= $error ?>
+  </div>
+</div>
+<?php } ?>
+
 <div class="panel panel-default control-box login-panel">
   <div class="panel-heading" style="text-align: center;"><?= $app_name ?> Login</div>
   <form action="" method="POST">

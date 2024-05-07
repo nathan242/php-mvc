@@ -14,7 +14,7 @@ class PreRoute implements PreRouteInterface
     /**
      * @param array<string> $arguments
      */
-    public function process(array &$arguments)
+    public function process(array &$arguments): void
     {
         echo 'PREROUTE';
         //$arguments[] = 'repl';

@@ -3,6 +3,7 @@
 namespace Framework\Database;
 
 use SQLite3;
+use SQLite3Stmt;
 use SQLite3Result;
 use Framework\Database\Interfaces\DatabaseInterface;
 
@@ -40,7 +41,7 @@ class Sqlite3Db implements DatabaseInterface
     /** @var SQLite3Result|bool $qResult Query result */
     protected $qResult;
 
-    /** @var mixed|null $stmt Prepared statement */
+    /** @var SQLite3Stmt|null $stmt Prepared statement */
     protected $stmt;
 
     /**
@@ -56,7 +57,7 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Connect to DB
      */
-    public function connect()
+    public function connect(): void
     {
         if (!$this->isConnected) {
             $this->dbobj = new SQLite3($this->dbFilename);
@@ -68,7 +69,7 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Disconnect from DB
      */
-    public function disconnect()
+    public function disconnect(): void
     {
         if ($this->isConnected) {
             $this->dbobj->close();
@@ -80,7 +81,7 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Disconnect from the DB server if set to not remain connected or a transaction is not open
      */
-    private function disconnectIfAllowed()
+    protected function disconnectIfAllowed(): void
     {
         if (!$this->keepConnected && !$this->transactionOpen) {
             $this->disconnect();
@@ -160,10 +161,10 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Get results array
      *
-     * @param $result
+     * @param SQLite3Result $result
      * @return array<int, array<string, mixed>>
      */
-    private function getResult($result): array
+    private function getResult(SQLite3Result $result): array
     {
         $arr = [];
 
@@ -199,7 +200,7 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Start a transaction
      */
-    public function startTransaction()
+    public function startTransaction(): void
     {
         $this->connect();
         $this->dbobj->exec('BEGIN;');
@@ -209,7 +210,7 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Commit a transaction
      */
-    public function commit()
+    public function commit(): void
     {
         $this->dbobj->exec('COMMIT;');
         $this->transactionOpen = false;
@@ -219,7 +220,7 @@ class Sqlite3Db implements DatabaseInterface
     /**
      * Rollback a transaction
      */
-    public function rollback()
+    public function rollback(): void
     {
         $this->dbobj->exec('ROLLBACK;');
         $this->transactionOpen = false;
@@ -252,7 +253,7 @@ class Sqlite3Db implements DatabaseInterface
      *
      * @return bool|int
      */
-    public function getLastInsertId()
+    public function getLastInsertId(): bool|int
     {
         if (!$this->query('SELECT last_insert_rowid()') || !isset($this->result[0]['last_insert_rowid()'])) {
             return false;
@@ -266,7 +267,7 @@ class Sqlite3Db implements DatabaseInterface
      *
      * @param string $data Data to output
      */
-    private function debugPrint($data)
+    protected function debugPrint($data): void
     {
         if ($this->debugPrint) {
             if (php_sapi_name() === 'cli') {

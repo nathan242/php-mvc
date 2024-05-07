@@ -14,5 +14,5 @@ interface PreActionInterface
      *
      * @param array<int, array<mixed>> $matchedRoute
      */
-    public function process(array &$matchedRoute);
+    public function process(array &$matchedRoute): void;
 }

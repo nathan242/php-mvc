@@ -30,10 +30,13 @@ class Repl extends BaseCommand
      * Start framework shell
      *
      * @param array<string> $args Command arguments
+     * @return int
      */
-    public function shell(array $args = [])
+    public function shell(array $args = []): int
     {
         echo "Starting shell\n";
         require $this->config->local['root_path'] . '/../Framework/include/repl.php';
+
+        return 0;
     }
 }

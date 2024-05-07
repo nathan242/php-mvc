@@ -27,7 +27,7 @@ class Response implements ResponseInterface
     /**
      * Output response
      */
-    public function send()
+    public function send(): void
     {
         foreach ($this->cookies as $name => $cookie) {
             setcookie($name, $cookie['value'], $cookie['expires'], $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['http_only']);
@@ -50,11 +50,11 @@ class Response implements ResponseInterface
      * Set response content
      *
      * @param int $code
-     * @param string|ResponseContentInterface $content
+     * @param ResponseContentInterface|string $content
      * @param array<string, mixed> $headers
-     * @return $this
+     * @return self
      */
-    public function set(int $code = 200, $content = '', array $headers = [])
+    public function set(int $code = 200, ResponseContentInterface|string $content = '', array $headers = []): self
     {
         $this->code = $code;
         $this->content = $content;
@@ -67,9 +67,9 @@ class Response implements ResponseInterface
      * Add response headers
      *
      * @param array<string, mixed> $headers
-     * @return $this
+     * @return self
      */
-    public function addHeaders(array $headers)
+    public function addHeaders(array $headers): self
     {
         $this->headers = array_merge($this->headers, $headers);
 
@@ -86,9 +86,9 @@ class Response implements ResponseInterface
      * @param string $domain
      * @param bool $secure
      * @param bool $httpOnly
-     * @return $this
+     * @return self
      */
-    public function addCookie(string $name, string $value = '', int $expires = 0, string $path = '', string $domain = '', bool $secure = false, bool $httpOnly = false)
+    public function addCookie(string $name, string $value = '', int $expires = 0, string $path = '', string $domain = '', bool $secure = false, bool $httpOnly = false): self
     {
         $this->cookies[$name] = [
             'value' => $value,

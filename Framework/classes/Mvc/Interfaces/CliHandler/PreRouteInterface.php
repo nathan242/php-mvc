@@ -14,5 +14,5 @@ interface PreRouteInterface
      *
      * @param array<string> $arguments
      */
-    public function process(array &$arguments);
+    public function process(array &$arguments): void;
 }

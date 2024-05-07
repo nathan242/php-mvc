@@ -15,6 +15,8 @@ return [
             '/file_upload' => ['Files', 'index'],
             '/file_upload/(.+)' => ['Files', 'download'],
             '/cookies' => ['Cookies', 'index'],
+            '/session' => ['Session', 'index'],
+            '/request' => ['Request', 'index'],
             '/no_method' => ['Login', 'noExist'],
             '/no_controller' => ['noExist', 'test'],
         ],

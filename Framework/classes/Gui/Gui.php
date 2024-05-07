@@ -12,7 +12,7 @@ class Gui
      * @param string $colour Panel colour
      * @param array<string, mixed> $options Array of additional parameters
      */
-    public static function panel(string $heading, string $content, string $colour = 'primary', array $options = [])
+    public static function panel(string $heading, string $content, string $colour = 'primary', array $options = []): void
     {
         $class = (isset($options['class'])) ? ' ' . $options['class'] : ' panel-custom';
         echo '<div class="panel panel-' . $colour . $class . '">';
@@ -32,7 +32,7 @@ class Gui
      * @param array<string, array<string, mixed>>|bool $buttons Configuration array for table row buttons
      * @return bool|void False if no table data
      */
-    public static function table(array $data, $headings = false, $select = false, $buttons = false)
+    public static function table(array $data, array|bool $headings = false, $select = false, $buttons = false)
     {
         if (!is_array($data) || !isset($data[0])) {
             return false;
@@ -126,7 +126,7 @@ class Gui
      * @param bool $prompt Prompt for confirmation
      * @param array<string, mixed> $options Array of additional parameters
      */
-    public static function button(string $text, string $link, string $colour = 'primary', bool $prompt = false, array $options = [])
+    public static function button(string $text, string $link, string $colour = 'primary', bool $prompt = false, array $options = []): void
     {
         if ($prompt !== false) {
             $dest = ' onclick="if (confirm(\'' . $prompt . '\')) { window.location = \'' . $link . '\' }"';

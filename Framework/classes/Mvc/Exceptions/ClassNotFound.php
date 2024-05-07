@@ -7,7 +7,7 @@ use Exception;
 /**
  * Class not found exception
  *
- * @package framework\mvc\exceptions
+ * @package Framework\Mvc\Exceptions
  */
 class ClassNotFound extends Exception
 {

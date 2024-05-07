@@ -5,7 +5,7 @@ namespace Framework\Gui;
 /**
  * HTML form handling
  *
- * @package framework\gui
+ * @package Framework\Gui
  */
 class Form extends Gui
 {
@@ -45,7 +45,7 @@ class Form extends Gui
         string $submitColour = 'primary',
         string $method = 'post',
         array $formParams = []
-    )
+    ): void
     {
         $this->title = $title;
         $this->submit = $submit;
@@ -69,9 +69,9 @@ class Form extends Gui
         string $displayName,
         string $type = 'text',
         bool $allowEmpty = false,
-        $value = false,
+        string|bool $value = false,
         array $options = []
-    )
+    ): void
     {
         $this->inputs[$name] =
             [
@@ -95,6 +95,7 @@ class Form extends Gui
     {
         $inputData = [];
         $inputNames = array_keys($this->inputs);
+
         foreach ($inputNames as $i) {
             // Is the option set?
             if (!isset($params[$i])) {
@@ -109,6 +110,7 @@ class Form extends Gui
             // Build data array
             $inputData[$i] = $params[$i];
         }
+
         $pass[] = $inputData;
         $this->result = call_user_func_array($function, $pass);
 
@@ -122,7 +124,7 @@ class Form extends Gui
      * @param bool $panel Render on a bootstrap panel
      * @param bool $table Form will be in a table
      */
-    public function html(bool $inline = false, bool $panel = true, bool $table = false)
+    public function html(bool $inline = false, bool $panel = true, bool $table = false): void
     {
         if ($inline) {
             if ($table) {

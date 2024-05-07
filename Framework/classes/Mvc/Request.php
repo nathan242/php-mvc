@@ -14,6 +14,18 @@ class Request implements RequestInterface
     /** @var string $method */
     public $method;
 
+    /** @var string $remoteAddr */
+    public $remoteAddr;
+
+    /** @var string $remotePort */
+    public $remotePort;
+
+    /** @var int $requestTime */
+    public $requestTime;
+
+    /** @var string $protocol */
+    public $protocol;
+
     /** @var string $path */
     public $path;
 
@@ -29,9 +41,13 @@ class Request implements RequestInterface
     /**
      * Get request data
      */
-    public function get()
+    public function get(): void
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->remoteAddr = $_SERVER['REMOTE_ADDR'];
+        $this->remotePort = $_SERVER['REMOTE_PORT'];
+        $this->requestTime = $_SERVER['REQUEST_TIME'];
+        $this->protocol = (array_key_exists('HTTPS', $_SERVER) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
         $this->path = preg_replace('/\?(.+)?/', '', $_SERVER['REQUEST_URI']);
         $this->params = [
             'GET' => $_GET,
@@ -59,7 +75,7 @@ class Request implements RequestInterface
      * @param string|null $type
      * @return mixed
      */
-    public function param(string $name, $default = null, string $type = null)
+    public function param(string $name, mixed $default = null, string $type = null): mixed
     {
         $return = $default;
         $type = null === $type ? ['GET', 'POST'] : (array)$type;
@@ -109,7 +125,7 @@ class Request implements RequestInterface
      * @param string $dest
      * @return bool
      */
-    public function storeFile($name, string $dest): bool
+    public function storeFile(string|null $name, string $dest): bool
     {
         $fileData = null;
 

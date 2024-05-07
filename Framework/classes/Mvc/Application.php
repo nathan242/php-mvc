@@ -37,17 +37,17 @@ class Application
      *
      * @param string $rootPath Path to application directory
      * @param array<string, mixed> $localConfig Local configuration
-     * @return $this
+     * @return self
      */
-    public function init(string $rootPath, array $localConfig = [])
+    public function init(string $rootPath, array $localConfig = []): self
     {
         $localConfig['root_path'] = $rootPath;
         $this->localConfig = $localConfig;
         $this->config = $this->getConfigInstance();
         $this->container = $this->getContainerInstance();
         $this->container->set(get_class($this->config), $this->config);
-        $this->container->set(get_class($this), $this);
         $this->container->set(get_class($this->container), $this->container);
+        $this->container->set(get_class($this), $this);
 
         return $this;
     }
@@ -84,7 +84,7 @@ class Application
      *
      * @return ConfigInterface|null
      */
-    public function getConfig()
+    public function getConfig(): ConfigInterface|null
     {
         return $this->config;
     }
@@ -94,7 +94,7 @@ class Application
      *
      * @return ContainerInterface|null
      */
-    public function getContainer()
+    public function getContainer(): ContainerInterface|null
     {
         return $this->container;
     }
@@ -109,7 +109,7 @@ class Application
      * @throws CommandMethodNotFound
      * @throws CommandNotFound
      */
-    public function runCli(array $args = [], bool $throwExceptions = false)
+    public function runCli(array $args = [], bool $throwExceptions = false): int
     {
         try {
             return $this->container->get('cli_handler')->process($args);
@@ -134,13 +134,12 @@ class Application
      * @param RequestInterface|null $request Optional request
      * @param bool $returnResponse Return response object
      * @param bool $throwExceptions Set true to pass exceptions on
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      * @throws ControllerNotFound
      * @throws MethodNotFound
      * @throws PageNotFound
-     * @throws ResponseException
      */
-    public function runWeb($request = null, bool $returnResponse = false, bool $throwExceptions = false)
+    public function runWeb($request = null, bool $returnResponse = false, bool $throwExceptions = false): ?ResponseInterface
     {
         try {
             if ($request === null) {
@@ -169,6 +168,8 @@ class Application
         }
 
         $response->send();
+
+        return null;
     }
 }
 

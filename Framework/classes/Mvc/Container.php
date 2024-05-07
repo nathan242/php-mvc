@@ -47,13 +47,81 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Add class alias
+     *
+     * @param string $alias
+     * @param string $class
+     */
+    public function addAlias(string $alias, string $class): void
+    {
+        $this->aliases[$alias] = $class;
+    }
+
+    /**
+     * Remove class alias
+     *
+     * @param string $alias
+     */
+    public function removeAlias(string $alias): void
+    {
+        unset($this->aliases[$alias]);
+    }
+
+    /**
+     * Set class factory
+     *
+     * @param string $class
+     * @param string $factory
+     */
+    public function setFactory(string $class, string $factory): void
+    {
+        $this->factories[$class] = $factory;
+    }
+
+    /**
+     * Unset class factory
+     *
+     * @param string $class
+     */
+    public function unsetFactory(string $class): void
+    {
+        unset($this->factories[$class]);
+    }
+
+    /**
+     * Set class instance to be stored
+     *
+     * @param string $class
+     */
+    public function setStoreInstance(string $class): void
+    {
+        if (!in_array($class, $this->storeInstances)) {
+            $this->storeInstances[] = $class;
+        }
+    }
+
+    /**
+     * Unset class instance to be stored
+     *
+     * @param string $class
+     */
+    public function unsetStoreInstance(string $class): void
+    {
+        foreach ($this->storeInstances as $key => $value) {
+            if ($value === $class) {
+                unset($this->storeInstances[$key]);
+            }
+        }
+    }
+
+    /**
      * Create instance of class
      *
      * @param string $name
      * @return object
      * @throws ClassNotFound
      */
-    public function create(string $name)
+    public function create(string $name): object
     {
         $name = $this->getName($name);
 
@@ -73,7 +141,7 @@ class Container implements ContainerInterface
      * @param string $name
      * @param object $object
      */
-    public function set(string $name, $object)
+    public function set(string $name, object $object): void
     {
         $this->instances[$name] = $object;
     }
@@ -85,7 +153,7 @@ class Container implements ContainerInterface
      * @return object
      * @throws ClassNotFound
      */
-    public function get(string $name)
+    public function get(string $name): object
     {
         $name = $this->getName($name);
 
@@ -106,10 +174,10 @@ class Container implements ContainerInterface
      * Resolve dependencies and instantiate class
      *
      * @param string $name
-     * @return mixed
+     * @return object
      * @throws ClassNotFound
      */
-    public function resolve(string $name)
+    public function resolve(string $name): object
     {
         try {
             $reflection = new ReflectionClass($name);

@@ -34,7 +34,7 @@ class Router implements RouterInterface
      * @param string $method
      * @param array<string> $action
      */
-    public function route(string $path, string $method, array $action)
+    public function route(string $path, string $method, array $action): void
     {
         if (!isset($this->routes[$method])) {
             $this->routes[$method] = [];

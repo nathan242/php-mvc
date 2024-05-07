@@ -7,6 +7,10 @@ namespace Framework\Mvc\Interfaces;
  *
  * @package Framework\Mvc\Interfaces
  * @property string $method
+ * @property string $remoteAddr
+ * @property string $remotePort
+ * @property int $requestTime
+ * @property string $protocol
  * @property string $path
  * @property array<string, array<mixed>> $params
  * @property string $body
@@ -16,7 +20,7 @@ interface RequestInterface
     /**
      * Get request data
      */
-    public function get();
+    public function get(): void;
 
     /**
      * Get request parameter
@@ -26,7 +30,7 @@ interface RequestInterface
      * @param string|null $type
      * @return mixed
      */
-    public function param(string $name, $default =  null, string $type = null);
+    public function param(string $name, mixed $default =  null, string $type = null);
 
     /**
      * Check if request parameter exists
@@ -51,5 +55,5 @@ interface RequestInterface
      * @param string $dest
      * @return bool
      */
-    public function storeFile($name, string $dest): bool;
+    public function storeFile(string|null $name, string $dest): bool;
 }
