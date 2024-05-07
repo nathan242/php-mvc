@@ -31,6 +31,8 @@ class Login extends BaseAppController
      */
     public function login(): ResponseInterface
     {
+        $error = null;
+
         if ($this->user->checkLoggedIn()) {
             return $this->response->set(302, '', ['Location' => 'main']);
         }
@@ -39,11 +41,11 @@ class Login extends BaseAppController
             if ($this->user->login($this->request->param('username', null, 'POST'), $this->request->param('password', null, 'POST'))) {
                 return $this->response->set(302, '', ['Location' => 'main']);
             } else {
-                return $this->response->set(200, $this->view->get('login-fail.phtml'));
+                $error = 'ERROR: Unknown username or password.';
             }
         }
 
-        return $this->response->set(200, $this->view->get('login.phtml', ['app_name' => $this->appConfig['name']]));
+        return $this->response->set(200, $this->view->get('login.phtml', ['app_name' => $this->appConfig['name'], 'error' => $error]));
     }
 
     /**
