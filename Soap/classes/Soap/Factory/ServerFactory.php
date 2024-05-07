@@ -9,7 +9,7 @@ use Soap\Soap\Factory\SoapServerFactory;
 
 class ServerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $class)
+    public function __invoke(ContainerInterface $container, string $class): object
     {
         $config = $container->get('config');
         return new $class($container, $container->get(PHP2WSDLFactory::class), $container->get(SoapServerFactory::class), $config->get('soap'));

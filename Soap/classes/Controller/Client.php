@@ -27,7 +27,7 @@ class Client extends BaseController
 
     public function client(): ResponseInterface
     {
-        $wsdlUrl = $this->request->param('wsdl_url', null);
+        $wsdlUrl = $this->request->param('wsdl_url', false);
         $wsdlInfo = [];
         $functions = [];
         $error = null;
@@ -40,7 +40,7 @@ class Client extends BaseController
         $this->form->init('SOAP API Client', 'Submit', 'primary', 'get');
         $this->form->input('wsdl_url', 'WSDL URL: ', 'text', false, $wsdlUrl);
 
-        if ($wsdlUrl !== null) {
+        if ($wsdlUrl !== false) {
             try {
                 $this->client->wsdl($wsdlUrl);
             } catch (Exception $e) {

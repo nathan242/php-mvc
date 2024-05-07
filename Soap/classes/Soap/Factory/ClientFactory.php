@@ -8,7 +8,7 @@ use Soap\Soap\Factory\SoapClientFactory;
 
 class ClientFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, string $class)
+    public function __invoke(ContainerInterface $container, string $class): object
     {
         $config = $container->get('config');
         return new $class($container->get(SoapClientFactory::class), $config->get('soap'));
