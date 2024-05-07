@@ -11,7 +11,7 @@ use Framework\Mvc\Interfaces\ResponseInterface;
  */
 class Login extends BaseAppController
 {
-    /** @var array $appConfig */
+    /** @var array<string, mixed> $appConfig */
     protected $appConfig;
 
     /**

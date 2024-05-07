@@ -7,6 +7,7 @@ use Application\Model\Test;
 use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ResponseInterface;
 use Application\Exceptions\InvalidCsrfException;
+use Framework\Model\Model;
 
 /**
  * DB table CRUD test
@@ -70,7 +71,7 @@ class TableCrud extends BaseAuthController
         try {
             $result = $this->form->handle(
                 $this->request->params['POST'],
-                function ($model, $data) {
+                function (Model $model, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
                         throw new InvalidCsrfException();
                     }
@@ -114,7 +115,7 @@ class TableCrud extends BaseAuthController
         try {
             $result = $this->form->handle(
                 $this->request->params['POST'],
-                function ($id, $model, $data) {
+                function (Model $model, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
                         throw new InvalidCsrfException();
                     }
@@ -124,7 +125,7 @@ class TableCrud extends BaseAuthController
 
                     return $model->update();
                 },
-                [$id, $this->model]
+                [$this->model]
             );
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');

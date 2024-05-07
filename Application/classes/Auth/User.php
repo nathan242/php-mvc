@@ -57,7 +57,7 @@ class User
      * @param string $password Password
      * @return bool
      */
-    public function login($username, $password): bool
+    public function login(string $username, string $password): bool
     {
         session_unset();
         session_regenerate_id();

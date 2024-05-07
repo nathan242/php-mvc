@@ -6,6 +6,7 @@ use Framework\Gui\Form;
 use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ResponseInterface;
 use Application\Exceptions\InvalidCsrfException;
+use Framework\Mvc\Interfaces\SessionInterface;
 
 /**
  * Session records test
@@ -41,7 +42,7 @@ class Records extends BaseAuthController
     /**
      * Get records from session
      *
-     * @return array
+     * @return array<int, string>
      */
     private function getRecords(): array
     {
@@ -84,7 +85,7 @@ class Records extends BaseAuthController
         try {
             $result = $this->form->handle(
                 $this->request->params['POST'],
-                function ($session, $data) {
+                function (SessionInterface $session, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
                         throw new InvalidCsrfException();
                     }
@@ -133,7 +134,7 @@ class Records extends BaseAuthController
         try {
             $result = $this->form->handle(
                 $this->request->params['POST'],
-                function ($id, $session, $data) {
+                function (int $id, SessionInterface $session, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
                         throw new InvalidCsrfException();
                     }

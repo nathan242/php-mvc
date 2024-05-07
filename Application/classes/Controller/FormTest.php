@@ -63,7 +63,7 @@ class FormTest extends BaseAuthController
         try {
             $result = $this->form->handle(
                 $this->request->params['POST'],
-                function ($data) {
+                function (array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
                         throw new InvalidCsrfException();
                     }

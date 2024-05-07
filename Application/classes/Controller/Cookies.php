@@ -65,7 +65,7 @@ class Cookies extends BaseAuthController
     {
         $this->form->handle(
             $this->request->params['POST'],
-            function ($response, $data) {
+            function (ResponseInterface $response, array $data) {
                 if ($data['value'] === '') {
                     $response->addCookie($data['name'], '', time() - 3600);
                 } else {
