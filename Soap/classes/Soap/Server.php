@@ -13,14 +13,16 @@ class Server
     protected $container;
     protected $PHP2WSDLFactory;
     protected $soapServerFactory;
+    protected $runner;
     protected $config;
     protected $className;
 
-    public function __construct(ContainerInterface $container, PHP2WSDLFactory $PHP2WSDLFactory, SoapServerFactory $soapServerFactory, array $config = [])
+    public function __construct(ContainerInterface $container, PHP2WSDLFactory $PHP2WSDLFactory, SoapServerFactory $soapServerFactory, Runner $runner, array $config = [])
     {
         $this->container = $container;
         $this->PHP2WSDLFactory = $PHP2WSDLFactory;
         $this->soapServerFactory = $soapServerFactory;
+        $this->runner = $runner;
         $this->config = $config;
     }
 
@@ -37,8 +39,7 @@ class Server
 
     public function wsdl(RequestInterface $request): string
     {
-        // TODO: HTTPS flag should be added to request object
-        $uri = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+        $uri =  $request->protocol === 'https' ? 'https://' : 'http://';
         $uri .= $request->headers['Host'];
         $uri .= $request->path;
 
@@ -47,14 +48,14 @@ class Server
         return $PHP2WSDL->dump();
     }
 
-    public function run(RequestInterface $request): string
+    public function run(RequestInterface $request): Runner
     {
         $soapServer = $this->soapServerFactory->create('data://text/plaim;base64,'.base64_encode($this->wsdl($request)));
         $soapServer->setObject($this->container->get($this->className));
 
-        ob_start();
-        $soapServer->handle($request->body);
-        return ob_get_clean();
+        $this->runner->set($soapServer, $request);
+
+        return $this->runner;
     }
 }
 
