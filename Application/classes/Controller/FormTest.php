@@ -39,8 +39,9 @@ class FormTest extends BaseAuthController
 
         $this->form->init('test');
         $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
-        $this->form->input('data1', 'data1', 'text', true);
-        $this->form->input('data2', 'data2', 'text', true);
+        $this->form->input('text', 'data1', 'text', true, $this->request->param('text'));
+        $this->form->input('select1', 'select1', 'select', true, $this->request->param('select1'), ['selects' => ['test0', 'test1', 'test2', 'test3']]);
+        $this->form->input('select2', 'select2', 'select', true, $this->request->param('select2'), ['selects' => ['A' => 'testA', 'B' => 'testB', 'C' => 'testC', 'D' => 'testD']]);
     }
 
     /**

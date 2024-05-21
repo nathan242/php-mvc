@@ -61,7 +61,7 @@ class Form extends Gui
      * @param string $displayName Field display text
      * @param string $type Field type
      * @param bool $allowEmpty Allow empty values
-     * @param string|bool $value Optional default value
+     * @param int|string|null $value Optional default value
      * @param array<string, mixed> $options Array of additional parameters
      */
     public function input(
@@ -69,7 +69,7 @@ class Form extends Gui
         string $displayName,
         string $type = 'text',
         bool $allowEmpty = false,
-        string|bool $value = false,
+        int|string|null $value = null,
         array $options = []
     ): void
     {
@@ -178,7 +178,7 @@ class Form extends Gui
                 echo '<strong>' . $v['display_name'] . '</strong><select name="' . $k . '"' . $style . '>';
                 foreach ($v['options']['selects'] as $sk => $sv) {
                     echo '<option value="' . $sk . '"';
-                    if ($v['value'] === $sk) {
+                    if ($v['value'] == $sk) {
                         echo ' selected';
                     }
                     echo '>' . $sv . '</option>';
@@ -189,7 +189,7 @@ class Form extends Gui
             } elseif ($v['type'] !== 'hidden') {
                 $extra = '';
 
-                if ($v['value'] !== false) {
+                if ($v['value'] !== null) {
                     $extra .= ' value="' . $v['value'] . '"';
                 }
 
@@ -217,7 +217,7 @@ class Form extends Gui
             } else {
                 $extra = '';
 
-                if ($v['value'] !== false) {
+                if ($v['value'] !== null) {
                     $extra .= ' value="' . $v['value'] . '"';
                 }
 
