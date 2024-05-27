@@ -2,6 +2,8 @@
 
 namespace Framework\Gui;
 
+use RuntimeException;
+
 /**
  * HTML form handling
  *
@@ -145,12 +147,8 @@ class Form extends Gui
 
         ob_start();
 
-        $formParams = '';
-        foreach ($this->formParams as $key => $value) {
-            $formParams .= " {$key}=\"{$value}\"";
-        }
+        $this->startFormHtml();
 
-        echo '<form method="' . $this->method . '"' . $formParams . '>';
         if ($table) {
             echo '<table class="table table-hover" border="1">';
             if ($inline) {
@@ -172,35 +170,7 @@ class Form extends Gui
         }
 
         foreach ($this->inputs as $k => $v) {
-            if ($v['type'] === 'select') {
-                echo $sepStart;
-
-                echo '<strong>' . $v['display_name'] . '</strong><select name="' . $k . '"' . $style . '>';
-                foreach ($v['options']['selects'] as $sk => $sv) {
-                    echo '<option value="' . $sk . '"';
-                    if ($v['value'] == $sk) {
-                        echo ' selected';
-                    }
-                    echo '>' . $sv . '</option>';
-                }
-                echo '</select>';
-
-                echo $sepEnd;
-            } elseif ($v['type'] !== 'hidden') {
-                $extra = '';
-
-                if ($v['value'] !== null) {
-                    $extra .= ' value="' . $v['value'] . '"';
-                }
-
-                if (isset($v['options']['placeholder'])) {
-                    $extra .= ' placeholder="' . $v['options']['placeholder'] . '"';
-                }
-
-                if (isset($v['options']['autofocus'])) {
-                    $extra .= ' autofocus';
-                }
-
+            if ($v['type'] !== 'hidden') {
                 echo $sepStart;
 
                 if (!($table && $inline)) {
@@ -212,16 +182,11 @@ class Form extends Gui
                     echo $sepStart;
                 }
 
-                echo '<input type="' . $v['type'] . '" name="' . $k . '"' . $extra . $style . '>';
+                $this->inputHtml($k, $style);
+
                 echo $sepEnd;
             } else {
-                $extra = '';
-
-                if ($v['value'] !== null) {
-                    $extra .= ' value="' . $v['value'] . '"';
-                }
-
-                echo '<input type="' . $v['type'] . '" name="' . $k . '"' . $extra . '>';
+                $this->inputHtml($k, $style);
             }
 
             if (isset($v['options']['after'])) {
@@ -230,7 +195,7 @@ class Form extends Gui
         }
 
         echo $sepStart;
-        echo '<input class="btn btn-' . $this->submitColour . '" type="submit" value="' . $this->submit . '">';
+        $this->submitHtml();
         echo $sepEnd;
 
         if ($table) {
@@ -241,12 +206,86 @@ class Form extends Gui
             echo '</table>';
         }
 
-        echo '</form>';
+        $this->endFormHtml();
 
         if ($panel) {
             self::panel($this->title, ob_get_clean());
         } else {
             echo ob_get_clean();
         }
+    }
+
+    /**
+     * Render form start tag
+     */
+    public function startFormHtml(): void
+    {
+        $formParams = '';
+        foreach ($this->formParams as $key => $value) {
+            $formParams .= " {$key}=\"{$value}\"";
+        }
+
+        echo '<form method="' . $this->method . '"' . $formParams . '>';
+    }
+
+    /**
+     * Render form end tag
+     */
+    public function endFormHtml(): void
+    {
+        echo '</form>';
+    }
+
+    /**
+     * Render form field
+     *
+     * @param string $field Field name
+     * @param string $style Optional additional style values
+     */
+    public function inputHtml(string $field, string $style = ''): void
+    {
+        if (!array_key_exists($field, $this->inputs)) {
+            throw new RuntimeException("Cannot render undefined form field {$field}");
+        }
+
+        if ($this->inputs[$field]['type'] === 'select') {
+            echo '<select name="' . $field . '"' . $style . '>';
+
+            foreach ($this->inputs[$field]['options']['selects'] as $sk => $sv) {
+                echo '<option value="' . $sk . '"';
+
+                if ($this->inputs[$field]['value'] == $sk) {
+                    echo ' selected';
+                }
+
+                echo '>' . $sv . '</option>';
+            }
+
+            echo '</select>';
+        } else {
+            $extra = '';
+
+            if ($this->inputs[$field]['value'] !== null) {
+                $extra .= ' value="' . $this->inputs[$field]['value'] . '"';
+            }
+
+            if (isset($v['options']['placeholder'])) {
+                $extra .= ' placeholder="' . $this->inputs[$field]['options']['placeholder'] . '"';
+            }
+
+            if (isset($v['options']['autofocus'])) {
+                $extra .= ' autofocus';
+            }
+
+            echo '<input type="' . $this->inputs[$field]['type'] . '" name="' . $field . '"' . $extra . $style . '>';
+        }
+    }
+
+    /**
+     * Render submit button
+     */
+    public function submitHtml(): void
+    {
+        echo '<input class="btn btn-' . $this->submitColour . '" type="submit" value="' . $this->submit . '">';
     }
 }
