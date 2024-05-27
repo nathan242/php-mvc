@@ -6,6 +6,7 @@ use Framework\Gui\Form;
 use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ResponseInterface;
 use Application\Exceptions\InvalidCsrfException;
+use Framework\Gui\Exceptions\InvalidFormData;
 use Framework\Mvc\Interfaces\SessionInterface;
 
 /**
@@ -104,6 +105,8 @@ class Records extends BaseAuthController
             );
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
+        } catch (InvalidFormData $e) {
+            $result = false;
         }
 
         if (!$result) {
@@ -153,6 +156,8 @@ class Records extends BaseAuthController
             );
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
+        } catch (InvalidFormData $e) {
+            $result = false;
         }
 
         if (!$result) {

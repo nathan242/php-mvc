@@ -2,6 +2,7 @@
 
 namespace Framework\Gui;
 
+use Framework\Gui\Exceptions\InvalidFormData;
 use RuntimeException;
 
 /**
@@ -99,18 +100,14 @@ class Form extends Gui
         $inputNames = array_keys($this->inputs);
 
         foreach ($inputNames as $i) {
-            // Is the option set?
-            if (!isset($params[$i])) {
-                return false;
-            }
-
-            // If it is empty, is it allowed to be?
-            if ($params[$i] === '' && $this->inputs[$i]['allow_empty'] === false) {
-                return false;
+            // If it is not set or empty, is it allowed to be?
+            if ((!isset($params[$i]) || $params[$i] === '') && $this->inputs[$i]['allow_empty'] === false) {
+                $this->result = false;
+                throw new InvalidFormData("Form parameter {$i} must be set and have a value");
             }
 
             // Build data array
-            $inputData[$i] = $params[$i];
+            $inputData[$i] = $params[$i] ?? '';
         }
 
         $pass[] = $inputData;
@@ -174,7 +171,7 @@ class Form extends Gui
                 echo $sepStart;
 
                 if (!($table && $inline)) {
-                    echo '<strong>' . $v['display_name'] . '</strong>';
+                    echo '<strong>' . $v['display_name'] . '</strong> ';
                 }
 
                 if ($table && !$inline) {
@@ -269,12 +266,16 @@ class Form extends Gui
                 $extra .= ' value="' . $this->inputs[$field]['value'] . '"';
             }
 
-            if (isset($v['options']['placeholder'])) {
+            if (isset($this->inputs[$field]['options']['placeholder'])) {
                 $extra .= ' placeholder="' . $this->inputs[$field]['options']['placeholder'] . '"';
             }
 
-            if (isset($v['options']['autofocus'])) {
+            if ($this->inputs[$field]['options']['autofocus'] ?? false) {
                 $extra .= ' autofocus';
+            }
+
+            if ($this->inputs[$field]['options']['checked'] ?? false) {
+                $extra .= ' checked';
             }
 
             echo '<input type="' . $this->inputs[$field]['type'] . '" name="' . $field . '"' . $extra . $style . '>';
