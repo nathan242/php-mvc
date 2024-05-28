@@ -5,7 +5,9 @@ namespace Framework\Mvc;
 use Framework\Mvc\Exceptions\ClassNotFound;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use ReflectionClass;
+use ReflectionMethod;
 use ReflectionException;
+use RuntimeException;
 
 /**
  * DI container
@@ -179,17 +181,58 @@ class Container implements ContainerInterface
      */
     public function resolve(string $name): object
     {
+        $constructor = $this->getConstructor($name);
+        if (null === $constructor) {
+            return new $name();
+        }
+
+        return new $name(...$this->getDependencies($constructor));
+    }
+
+    /**
+     * Resolve dependencies with included and instantiate class
+     *
+     * @param string $name
+     * @param array<mixed> $dependencies
+     * @return object
+     * @throws ClassNotFound
+     */
+    public function resolveWith(string $name, array $dependencies): object
+    {
+        $constructor = $this->getConstructor($name);
+        if (null === $constructor) {
+            throw new RuntimeException("Class {$name} has no constructor");
+        }
+
+        return new $name(...$this->getDependencies($constructor), ...$dependencies);
+    }
+
+    /**
+     * Get class constructor reflection object
+     *
+     * @param string $name
+     * @return null|ReflectionMethod
+     */
+    protected function getConstructor(string $name): ?ReflectionMethod
+    {
         try {
             $reflection = new ReflectionClass($name);
         } catch (ReflectionException $e) {
             throw new ClassNotFound("Class {$name} not found");
         }
 
-        $constructor = $reflection->getConstructor();
-        if (null === $constructor) {
-            return new $name();
-        }
+        return $reflection->getConstructor();
+    }
 
+    /**
+     * Get class dependencies
+     *
+     * @param ReflectionMethod $constructor
+     * @return array<object>
+     * @throws ClassNotFound
+     */
+    protected function getDependencies(ReflectionMethod $constructor): array
+    {
         $parameters = $constructor->getParameters();
 
         $dependencies = [];
@@ -205,7 +248,7 @@ class Container implements ContainerInterface
             }
         }
 
-        return new $name(...$dependencies);
+        return $dependencies;
     }
 
     /**
