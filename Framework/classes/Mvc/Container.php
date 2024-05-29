@@ -7,6 +7,7 @@ use Framework\Mvc\Interfaces\ContainerInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionException;
+use ReflectionNamedType;
 
 /**
  * DI container
@@ -240,7 +241,7 @@ class Container implements ContainerInterface
             $type = $parameter->getType();
 
             try {
-                if (!$type->isBuiltin()) {
+                if ($type instanceof ReflectionNamedType && !$type->isBuiltin()) {
                     $dependencies[] = $this->get((string)$type);
                 }
             } catch (ClassNotFound $e) {
