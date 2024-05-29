@@ -2,6 +2,7 @@
 
 namespace Framework\Database\Factory;
 
+use Framework\Mvc\Interfaces\ConfigInterface;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\FactoryInterface;
 
@@ -21,7 +22,7 @@ class SqlBuilderFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, string $class): object
     {
-        $config = $container->get('config');
+        $config = $container->get(ConfigInterface::class);
         $dbConfig = $config->get('db');
 
         return $container->get($dbConfig['sql_builder']);

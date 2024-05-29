@@ -2,9 +2,13 @@
 
 namespace Framework\Controller\Factory;
 
+use Framework\Mvc\Interfaces\ConfigInterface;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\FactoryInterface;
-use Framework\Mvc\View;
+use Framework\Mvc\Interfaces\RequestInterface;
+use Framework\Mvc\Interfaces\ResponseInterface;
+use Framework\Mvc\Interfaces\SessionInterface;
+use Framework\Mvc\Interfaces\ViewInterface;
 
 /**
  * Base web controller factory for use with controllers that extend BaseController
@@ -41,10 +45,10 @@ class BaseFactory implements FactoryInterface
      */
     protected function setObjects(ContainerInterface $container, object $classObj): void
     {
-        $classObj->setRequest($container->get('request'));
-        $classObj->setResponse($container->get('response'));
-        $classObj->setSession($container->get('session'));
-        $classObj->setConfig($container->get('config'));
-        $classObj->setView($container->get(View::class));
+        $classObj->setRequest($container->get(RequestInterface::class));
+        $classObj->setResponse($container->get(ResponseInterface::class));
+        $classObj->setSession($container->get(SessionInterface::class));
+        $classObj->setConfig($container->get(ConfigInterface::class));
+        $classObj->setView($container->get(ViewInterface::class));
     }
 }

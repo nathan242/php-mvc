@@ -56,7 +56,7 @@ class FormTest extends BaseAuthController
     }
 
     /**
-     * Hand form post
+     * Handle form post
      *
      * @return ResponseInterface
      */

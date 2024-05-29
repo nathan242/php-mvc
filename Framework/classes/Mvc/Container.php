@@ -7,7 +7,6 @@ use Framework\Mvc\Interfaces\ContainerInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionException;
-use RuntimeException;
 
 /**
  * DI container
@@ -190,7 +189,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * Resolve dependencies with included and instantiate class
+     * Resolve dependencies with included variables and instantiate class
      *
      * @param string $name
      * @param array<mixed> $dependencies
@@ -201,7 +200,7 @@ class Container implements ContainerInterface
     {
         $constructor = $this->getConstructor($name);
         if (null === $constructor) {
-            throw new RuntimeException("Class {$name} has no constructor");
+            return new $name(...$dependencies);
         }
 
         return new $name(...$this->getDependencies($constructor), ...$dependencies);
@@ -212,6 +211,7 @@ class Container implements ContainerInterface
      *
      * @param string $name
      * @return null|ReflectionMethod
+     * @throws ClassNotFound
      */
     protected function getConstructor(string $name): ?ReflectionMethod
     {
@@ -237,10 +237,12 @@ class Container implements ContainerInterface
 
         $dependencies = [];
         foreach ($parameters as $parameter) {
-            $type = (string)$parameter->getType();
+            $type = $parameter->getType();
 
             try {
-                $dependencies[] = $this->get($type);
+                if (!$type->isBuiltin()) {
+                    $dependencies[] = $this->get((string)$type);
+                }
             } catch (ClassNotFound $e) {
                 if (!$parameter->isOptional()) {
                     throw $e;

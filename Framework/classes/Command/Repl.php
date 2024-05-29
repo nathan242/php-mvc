@@ -2,7 +2,7 @@
 
 namespace Framework\Command;
 
-use Framework\Mvc\Container;
+use Framework\Mvc\Interfaces\ContainerInterface;
 
 /**
  * Read Execute Print Loop
@@ -13,15 +13,15 @@ use Framework\Mvc\Container;
  */
 class Repl extends BaseCommand
 {
-    /** @var Container */
+    /** @var ContainerInterface */
     protected $container;
 
     /**
      * Repl constructor
      *
-     * @param Container $container
+     * @param ContainerInterface $container
      */
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }

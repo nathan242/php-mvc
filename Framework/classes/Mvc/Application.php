@@ -112,7 +112,7 @@ class Application
     public function runCli(array $args = [], bool $throwExceptions = false): int
     {
         try {
-            return $this->container->get('cli_handler')->process($args);
+            return $this->container->get(CliHandler::class)->process($args);
         } catch (CommandNotFound $e) {
             if ($throwExceptions) throw $e;
             echo "Command not found.\n";
@@ -143,24 +143,24 @@ class Application
     {
         try {
             if ($request === null) {
-                $request = $this->container->get('request');
+                $request = $this->container->get(RequestInterface::class);
                 $request->get();
             } else {
                 $this->container->set(get_class($request), $request);
             }
 
-            $response = $this->container->get('web_handler')->process($request);
+            $response = $this->container->get(WebHandler::class)->process($request);
         } catch (ResponseException $e) {
             $response = $e->getResponse();
         } catch (PageNotFound $e) {
             if ($throwExceptions) throw $e;
-            $response = $this->container->get('response')->set(404, 'Page not found');
+            $response = $this->container->get(ResponseInterface::class)->set(404, 'Page not found');
         } catch (MethodNotFound $e) {
             if ($throwExceptions) throw $e;
-            $response = $this->container->get('response')->set(500, 'Internal error');
+            $response = $this->container->get(ResponseInterface::class)->set(500, 'Internal error');
         } catch (ControllerNotFound $e) {
             if ($throwExceptions) throw $e;
-            $response = $this->container->get('response')->set(500, 'Internal error');
+            $response = $this->container->get(ResponseInterface::class)->set(500, 'Internal error');
         }
 
         if ($returnResponse) {

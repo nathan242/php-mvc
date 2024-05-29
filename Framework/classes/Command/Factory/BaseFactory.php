@@ -2,6 +2,7 @@
 
 namespace Framework\Command\Factory;
 
+use Framework\Mvc\Interfaces\ConfigInterface;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\FactoryInterface;
 
@@ -40,6 +41,6 @@ class BaseFactory implements FactoryInterface
      */
     protected function setObjects(ContainerInterface $container, object $classObj): void
     {
-        $classObj->setConfig($container->get('config'));
+        $classObj->setConfig($container->get(ConfigInterface::class));
     }
 }
