@@ -260,6 +260,16 @@ class Form extends Gui
             }
 
             echo '</select>';
+        } elseif ($this->inputs[$field]['type'] === 'radio') {
+            echo ($this->inputs[$field]['options']['pre_break'] ?? false) ? '<br>' : '';
+            foreach ($this->inputs[$field]['options']['radios'] as $rk => $rv) {
+                $id = $rv['id'] ?? "{$field}_{$rk}";
+                $value = $rv['value'] ?? '';
+                $checked = $this->inputs[$field]['value'] == $value ? ' checked' : '';
+                $break = ($rv['break'] ?? false) ? '<br>' : '';
+                echo '<input type="radio" name="'. $field . '" id="' . $id . '" value="' . $value . '"' . $checked . $style . '>';
+                echo '<label for="' . $id . '">' . $rk . '</label>' . $break;
+            }
         } else {
             $extra = '';
 

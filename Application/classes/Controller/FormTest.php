@@ -44,6 +44,39 @@ class FormTest extends BaseAuthController
         $this->form->input('select1', 'select1', 'select', true, $this->request->param('select1'), ['selects' => ['test0', 'test1', 'test2', 'test3']]);
         $this->form->input('select2', 'select2', 'select', true, $this->request->param('select2'), ['selects' => ['A' => 'testA', 'B' => 'testB', 'C' => 'testC', 'D' => 'testD']]);
         $this->form->input('checkbox', 'checkbox', 'checkbox', true, null, ['checked' => $this->request->param('checkbox') !== null]);
+
+        $this->form->input(
+            'radio',
+            'radio',
+            'radio',
+            true,
+            $this->request->param('radio'),
+            [
+                'pre_break' => true,
+                'radios' => [
+                    'radio1' => [
+                        'id' => 'radio_option1',
+                        'value' => 'option1',
+                        'break' => true
+                    ],
+                    'radio2' => [
+                        'id' => 'radio_option2',
+                        'value' => 'option2',
+                        'break' => true
+                    ],
+                    'radio3' => [
+                        'id' => 'radio_option3',
+                        'value' => 'option3',
+                        'break' => true
+                    ],
+                    'radio4' => [
+                        'id' => 'radio_option4',
+                        'value' => 'option4',
+                        'break' => true
+                    ]
+                ]
+            ]
+        );
     }
 
     /**
