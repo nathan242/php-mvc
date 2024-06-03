@@ -238,6 +238,7 @@ class Form extends Gui
      *
      * @param string $field Field name
      * @param string $style Optional additional style values
+     * @throws RuntimeException
      */
     public function inputHtml(string $field, string $style = ''): void
     {
@@ -278,7 +279,11 @@ class Form extends Gui
                 $extra .= ' checked';
             }
 
-            echo '<input type="' . $this->inputs[$field]['type'] . '" name="' . $field . '"' . $extra . $style . '>';
+            if ($this->inputs[$field]['type'] === 'textarea') {
+                echo '<textarea name="' . $field . '"' . $style . '>' . ($this->inputs[$field]['value'] ?? '') . '</textarea>';
+            } else {
+                echo '<input type="' . $this->inputs[$field]['type'] . '" name="' . $field . '"' . $extra . $style . '>';
+            }
         }
     }
 
