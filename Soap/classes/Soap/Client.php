@@ -52,9 +52,9 @@ class Client
         if (is_array($this->functionDefs)) {
             foreach ($this->functionDefs as $def) {
                 $matches = [];
-                if (preg_match('/(?<=\ )[a-zA-Z0-9]+\([^\)]*\)/', $def, $matches)) {
+                if (preg_match('/(?<=\ )[a-zA-Z0-9_]+\([^\)]*\)/', $def, $matches)) {
                     $params = [];
-                    preg_match_all('/\$[a-zA-Z0-9]+/', $matches[0], $params);
+                    preg_match_all('/\$[a-zA-Z0-9_]+/', $matches[0], $params);
                     $functionName = explode('(', $matches[0])[0];
                     $functions[$functionName] = $params[0];
                 }
