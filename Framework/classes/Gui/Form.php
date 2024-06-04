@@ -93,6 +93,7 @@ class Form extends Gui
      * @param callable $function Function to process submitted data
      * @param array<mixed> $pass Array of additional parameters for function
      * @return bool Returns true if form submit is valid
+     * @throws InvalidFormData
      */
     public function handle(array $params, callable $function, array $pass = []): bool
     {
