@@ -38,7 +38,8 @@ class Client extends BaseController
         $rawData = [];
 
         $this->form->init('SOAP API Client', 'Submit', 'primary', 'get');
-        $this->form->input('wsdl_url', 'WSDL URL: ', 'text', false, $wsdlUrl);
+        $this->form->input('wsdl_url', 'WSDL URL:', 'text', false, $wsdlUrl);
+        $this->form->input('raw', 'Show raw:', 'checkbox', false, '1', ['checked' => $this->request->param('raw') == 1]);
 
         if ($wsdlUrl !== null) {
             try {
