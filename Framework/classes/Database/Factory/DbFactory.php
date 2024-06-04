@@ -2,6 +2,7 @@
 
 namespace Framework\Database\Factory;
 
+use Framework\Mvc\Interfaces\ConfigInterface;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\FactoryInterface;
 
@@ -25,9 +26,9 @@ class DbFactory implements FactoryInterface
             return $container->get('db_driver');
         }
 
-        $config = $container->get('config');
+        $config = $container->get(ConfigInterface::class);
         $dbConfig = $config->get('db');
-        $db = new $dbConfig['driver']($dbConfig);
+        $db = $container->resolveWith($dbConfig['driver'], [$dbConfig]);
         $container->set('db_driver', $db);
 
         return $db;

@@ -37,10 +37,46 @@ class FormTest extends BaseAuthController
         parent::init();
         $this->view->setView('template.phtml', ['topbar' => true, 'loginuser' => $this->session->loginuser, 'pagepath' => [['MAIN', '/main'], ['Form Test', $this->request->path]]]);
 
-        $this->form->init('test');
+        $this->form->init('Form Test');
         $this->form->input('csrf', 'csrf', 'hidden', false, $this->session->csrfToken);
-        $this->form->input('data1', 'data1', 'text', true);
-        $this->form->input('data2', 'data2', 'text', true);
+        $this->form->input('text', 'text', 'text', true, $this->request->param('text'));
+        $this->form->input('textarea', 'textarea', 'textarea', true, $this->request->param('textarea'));
+        $this->form->input('select1', 'select1', 'select', true, $this->request->param('select1'), ['selects' => ['test0', 'test1', 'test2', 'test3']]);
+        $this->form->input('select2', 'select2', 'select', true, $this->request->param('select2'), ['selects' => ['A' => 'testA', 'B' => 'testB', 'C' => 'testC', 'D' => 'testD']]);
+        $this->form->input('checkbox', 'checkbox', 'checkbox', true, null, ['checked' => $this->request->param('checkbox') !== null]);
+
+        $this->form->input(
+            'radio',
+            'radio',
+            'radio',
+            true,
+            $this->request->param('radio'),
+            [
+                'pre_break' => true,
+                'radios' => [
+                    'radio1' => [
+                        'id' => 'radio_option1',
+                        'value' => 'option1',
+                        'break' => true
+                    ],
+                    'radio2' => [
+                        'id' => 'radio_option2',
+                        'value' => 'option2',
+                        'break' => true
+                    ],
+                    'radio3' => [
+                        'id' => 'radio_option3',
+                        'value' => 'option3',
+                        'break' => true
+                    ],
+                    'radio4' => [
+                        'id' => 'radio_option4',
+                        'value' => 'option4',
+                        'break' => true
+                    ]
+                ]
+            ]
+        );
     }
 
     /**
@@ -54,7 +90,7 @@ class FormTest extends BaseAuthController
     }
 
     /**
-     * Hand form post
+     * Handle form post
      *
      * @return ResponseInterface
      */

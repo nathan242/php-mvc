@@ -70,6 +70,15 @@ interface ContainerInterface
     public function resolve(string $name): object;
 
     /**
+     * Resolve dependencies with included and instantiate class
+     *
+     * @param string $name
+     * @param array<mixed> $dependencies
+     * @return object
+     */
+    public function resolveWith(string $name, array $dependencies): object;
+
+    /**
      * Store object instance in the container
      *
      * @param string $name
