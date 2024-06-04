@@ -8,14 +8,14 @@ return [
         Framework\Mvc\Session::class
     ],
     'aliases' => [
-        'config' => Framework\Mvc\Config::class,
-        'request' => Framework\Mvc\Request::class,
-        'response' => Framework\Mvc\Response::class,
-        'web_handler' => Framework\Mvc\WebHandler::class,
-        'cli_handler' => Framework\Mvc\CliHandler::class,
-        'router' => Framework\Mvc\Router::class,
-        'command' => Framework\Mvc\Command::class,
-        'session' => Framework\Mvc\Session::class
+        Framework\Mvc\Interfaces\ContainerInterface::class => Framework\Mvc\Container::class,
+        Framework\Mvc\Interfaces\ConfigInterface::class => Framework\Mvc\Config::class,
+        Framework\Mvc\Interfaces\RequestInterface::class => Framework\Mvc\Request::class,
+        Framework\Mvc\Interfaces\ResponseInterface::class => Framework\Mvc\Response::class,
+        Framework\Mvc\Interfaces\RouterInterface::class => Framework\Mvc\Router::class,
+        Framework\Mvc\Interfaces\CommandRouterInterface::class => Framework\Mvc\Command::class,
+        Framework\Mvc\Interfaces\SessionInterface::class => Framework\Mvc\Session::class,
+        Framework\Mvc\Interfaces\ViewInterface::class => Framework\Mvc\View::class
     ],
     'factories' => [
         Framework\Mvc\WebHandler::class => Framework\Mvc\Factory\WebHandlerFactory::class,
