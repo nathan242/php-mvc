@@ -18,6 +18,28 @@ class Client
         $this->config = $config;
     }
 
+    public function setOption(string $name, mixed $value): void
+    {
+        if (!array_key_exists('options', $this->config)) {
+            $this->config['options'] = [];
+        }
+
+        if ($value === null || $value === '') {
+            unset($this->config['options'][$name]);
+        } else {
+            $this->config['options'][$name] = $value;
+        }
+    }
+
+    public function getOption(string $name): mixed
+    {
+        if (!array_key_exists($name, $this->config['options'])) {
+            return null;
+        }
+
+        return $this->config['options'][$name] ?? null;
+    }
+
     public function wsdl(string $wsdl): void
     {
         $this->soapClient = null;
