@@ -5,7 +5,6 @@ namespace Framework\Mvc;
 use Framework\Mvc\Interfaces\ConfigInterface;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\RequestInterface;
-use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Exceptions\PageNotFound;
 use Framework\Mvc\Exceptions\MethodNotFound;
 use Framework\Mvc\Exceptions\ControllerNotFound;
@@ -150,8 +149,6 @@ class Application
             }
 
             $response = $this->container->get(WebHandler::class)->process($request);
-        } catch (ResponseException $e) {
-            $response = $e->getResponse();
         } catch (PageNotFound $e) {
             if ($throwExceptions) throw $e;
             $response = $this->container->get(ResponseInterface::class)->set(404, 'Page not found');
