@@ -30,7 +30,7 @@ class Form extends Gui
     /** @var array<string, mixed> $formParams */
     protected $formParams;
 
-    /** @var bool|null $result */
+    /** @var mixed $result */
     public $result;
 
     /**
@@ -92,10 +92,9 @@ class Form extends Gui
      * @param array<string, mixed> $params Submitted form values
      * @param callable $function Function to process submitted data
      * @param array<mixed> $pass Array of additional parameters for function
-     * @return bool Returns true if form submit is valid
      * @throws InvalidFormData
      */
-    public function handle(array $params, callable $function, array $pass = []): bool
+    public function handle(array $params, callable $function, array $pass = []): void
     {
         $inputData = [];
         $inputNames = array_keys($this->inputs);
@@ -113,8 +112,6 @@ class Form extends Gui
 
         $pass[] = $inputData;
         $this->result = call_user_func_array($function, $pass);
-
-        return true;
     }
 
     /**

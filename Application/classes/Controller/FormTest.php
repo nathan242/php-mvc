@@ -97,7 +97,7 @@ class FormTest extends BaseAuthController
     public function post(): ResponseInterface
     {
         try {
-            $result = $this->form->handle(
+            $this->form->handle(
                 $this->request->params['POST'],
                 function (array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
@@ -109,10 +109,6 @@ class FormTest extends BaseAuthController
             );
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
-        }
-
-        if (!$result) {
-            return $this->get();
         }
 
         $data = json_encode($this->form->result);
