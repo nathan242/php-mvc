@@ -30,7 +30,7 @@ class Form extends Gui
     /** @var array<string, mixed> $formParams */
     protected $formParams;
 
-    /** @var bool|null $result */
+    /** @var mixed $result */
     public $result;
 
     /**
@@ -92,10 +92,9 @@ class Form extends Gui
      * @param array<string, mixed> $params Submitted form values
      * @param callable $function Function to process submitted data
      * @param array<mixed> $pass Array of additional parameters for function
-     * @return bool Returns true if form submit is valid
      * @throws InvalidFormData
      */
-    public function handle(array $params, callable $function, array $pass = []): bool
+    public function handle(array $params, callable $function, array $pass = []): void
     {
         $inputData = [];
         $inputNames = array_keys($this->inputs);
@@ -113,8 +112,6 @@ class Form extends Gui
 
         $pass[] = $inputData;
         $this->result = call_user_func_array($function, $pass);
-
-        return true;
     }
 
     /**
@@ -162,9 +159,9 @@ class Form extends Gui
             }
         }
 
-        $style = '';
+        $styles = [];
         if ($table && $inline) {
-            $style = ' style="width: 100%;"';
+            $styles['width'] = '100%';
         }
 
         foreach ($this->inputs as $k => $v) {
@@ -180,11 +177,11 @@ class Form extends Gui
                     echo $sepStart;
                 }
 
-                $this->inputHtml($k, $style);
+                $this->inputHtml($k, $styles);
 
                 echo $sepEnd;
             } else {
-                $this->inputHtml($k, $style);
+                $this->inputHtml($k, $styles);
             }
 
             if (isset($v['options']['after'])) {
@@ -238,13 +235,26 @@ class Form extends Gui
      * Render form field
      *
      * @param string $field Field name
-     * @param string $style Optional additional style values
+     * @param array<string, string> $addStyles Optional additional style values
      * @throws RuntimeException
      */
-    public function inputHtml(string $field, string $style = ''): void
+    public function inputHtml(string $field, array $addStyles = []): void
     {
         if (!array_key_exists($field, $this->inputs)) {
             throw new RuntimeException("Cannot render undefined form field {$field}");
+        }
+
+        $inputStyles = $this->inputs[$field]['options']['style'] ?? [];
+        $style = '';
+        if (count($addStyles) > 0 || count($inputStyles) > 0) {
+            $style = ' style="';
+
+            $allStyles = array_merge($inputStyles, $addStyles);
+            foreach ($allStyles as $k => $v) {
+                $style .= "{$k}: {$v};";
+            }
+
+            $style .= '"';
         }
 
         if ($this->inputs[$field]['type'] === 'select') {
@@ -290,8 +300,16 @@ class Form extends Gui
                 $extra .= ' checked';
             }
 
+            if (isset($this->inputs[$field]['options']['rows'])) {
+                $extra .= ' rows="' . $this->inputs[$field]['options']['rows'] . '"';
+            }
+
+            if (isset($this->inputs[$field]['options']['cols'])) {
+                $extra .= ' cols="' . $this->inputs[$field]['options']['cols'] . '"';
+            }
+
             if ($this->inputs[$field]['type'] === 'textarea') {
-                echo '<textarea name="' . $field . '"' . $style . '>' . ($this->inputs[$field]['value'] ?? '') . '</textarea>';
+                echo '<textarea name="' . $field . '"' . $extra . $style . '>' . ($this->inputs[$field]['value'] ?? '') . '</textarea>';
             } else {
                 echo '<input type="' . $this->inputs[$field]['type'] . '" name="' . $field . '"' . $extra . $style . '>';
             }

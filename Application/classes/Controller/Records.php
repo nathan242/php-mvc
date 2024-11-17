@@ -84,7 +84,7 @@ class Records extends BaseAuthController
         $this->form->input('value', 'value', 'text', true);
 
         try {
-            $result = $this->form->handle(
+            $this->form->handle(
                 $this->request->params['POST'],
                 function (SessionInterface $session, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
@@ -106,10 +106,6 @@ class Records extends BaseAuthController
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
         } catch (InvalidFormData $e) {
-            $result = false;
-        }
-
-        if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [['New', $this->request->path]]);
             return $this->response->set(200, $this->view->get('records_edit.phtml', ['form' => $this->form]));
         }
@@ -135,7 +131,7 @@ class Records extends BaseAuthController
         $this->form->input('value', 'value', 'text', true, $records[$id]);
 
         try {
-            $result = $this->form->handle(
+            $this->form->handle(
                 $this->request->params['POST'],
                 function (int $id, SessionInterface $session, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
@@ -157,10 +153,6 @@ class Records extends BaseAuthController
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
         } catch (InvalidFormData $e) {
-            $result = false;
-        }
-
-        if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $this->request->path]]);
             return $this->response->set(200, $this->view->get('records_edit.phtml', ['form' => $this->form]));
         }

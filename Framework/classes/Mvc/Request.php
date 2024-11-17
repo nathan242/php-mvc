@@ -91,6 +91,23 @@ class Request implements RequestInterface
     }
 
     /**
+     * Get all request parameters
+     *
+     * @param array<string> $order
+     * @return array<string, mixed>
+     */
+    public function allParams(array $order = ['GET', 'POST']): array
+    {
+        $return = [];
+
+        while (($next = array_shift($order)) !== null) {
+            $return = array_merge($return, $this->params[$next]);
+        }
+
+        return $return;
+    }
+
+    /**
      * Check if request parameter exists
      *
      * @param string $name

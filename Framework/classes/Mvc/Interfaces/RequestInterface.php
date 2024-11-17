@@ -30,7 +30,15 @@ interface RequestInterface
      * @param string|null $type
      * @return mixed
      */
-    public function param(string $name, mixed $default =  null, string $type = null);
+    public function param(string $name, mixed $default =  null, string $type = null): mixed;
+
+    /**
+     * Get all request parameters
+     *
+     * @param array<string> $order
+     * @return array<string, mixed>
+     */
+    public function allParams(array $order = ['GET', 'POST']): array;
 
     /**
      * Check if request parameter exists

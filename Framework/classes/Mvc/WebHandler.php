@@ -2,10 +2,12 @@
 
 namespace Framework\Mvc;
 
+use Exception;
 use Framework\Mvc\Exceptions\ClassNotFound;
 use Framework\Mvc\Exceptions\ControllerNotFound;
 use Framework\Mvc\Exceptions\MethodNotFound;
 use Framework\Mvc\Exceptions\PageNotFound;
+use Framework\Mvc\Exceptions\ResponseException;
 use Framework\Mvc\Interfaces\ContainerInterface;
 use Framework\Mvc\Interfaces\RequestInterface;
 use Framework\Mvc\Interfaces\ResponseInterface;
@@ -166,7 +168,11 @@ class WebHandler
 
         $this->runPreAction($matchedRoute);
 
-        $response = $this->runAction($matchedRoute[0], $matchedRoute[1]);
+        try {
+            $response = $this->runAction($matchedRoute[0], $matchedRoute[1]);
+        } catch (ResponseException $e) {
+            $response = $e->getResponse();
+        }
 
         $this->runPostAction($response);
 
@@ -181,6 +187,8 @@ class WebHandler
      * @return ResponseInterface
      * @throws ControllerNotFound
      * @throws MethodNotFound
+     * @throws ResponseException
+     * @throws Exception
      */
     public function runAction(array $action, array $params = []): ResponseInterface
     {

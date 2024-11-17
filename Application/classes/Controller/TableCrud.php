@@ -70,7 +70,7 @@ class TableCrud extends BaseAuthController
         $this->form->input('number', 'Number', 'text', true);
 
         try {
-            $result = $this->form->handle(
+            $this->form->handle(
                 $this->request->params['POST'],
                 function (Model $model, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
@@ -87,10 +87,6 @@ class TableCrud extends BaseAuthController
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
         } catch (InvalidFormData $e) {
-            $result = false;
-        }
-
-        if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [['New', $this->request->path]]);
             return $this->response->set(200, $this->view->get('table_crud_edit.phtml', ['form' => $this->form]));
         }
@@ -116,7 +112,7 @@ class TableCrud extends BaseAuthController
         $this->form->input('number', 'Number', 'text', true, $this->model->number);
 
         try {
-            $result = $this->form->handle(
+            $this->form->handle(
                 $this->request->params['POST'],
                 function (Model $model, array $data) {
                     if ($data['csrf'] !== $this->session->csrfToken) {
@@ -133,10 +129,6 @@ class TableCrud extends BaseAuthController
         } catch (InvalidCsrfException $e) {
             return $this->response->set(403, 'CSRF token mismatch');
         } catch (InvalidFormData $e) {
-            $result = false;
-        }
-
-        if (!$result) {
             $this->view->pagepath = array_merge($this->view->pagepath, [["Edit {$id}", $this->request->path]]);
             return $this->response->set(200, $this->view->get('table_crud_edit.phtml', ['form' => $this->form]));
         }
