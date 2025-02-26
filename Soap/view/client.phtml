@@ -2,7 +2,7 @@
 use Framework\Gui\Gui;
 use Framework\Util\Escaper;
 
-echo $form->html();
+$form->html();
 
 if ($error !== null) {
     Gui::panel('Error', '<p>'.Escaper::escapeHtml($error).'</p>', 'danger');
@@ -18,7 +18,9 @@ if (is_array($functions) && count($functions) > 0) {
         echo '<option '.$selected.'value="'.$func.'">'.$func.'</option>';
     }
 
-    echo '</select></p>';
+    echo '</select>';
+    echo ' <strong>Show raw:</strong> <input type="checkbox" name="raw" value="1"'.($show_raw === true ? ' checked' : '').'>';
+    echo '</p>';
 
     foreach ($functions as $func => $params) {
         echo '<p id="params_'.$func.'" style="display: none;">';

@@ -37,32 +37,28 @@ class Client extends BaseController
         $showRaw = false;
         $rawData = [];
 
-        foreach (
-            [
-                'option_login',
-                'option_password',
-                'option_proxy_host',
-                'option_proxy_port',
-                'option_proxy_login',
-                'option_proxy_password'
-            ]
-            as $optionKey
-        ) {
-            if ($this->request->hasParam($optionKey)) {
-                $key = explode('_', $optionKey, 2);
-                $this->client->setOption($key[1], $this->request->param($optionKey));
-            }
-        }
+        $options = [
+            'option_location' => 'Call endpoint',
+            'option_login' => 'HTTP auth user',
+            'option_password' => 'HTTP auth password',
+            'option_proxy_host' => 'Proxy host',
+            'option_proxy_port' => 'Proxy port',
+            'option_proxy_login' => 'Proxy login',
+            'option_proxy_password' => 'Proxy password'
+        ];
 
         $this->form->init('SOAP API Client', 'Submit', 'primary', 'get');
         $this->form->input('wsdl_url', 'WSDL URL:', 'text', false, $wsdlUrl);
-        $this->form->input('raw', 'Show raw:', 'checkbox', false, '1', ['checked' => $this->request->param('raw') == 1]);
-        $this->form->input('option_login', 'HTTP auth user:', 'text', true, $this->client->getOption('login'));
-        $this->form->input('option_password', 'HTTP auth password:', 'text', true, $this->client->getOption('password'));
-        $this->form->input('option_proxy_host', 'Proxy host:', 'text', true, $this->client->getOption('proxy_host'));
-        $this->form->input('option_proxy_port', 'Proxy port:', 'text', true, $this->client->getOption('proxy_port'));
-        $this->form->input('option_proxy_login', 'Proxy login:', 'text', true, $this->client->getOption('proxy_login'));
-        $this->form->input('option_proxy_password', 'Proxy password:', 'text', true, $this->client->getOption('proxy_password'));
+
+        foreach ($options as $optionKey => $optionValue) {
+            $key = explode('_', $optionKey, 2);
+
+            if ($this->request->hasParam($optionKey)) {
+                $this->client->setOption($key[1], $this->request->param($optionKey));
+            }
+
+            $this->form->input($optionKey, "{$optionValue}:", 'text', true, $this->client->getOption($key[1]));
+        }
 
         if ($wsdlUrl !== null) {
             try {
@@ -76,7 +72,7 @@ class Client extends BaseController
 
             if ($this->request->method === 'POST') {
                 $callFunction = $this->request->param('call_function', null, 'POST');
-                $showRaw = $this->request->param('raw') === '1' ? true : false;
+                $showRaw = $this->request->param('raw', null, 'POST') === '1' ? true : false;
                 if (array_key_exists($callFunction, $functions)) {
                     foreach ($functions[$callFunction] as $param) {
                         if ($this->request->param("array_{$callFunction}_{$param}", null, 'POST') !== null) {
@@ -113,7 +109,8 @@ class Client extends BaseController
                     'call_function' => $callFunction,
                     'call_params' => $callParams,
                     'raw_request' => $rawData['request'] ?? null,
-                    'raw_response' => $rawData['response'] ?? null
+                    'raw_response' => $rawData['response'] ?? null,
+                    'show_raw' => $showRaw
                 ]
             )
         );
