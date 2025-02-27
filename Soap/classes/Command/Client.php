@@ -15,6 +15,39 @@ class Client extends BaseCommand
         $this->client = $client;
     }
 
+    protected function getCliOptions(array &$args, string $config): array
+    {
+        $params = [];
+        $options = [];
+
+        $configArr = str_split($config);
+
+        foreach ($configArr as $cKey => $cValue) {
+            if ($cValue === ':') {
+                continue;
+            }
+
+            $params[$cValue] = ($configArr[$cKey+1] ?? '') === ':' ? true : false;
+        }
+
+        foreach ($args as $key => $value) {
+            if (preg_match('/^-[a-zA-Z0-9]$/', $value) && array_key_exists($optionVal = substr($value, 1), $params)) {
+                $optionsElement = [$optionVal];
+
+                if ($params[$optionVal]) {
+                    $optionsElement[] = $args[$key+1] ?? '';
+                    unset($args[$key+1]);
+                }
+
+                unset($args[$key]);
+
+                $options[] = $optionsElement;
+            }
+        }
+
+        return $options;
+    }
+
     protected function setWsdl(?string $wsdl): void
     {
         if ($wsdl === null) {
@@ -40,6 +73,24 @@ class Client extends BaseCommand
 
     public function call(array $args = []): int
     {
+        $options = $this->getCliOptions($args, 'ro:');
+        $raw = false;
+
+        $args = array_values($args);
+
+        foreach ($options as $option) {
+            switch($option[0]) {
+                case 'r':
+                    $raw = true;
+                    break;
+
+                case 'o':
+                    $parts = explode('=', $option[1] ?? '');
+                    $this->client->setOption($parts[0], $parts[1] ?? '');
+                    break;
+            }
+        }
+
         try {
             $this->setWsdl($args[1] ?? null);
         } catch (Exception $e) {
@@ -80,6 +131,13 @@ class Client extends BaseCommand
         } catch (Exception $e) {
             echo 'ERROR: '.$e->getMessage()."\n";
             return 1;
+        } finally {
+            if ($raw) {
+                $rawData = $this->client->getRawData();
+
+                echo "RAW DATA:\n";
+                echo print_r($rawData, true)."\n";
+            }
         }
 
         echo "RESPONSE:\n";
