@@ -48,8 +48,19 @@ class Client extends BaseController
         ];
 
         $this->form->init('SOAP API Client', 'Submit', 'primary', 'get');
-        $this->form->input('wsdl_url', 'WSDL URL:', 'text', false, $wsdlUrl);
+        $this->form->input(
+            'wsdl_url',
+            'WSDL URL:',
+            'text',
+            false,
+            $wsdlUrl,
+            [
+                'after' => '<p><button id="soap_options_button" type="button">Show Options</button></p><div id="soap_options" style="display: none;">'
+            ]
+        );
 
+        $totalOptions = count($options);
+        $countOptions = 0;
         foreach ($options as $optionKey => $optionValue) {
             $key = explode('_', $optionKey, 2);
 
@@ -57,7 +68,12 @@ class Client extends BaseController
                 $this->client->setOption($key[1], $this->request->param($optionKey));
             }
 
-            $this->form->input($optionKey, "{$optionValue}:", 'text', true, $this->client->getOption($key[1]));
+            $inputOptions = [];
+            if (++$countOptions === $totalOptions) {
+                $inputOptions = ['after' => '</div>'];
+            }
+
+            $this->form->input($optionKey, "{$optionValue}:", 'text', true, $this->client->getOption($key[1]), $inputOptions);
         }
 
         if ($wsdlUrl !== null) {

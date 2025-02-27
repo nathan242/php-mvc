@@ -94,7 +94,20 @@ if (is_array($type_defs) && count($type_defs) > 0) {
 Gui::panel('Types', ob_get_clean());
 ?>
 <script>
-    let callFunction = document.getElementById('call_function');
+    const soapOptionsDiv = document.getElementById('soap_options');
+    const soapOptionsButton = document.getElementById('soap_options_button');
+
+    soapOptionsButton.addEventListener('click', function (e) {
+        if (soapOptionsDiv.style.display === 'none') {
+            soapOptionsDiv.style.display = '';
+            soapOptionsButton.innerText = 'Hide Options'
+        } else {
+            soapOptionsDiv.style.display = 'none';
+            soapOptionsButton.innerText = 'Show Options'
+        }
+    });
+
+    const callFunction = document.getElementById('call_function');
     let currentFunctionId = 0;
 
     function showParams() {
