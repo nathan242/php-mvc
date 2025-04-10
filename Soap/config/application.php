@@ -1,6 +1,6 @@
 <?php
 return [
     'name' => 'SOAP API Tool',
-    'version' => 'v0.9.0'
+    'version' => 'v0.9.1'
 ];
 

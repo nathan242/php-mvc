@@ -59,6 +59,19 @@ class Client extends BaseCommand
 
     public function info(array $args = []): int
     {
+        $options = $this->getCliOptions($args, 'o:');
+
+        $args = array_values($args);
+
+        foreach ($options as $option) {
+            switch($option[0]) {
+                case 'o':
+                    $parts = explode('=', $option[1] ?? '');
+                    $this->client->setOption($parts[0], $parts[1] ?? '');
+                    break;
+            }
+        }
+
         try {
             $this->setWsdl($args[1] ?? null);
         } catch (Exception $e) {
