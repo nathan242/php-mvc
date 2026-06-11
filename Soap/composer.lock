@@ -62,13 +62,13 @@
             "version": "1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Speicher210/Reflection.git",
-                "reference": "c784361e516b58f326f1cabafe02e829298e85f7"
+                "url": "https://github.com/protung/wingu-reflection.git",
+                "reference": "3c736acd40d33b5e8e04c89528b47d368c22c709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Speicher210/Reflection/zipball/c784361e516b58f326f1cabafe02e829298e85f7",
-                "reference": "c784361e516b58f326f1cabafe02e829298e85f7",
+                "url": "https://api.github.com/repos/protung/wingu-reflection/zipball/3c736acd40d33b5e8e04c89528b47d368c22c709",
+                "reference": "3c736acd40d33b5e8e04c89528b47d368c22c709",
                 "shasum": ""
             },
             "require": {
@@ -103,19 +103,19 @@
                 "reflection"
             ],
             "support": {
-                "issues": "https://github.com/Speicher210/Reflection/issues",
-                "source": "https://github.com/Speicher210/Reflection/tree/1.2.0"
+                "issues": "https://github.com/protung/wingu-reflection/issues",
+                "source": "https://github.com/protung/wingu-reflection/tree/1.2.0"
             },
-            "time": "2023-05-11T09:01:22+00:00"
+            "time": "2025-05-10T10:32:19+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }
