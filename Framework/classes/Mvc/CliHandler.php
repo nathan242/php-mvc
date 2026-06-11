@@ -185,7 +185,7 @@ class CliHandler
      */
     public function runCommand(array $action, array $arguments): int
     {
-        if (!is_array($action) || count($action) < 2) {
+        if (count($action) < 2) {
             throw new CommandControllerNotFound();
         }
 

@@ -7,16 +7,16 @@ class Gui
     /**
      * Output a bootstrap panel
      *
-     * @param string $heading Panel heading
+     * @param string|null $heading Panel heading
      * @param string $content Panel content
      * @param string $colour Panel colour
      * @param array<string, mixed> $options Array of additional parameters
      */
-    public static function panel(string $heading, string $content, string $colour = 'primary', array $options = []): void
+    public static function panel(?string $heading, string $content, string $colour = 'primary', array $options = []): void
     {
         $class = (isset($options['class'])) ? ' ' . $options['class'] : ' panel-custom';
         echo '<div class="panel panel-' . $colour . $class . '">';
-        if ($heading !== false) {
+        if ($heading !== null) {
             echo '<div class="panel-heading">' . $heading . '</div>';
         }
         echo '<div class="panel-body">' . $content . '</div>';
@@ -34,7 +34,7 @@ class Gui
      */
     public static function table(array $data, array|bool $headings = false, $select = false, $buttons = false)
     {
-        if (!is_array($data) || !isset($data[0])) {
+        if (!isset($data[0])) {
             return false;
         }
 
