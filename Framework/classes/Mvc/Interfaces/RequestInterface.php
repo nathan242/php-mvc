@@ -30,7 +30,7 @@ interface RequestInterface
      * @param string|null $type
      * @return mixed
      */
-    public function param(string $name, mixed $default =  null, string $type = null): mixed;
+    public function param(string $name, mixed $default =  null, ?string $type = null): mixed;
 
     /**
      * Get all request parameters
@@ -44,10 +44,10 @@ interface RequestInterface
      * Check if request parameter exists
      *
      * @param string $name
-     * @param string $type
+     * @param string|null $type
      * @return bool
      */
-    public function hasParam(string $name, string $type = null): bool;
+    public function hasParam(string $name, ?string $type = null): bool;
 
     /**
      * Get information about files sent in request

@@ -192,7 +192,7 @@ class WebHandler
      */
     public function runAction(array $action, array $params = []): ResponseInterface
     {
-        if (!is_array($action) || count($action) < 2) {
+        if (count($action) < 2) {
             throw new ControllerNotFound();
         }
 

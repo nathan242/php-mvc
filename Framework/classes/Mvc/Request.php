@@ -75,7 +75,7 @@ class Request implements RequestInterface
      * @param string|null $type
      * @return mixed
      */
-    public function param(string $name, mixed $default = null, string $type = null): mixed
+    public function param(string $name, mixed $default = null, ?string $type = null): mixed
     {
         $return = $default;
         $type = null === $type ? ['GET', 'POST'] : (array)$type;
@@ -111,10 +111,10 @@ class Request implements RequestInterface
      * Check if request parameter exists
      *
      * @param string $name
-     * @param string $type
+     * @param string|null $type
      * @return bool
      */
-    public function hasParam(string $name, string $type = null): bool
+    public function hasParam(string $name, ?string $type = null): bool
     {
         return null !== $this->param($name, null, $type);
     }
