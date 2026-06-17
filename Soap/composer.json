@@ -1,6 +1,6 @@
 {
     "require": {
-        "php2wsdl/php2wsdl": "^0.7.0"
+        "php2wsdl/php2wsdl": "^0.7.1"
     },
     "autoload": {
         "psr-4": {
